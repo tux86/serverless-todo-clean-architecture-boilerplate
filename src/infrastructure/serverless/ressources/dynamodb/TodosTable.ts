@@ -1,7 +1,7 @@
 export const TodosTable = {
     Type: "AWS::DynamoDB::Table",
         Properties: {
-        TableName: "TodosTable",
+        TableName: "${env:DYNAMODB_TABLE}",
             AttributeDefinitions: [{
             AttributeName: "todoId",
             AttributeType: "S",
