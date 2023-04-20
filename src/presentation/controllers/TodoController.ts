@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import {CreateTodo} from "../../application/use-cases/todo/CreateTodo";
 import {TodoValidator} from "../../application/validators/TodoValidator";
 import { v4 as uuidv4 } from 'uuid';
+import {logger} from "../../infrastructure/utils/Logger";
 export class TodoController {
     constructor(
         private createTodo: CreateTodo,
@@ -13,14 +14,15 @@ export class TodoController {
 
     async create(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
         try {
+
+            logger.info('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+
             const todoData = JSON.parse(event.body || '{}');
 
             // const userId = event.requestContext.authorizer?.claims.sub;
             const userId = uuidv4()
-            todoData.userId = userId
 
-            await this.todoValidator.validateCreateOrUpdate(todoData);
-
+            await this.todoValidator.validateCreateOrUpdate({ ...todoData, userId });
 
             const createdTodo = await this.createTodo.execute({ ...todoData, userId });
 
@@ -29,7 +31,7 @@ export class TodoController {
                 body: JSON.stringify(createdTodo),
             };
         } catch (error) {
-            console.error(error)
+            logger.error(error)
         }
     }
     //

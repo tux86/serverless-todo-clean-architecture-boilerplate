@@ -6,7 +6,7 @@
   "scripts": {
     "deploy": "sls deploy",
     "remove": "sls remove",
-    "start": "sls offline start",
+    "start": "sls offline --reloadHandler start ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
