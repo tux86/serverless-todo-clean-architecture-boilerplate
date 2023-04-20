@@ -40,6 +40,6 @@ lerna-debug.log*
 Thumbs.db
 
 # esbuild directories
-dist/
+.esbuild
 *.tsbuildinfo
 .cache

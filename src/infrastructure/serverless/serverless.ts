@@ -6,7 +6,7 @@ export const serverlessConfiguration: AWS = {
     service: 'todo-api',
     frameworkVersion: '3',
     useDotenv: true,
-    plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-dynamodb-local'],
+    plugins: ['serverless-esbuild', 'serverless-offline'],
     provider: {
         name: 'aws',
         runtime: 'nodejs18.x',
@@ -55,14 +55,6 @@ export const serverlessConfiguration: AWS = {
             platform: 'node',
             concurrency: 10,
         },
-        dynamodb: {
-            start: {
-                port: 5000,
-                inMemory: true,
-                migrate: true,
-            },
-            stages: "dev"
-        }
     },
     resources: {
         Resources: {
