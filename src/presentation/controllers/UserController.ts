@@ -1,10 +1,10 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 
-import { AuthenticateUserUseCase } from '@/application/use-cases/user/AuthenticateUserUseCase'
-import { CreateUserUseCase } from '@/application/use-cases/user/CreateUserUseCase'
-import { GetUserUseCase } from '@/application/use-cases/user/GetUserUseCase'
+import { AuthenticateUserUseCase } from '@/application/usecases/user/AuthenticateUserUseCase'
+import { CreateUserUseCase } from '@/application/usecases/user/CreateUserUseCase'
+import { GetUserUseCase } from '@/application/usecases/user/GetUserUseCase'
 import { HttpStatus } from '@/common/enums/HttpStatus'
-import { parseBody, response } from '@/common/helpers'
+import { parseBody, response } from '@/infra/aws/api-gw/helpers'
 
 export class UserController {
   constructor (

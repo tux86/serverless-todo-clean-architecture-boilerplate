@@ -1,9 +1,9 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 
-import { CreateTodoUseCase } from '@/application/use-cases/todo/CreateTodoUseCase'
+import { CreateTodoUseCase } from '@/application/usecases/todo/CreateTodoUseCase'
 import { TodoValidator } from '@/application/validators/TodoValidator'
-import { TodoRepositoryImpl } from '@/infrastructure/aws/dynamodb/TodoRepositoryImpl'
-import { Config } from '@/infrastructure/Config'
+import { TodoRepositoryImpl } from '@/infra/aws/dynamodb/TodoRepositoryImpl'
+import { Config } from '@/infra/Config'
 
 import { TodoController } from '../controllers/TodoController'
 

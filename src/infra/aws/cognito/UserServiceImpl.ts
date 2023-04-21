@@ -2,7 +2,7 @@ import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provid
 
 import { User } from '@/domain/entities/User'
 import { UserService } from '@/domain/interfaces/UserService'
-import { Config } from '@/infrastructure/Config'
+import { Config } from '@/infra/Config'
 
 export class UserServiceImpl implements UserService {
   readonly userPoolId : string

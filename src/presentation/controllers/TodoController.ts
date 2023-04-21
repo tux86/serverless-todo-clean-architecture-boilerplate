@@ -1,9 +1,9 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { v4 as uuidv4 } from 'uuid'
 
-import { CreateTodoUseCase } from '@/application/use-cases/todo/CreateTodoUseCase'
+import { CreateTodoUseCase } from '@/application/usecases/todo/CreateTodoUseCase'
 import { TodoValidator } from '@/application/validators/TodoValidator'
-import { logger } from '@/infrastructure/utils/Logger'
+import { logger } from '@/infra/utils/Logger'
 
 export class TodoController {
   constructor (

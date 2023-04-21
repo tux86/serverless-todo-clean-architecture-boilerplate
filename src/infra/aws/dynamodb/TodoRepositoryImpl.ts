@@ -9,8 +9,8 @@ import {
 
 import { Todo } from '@/domain/entities/Todo'
 import { Repository } from '@/domain/interfaces/Repository'
-import { dynamoDBDocumentClient } from '@/infrastructure/aws/dynamodb/DynamoDB'
-import { Config } from '@/infrastructure/Config'
+import { dynamoDBDocumentClient } from '@/infra/aws/dynamodb/DynamoDB'
+import { Config } from '@/infra/Config'
 
 export class TodoRepositoryImpl implements Repository<Todo> {
   private readonly tableName :string
