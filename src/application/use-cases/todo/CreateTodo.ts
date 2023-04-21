@@ -1,6 +1,6 @@
-import {IUseCase} from "../../../domain/interfaces/IUseCase";
-import {Todo} from "../../../domain/entities/Todo";
-import {IRepository} from "../../../domain/interfaces/IRepository";
+import { Todo } from '../../../domain/entities/Todo'
+import { Repository } from '../../../domain/interfaces/Repository'
+import { UseCase } from '../../../domain/interfaces/UseCase'
 
 interface CreateTodoInput {
     title: string;
@@ -9,11 +9,11 @@ interface CreateTodoInput {
     status?: string;
 }
 
-export class CreateTodo implements IUseCase<CreateTodoInput, Todo> {
-    constructor(private todoRepository: IRepository<Todo>) {}
+export class CreateTodo implements UseCase<CreateTodoInput, Todo> {
+  constructor (private todoRepository: Repository<Todo>) {}
 
-    async execute(input: CreateTodoInput): Promise<Todo> {
-        const todo = new Todo(input.title, input.description, input.userId, input.status);
-        return this.todoRepository.create(todo);
-    }
+  async execute (input: CreateTodoInput): Promise<Todo> {
+    const todo = new Todo(input.title, input.description, input.userId, input.status)
+    return this.todoRepository.create(todo)
+  }
 }

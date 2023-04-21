@@ -1,3 +1,3 @@
-import {serverlessConfiguration} from "./src/infrastructure/serverless/serverless";
+import { serverlessConfiguration } from './src/infrastructure/aws/iac/serverless'
 
-module.exports = serverlessConfiguration;
+module.exports = serverlessConfiguration
