@@ -1,8 +1,7 @@
 export const todoFunctions = {
   createTodo: {
     handler: 'src/presentation/handlers/todo.create',
-    environment: {
-    },
+    environment: {},
     events: [
       {
         http: {

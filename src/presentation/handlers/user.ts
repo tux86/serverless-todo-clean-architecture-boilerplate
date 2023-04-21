@@ -1,9 +1,10 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 
-import { AuthenticateUser } from '../../application/use-cases/user/AuthenticateUser'
-import { CreateUser } from '../../application/use-cases/user/CreateUser'
-import { GetUser } from '../../application/use-cases/user/GetUser'
-import { UserServiceImpl } from '../../infrastructure/aws/cognito/UserServiceImpl'
+import { AuthenticateUser } from '@/application/use-cases/user/AuthenticateUser'
+import { CreateUser } from '@/application/use-cases/user/CreateUser'
+import { GetUser } from '@/application/use-cases/user/GetUser'
+import { UserServiceImpl } from '@/infrastructure/aws/cognito/UserServiceImpl'
+
 import { UserController } from '../controllers/UserController'
 
 const userService = new UserServiceImpl()

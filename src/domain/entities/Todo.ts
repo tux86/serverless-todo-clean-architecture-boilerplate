@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MaxLength, IsOptional, IsUUID } from 'class-validator'
+import { IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator'
 import { v4 as uuidv4 } from 'uuid'
 
 export class Todo {

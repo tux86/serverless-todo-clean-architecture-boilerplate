@@ -1,4 +1,4 @@
-import { HttpStatus } from '../enums/HttpStatus'
+import { HttpStatus } from '@/common/enums/HttpStatus'
 
 export class HttpError extends Error {
   public readonly message: string

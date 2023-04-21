@@ -1,6 +1,6 @@
 import { varToString } from '../utilities'
 
-export const createUserPool = () => {
+export const createUserPool = () : any => {
   const userPool = {
     Type: 'AWS::Cognito::UserPool',
     Properties: {

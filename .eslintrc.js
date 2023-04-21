@@ -1,8 +1,14 @@
-// .eslintrc.js
-
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
+  settings: {
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        project: './tsconfig.json'
+      }
+    }
+  },
   plugins: [
     '@typescript-eslint',
     'import',

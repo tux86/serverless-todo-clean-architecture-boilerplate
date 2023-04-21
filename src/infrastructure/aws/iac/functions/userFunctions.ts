@@ -1,8 +1,7 @@
 export const userFunctions = {
   createUser: {
     handler: 'src/presentation/handlers/user.createUser',
-    environment: {
-    },
+    environment: {},
     events: [
       {
         http: {
@@ -15,8 +14,7 @@ export const userFunctions = {
   },
   authenticateUser: {
     handler: 'src/presentation/handlers/user.getUser',
-    environment: {
-    },
+    environment: {},
     events: [
       {
         http: {
@@ -29,8 +27,7 @@ export const userFunctions = {
   },
   getUser: {
     handler: 'src/presentation/handlers/user.getUser',
-    environment: {
-    },
+    environment: {},
     events: [
       {
         http: {

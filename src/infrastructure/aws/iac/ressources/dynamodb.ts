@@ -1,10 +1,11 @@
 import { varToString } from '../utilities'
 
-export const createTodoDynamodbTable = () => {
+export const createTodoDynamodbTable = () : any => {
+  const tableName = '${self:service}-${sls:stage}-todos'
   const todosTable = {
     Type: 'AWS::DynamoDB::Table',
     Properties: {
-      TableName: '${self:service}-${sls:stage}-todos',
+      TableName: tableName,
       AttributeDefinitions: [{
         AttributeName: 'todoId',
         AttributeType: 'S'
@@ -24,7 +25,7 @@ export const createTodoDynamodbTable = () => {
     resources: {
       todosTable
     },
-    tableName: { Ref: varToString({ todosTable }) },
+    tableName,
     tableArn: { 'Fn::GetAtt': [varToString({ todosTable }), 'Arn'] }
   }
 }

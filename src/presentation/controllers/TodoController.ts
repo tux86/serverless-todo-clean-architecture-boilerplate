@@ -1,9 +1,9 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { v4 as uuidv4 } from 'uuid'
 
-import { CreateTodo } from '../../application/use-cases/todo/CreateTodo'
-import { TodoValidator } from '../../application/validators/TodoValidator'
-import { logger } from '../../infrastructure/utils/Logger'
+import { CreateTodo } from '@/application/use-cases/todo/CreateTodo'
+import { TodoValidator } from '@/application/validators/TodoValidator'
+import { logger } from '@/infrastructure/utils/Logger'
 
 export class TodoController {
   constructor (
@@ -12,12 +12,11 @@ export class TodoController {
         // private updateTodo: UpdateTodo,
         // private deleteTodo: DeleteTodo,
         private todoValidator: TodoValidator
-  ) {}
+  ) {
+  }
 
   async create (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
     try {
-      logger.info('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
-
       const todoData = JSON.parse(event.body || '{}')
 
       // const userId = event.requestContext.authorizer?.claims.sub;
@@ -35,6 +34,7 @@ export class TodoController {
       logger.error(error)
     }
   }
+
   //
   // async getAll(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   //     try {

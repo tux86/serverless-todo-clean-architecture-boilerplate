@@ -1,21 +1,20 @@
 import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider'
 
-import { User } from '../../../domain/entities/User'
-import { UserService } from '../../../domain/interfaces/UserService'
+import { User } from '@/domain/entities/User'
+import { UserService } from '@/domain/interfaces/UserService'
+import { config } from '@/infrastructure/config'
 
+const { userPoolId, clientId } = config.cognito
 export class UserServiceImpl implements UserService {
-  private cognitoClient: CognitoIdentityProvider
-
-  constructor () {
+  constructor (private cognitoClient: CognitoIdentityProvider) {
     this.cognitoClient = new CognitoIdentityProvider({})
   }
 
   async createUser (user: User): Promise<User> {
     const { email, password } = user
 
-    console.log('-------', process.env)
     const params = {
-      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+      UserPoolId: userPoolId,
       Username: email,
       MessageAction: 'SUPPRESS', // Prevents sending a welcome email
       TemporaryPassword: password,
@@ -37,7 +36,7 @@ export class UserServiceImpl implements UserService {
 
   async findUserByEmail (email: string): Promise<User | null> {
     const params = {
-      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+      UserPoolId: userPoolId,
       Filter: `email = "${email}"`
     }
 
@@ -52,7 +51,7 @@ export class UserServiceImpl implements UserService {
   async authenticateUser (email: string, password: string): Promise<string> {
     const params = {
       AuthFlow: 'USER_PASSWORD_AUTH',
-      ClientId: process.env.COGNITO_APP_CLIENT_ID,
+      ClientId: clientId,
       AuthParameters: {
         USERNAME: email,
         PASSWORD: password

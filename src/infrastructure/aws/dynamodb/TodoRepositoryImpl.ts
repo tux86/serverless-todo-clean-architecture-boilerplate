@@ -1,17 +1,31 @@
-import { DynamoDBDocumentClient, GetCommand, PutCommand, ScanCommand, UpdateCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb'
+import {
+  DeleteCommand,
+  DynamoDBDocumentClient,
+  GetCommand,
+  PutCommand,
+  ScanCommand,
+  UpdateCommand
+} from '@aws-sdk/lib-dynamodb'
+
+import { Todo } from '@/domain/entities/Todo'
+import { Repository } from '@/domain/interfaces/Repository'
+import { config } from '@/infrastructure/config'
 
 import { dynamoDBClient } from './DynamoDB'
-import { Todo } from '../../../domain/entities/Todo'
-import { Repository } from '../../../domain/interfaces/Repository'
 
-const documentClient = DynamoDBDocumentClient.from(dynamoDBClient, { marshallOptions: { convertClassInstanceToMap: true, removeUndefinedValues: true } })
+const documentClient = DynamoDBDocumentClient.from(dynamoDBClient, {
+  marshallOptions: {
+    convertClassInstanceToMap: true,
+    removeUndefinedValues: true
+  }
+})
 
 export class TodoRepositoryImpl implements Repository<Todo> {
-  private tableName = process.env.DYNAMODB_TABLE
+  private tableName = config.todosTable
 
   async create (todo: Todo): Promise<Todo> {
     const params = {
-      TableName: this.userPoolId,
+      TableName: this.tableName,
       Item: todo
     }
 
@@ -21,7 +35,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async findById (id: string): Promise<Todo | null> {
     const params = {
-      TableName: this.userPoolId,
+      TableName: this.tableName,
       Key: { id }
     }
 
@@ -31,7 +45,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async findAll (): Promise<Todo[]> {
     const params = {
-      TableName: this.userPoolId
+      TableName: this.tableName
     }
 
     const result = await documentClient.send(new ScanCommand(params))
@@ -40,7 +54,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async update (todo: Todo): Promise<Todo> {
     const params = {
-      TableName: this.userPoolId,
+      TableName: this.tableName,
       Key: { todoId: todo.todoId },
       UpdateExpression: 'set title = :title, description = :description, userId = :userId, status = :status',
       ExpressionAttributeValues: {
@@ -58,7 +72,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async delete (id: string): Promise<void> {
     const params = {
-      TableName: this.userPoolId,
+      TableName: this.tableName,
       Key: { id }
     }
 

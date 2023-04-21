@@ -1,6 +1,6 @@
-import { ValidationError, validate } from 'class-validator'
+import { validate, ValidationError } from 'class-validator'
 
-import { Todo } from '../../domain/entities/Todo'
+import { Todo } from '@/domain/entities/Todo'
 
 export class TodoValidator {
   async validateCreateOrUpdate (todoData: Partial<Todo>): Promise<void> {

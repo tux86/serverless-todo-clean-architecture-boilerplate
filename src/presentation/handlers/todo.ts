@@ -1,8 +1,9 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 
-import { CreateTodo } from '../../application/use-cases/todo/CreateTodo'
-import { TodoValidator } from '../../application/validators/TodoValidator'
-import { TodoRepositoryImpl } from '../../infrastructure/aws/dynamodb/TodoRepositoryImpl'
+import { CreateTodo } from '@/application/use-cases/todo/CreateTodo'
+import { TodoValidator } from '@/application/validators/TodoValidator'
+import { TodoRepositoryImpl } from '@/infrastructure/aws/dynamodb/TodoRepositoryImpl'
+
 import { TodoController } from '../controllers/TodoController'
 
 const todoRepository = new TodoRepositoryImpl()

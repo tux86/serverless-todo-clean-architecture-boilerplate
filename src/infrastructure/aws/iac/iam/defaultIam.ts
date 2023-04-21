@@ -1,9 +1,9 @@
 import { AwsArn } from '@serverless/typescript'
 
 export const createDefaultIam = (config: {
-  userPoolArn :AwsArn,
-  tableArn: AwsArn
-}) => {
+    userPoolArn: AwsArn,
+    tableArn: AwsArn
+}) : any => {
   return {
     role: {
       statements: [

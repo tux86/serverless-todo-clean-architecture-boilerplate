@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "./aws-serverless-typescript-api",
+    "baseUrl": ".",
     "paths": {
-      "@functions/*": ["src/functions/*"],
-      "@libs/*": ["src/libs/*"]
+      "@/*": ["src/*"]
     }
   }
 }
