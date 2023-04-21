@@ -1,4 +1,4 @@
-import { varToString } from '../../../utils/awsServerless'
+import { varToString } from '../../utilities'
 
 export const createTodoDynamodbTable = () => {
   const todosTable = {
