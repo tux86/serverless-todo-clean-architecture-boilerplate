@@ -1,16 +1,18 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 
-import { AuthenticateUser } from '@/application/use-cases/user/AuthenticateUser'
-import { CreateUser } from '@/application/use-cases/user/CreateUser'
-import { GetUser } from '@/application/use-cases/user/GetUser'
+import { AuthenticateUserUseCase } from '@/application/use-cases/user/AuthenticateUserUseCase'
+import { CreateUserUseCase } from '@/application/use-cases/user/CreateUserUseCase'
+import { GetUserUseCase } from '@/application/use-cases/user/GetUserUseCase'
 import { UserServiceImpl } from '@/infrastructure/aws/cognito/UserServiceImpl'
+import { Config } from '@/infrastructure/Config'
 
 import { UserController } from '../controllers/UserController'
 
-const userService = new UserServiceImpl()
-const createUserUserCase = new CreateUser(userService)
-const authenticateUserUseCase = new AuthenticateUser(userService)
-const getUserUseCase = new GetUser(userService)
+const config = new Config()
+const userService = new UserServiceImpl(config)
+const createUserUserCase = new CreateUserUseCase(userService)
+const authenticateUserUseCase = new AuthenticateUserUseCase(userService)
+const getUserUseCase = new GetUserUseCase(userService)
 const userController = new UserController(createUserUserCase, authenticateUserUseCase, getUserUseCase)
 export const createUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   return await userController.createUser(event)

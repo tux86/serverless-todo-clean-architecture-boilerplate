@@ -1,7 +1,7 @@
 import { User } from '@/domain/entities/User'
 import { UserService } from '@/domain/interfaces/UserService'
 
-export class CreateUser {
+export class CreateUserUseCase {
   constructor (private userRepository: UserService) {
   }
 

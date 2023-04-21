@@ -1,6 +1,6 @@
 import { UserService } from '@/domain/interfaces/UserService'
 
-export class AuthenticateUser {
+export class AuthenticateUserUseCase {
   constructor (private userRepository: UserService) {
   }
 

@@ -9,7 +9,7 @@ import {
 
 import { Todo } from '@/domain/entities/Todo'
 import { Repository } from '@/domain/interfaces/Repository'
-import { config } from '@/infrastructure/config'
+import { Config } from '@/infrastructure/Config'
 
 import { dynamoDBClient } from './DynamoDB'
 
@@ -21,7 +21,10 @@ const documentClient = DynamoDBDocumentClient.from(dynamoDBClient, {
 })
 
 export class TodoRepositoryImpl implements Repository<Todo> {
-  private tableName = config.todosTable
+  private readonly tableName
+  constructor (readonly config: Config) {
+    this.tableName = this.config.todosTable
+  }
 
   async create (todo: Todo): Promise<Todo> {
     const params = {

@@ -9,7 +9,7 @@ interface CreateTodoInput {
     status?: string;
 }
 
-export class CreateTodo implements UseCase<CreateTodoInput, Todo> {
+export class CreateTodoUseCase implements UseCase<CreateTodoInput, Todo> {
   constructor (private todoRepository: Repository<Todo>) {
   }
 
