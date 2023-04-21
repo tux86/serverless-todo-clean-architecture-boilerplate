@@ -1,16 +1,23 @@
 import type { AWS } from '@serverless/typescript'
 
-import { todoFunctions } from './functions/todoFunctions'
-import { defaultIam } from './iam/default'
-import { CognitoUserPool } from './ressources/cognito/CognitoUserPool'
-import { CognitoUserPoolClient } from './ressources/cognito/CognitoUserPoolClient'
-import { TodosTable } from './ressources/dynamodb/TodosTable'
+import { functions } from './functions'
+import { createDefaultIam } from './iam/defaultIam'
+import { createUserPool } from './ressources/cognitoUserPool'
+import { createTodoDynamodbTable } from './ressources/dynamodb'
+
+const todoDynamodbTable = createTodoDynamodbTable()
+const cognitoUserPool = createUserPool()
+const defaultIam = createDefaultIam({
+  userPoolArn: cognitoUserPool.userPoolArn,
+  tableArn: todoDynamodbTable.tableArn
+})
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-api',
   frameworkVersion: '3',
   useDotenv: true,
   plugins: ['serverless-esbuild', 'serverless-offline'],
+  package: { individually: true },
   provider: {
     name: 'aws',
     runtime: 'nodejs18.x',
@@ -26,13 +33,12 @@ export const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
       // TODO: move to the target lambda environement
-      COGNITO_USER_POOL_ID: { Ref: 'CognitoUserPool' },
-      COGNITO_APP_CLIENT_ID: { Ref: 'CognitoUserPoolClient' }
+      COGNITO_USER_POOL_ID: cognitoUserPool.userPoolId,
+      COGNITO_APP_CLIENT_ID: cognitoUserPool.userPoolClientId,
+      DYNAMODB_TABLE: todoDynamodbTable.tableName
     },
     iam: defaultIam
   },
-  functions: { ...todoFunctions },
-  package: { individually: true },
   custom: {
     esbuild: {
       bundle: true,
@@ -48,11 +54,11 @@ export const serverlessConfiguration: AWS = {
       }
     }
   },
+  functions,
   resources: {
     Resources: {
-      TodosTable,
-      CognitoUserPool,
-      CognitoUserPoolClient
+      ...todoDynamodbTable.resources,
+      ...cognitoUserPool.resources
     }
   }
 }

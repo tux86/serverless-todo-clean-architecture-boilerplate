@@ -11,7 +11,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async create (todo: Todo): Promise<Todo> {
     const params = {
-      TableName: this.tableName,
+      TableName: this.userPoolId,
       Item: todo
     }
 
@@ -21,7 +21,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async findById (id: string): Promise<Todo | null> {
     const params = {
-      TableName: this.tableName,
+      TableName: this.userPoolId,
       Key: { id }
     }
 
@@ -31,7 +31,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async findAll (): Promise<Todo[]> {
     const params = {
-      TableName: this.tableName
+      TableName: this.userPoolId
     }
 
     const result = await documentClient.send(new ScanCommand(params))
@@ -40,7 +40,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async update (todo: Todo): Promise<Todo> {
     const params = {
-      TableName: this.tableName,
+      TableName: this.userPoolId,
       Key: { todoId: todo.todoId },
       UpdateExpression: 'set title = :title, description = :description, userId = :userId, status = :status',
       ExpressionAttributeValues: {
@@ -58,7 +58,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async delete (id: string): Promise<void> {
     const params = {
-      TableName: this.tableName,
+      TableName: this.userPoolId,
       Key: { id }
     }
 

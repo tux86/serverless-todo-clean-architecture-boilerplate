@@ -13,6 +13,7 @@ export class UserServiceImpl implements UserService {
   async createUser (user: User): Promise<User> {
     const { email, password } = user
 
+    console.log('-------', process.env)
     const params = {
       UserPoolId: process.env.COGNITO_USER_POOL_ID,
       Username: email,
