@@ -1,4 +1,4 @@
-import { varToString } from '../../utilities'
+import { varToString } from '../utilities'
 
 export const createUserPool = () => {
   const userPool = {
