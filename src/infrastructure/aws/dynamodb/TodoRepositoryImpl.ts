@@ -9,21 +9,16 @@ import {
 
 import { Todo } from '@/domain/entities/Todo'
 import { Repository } from '@/domain/interfaces/Repository'
+import { dynamoDBDocumentClient } from '@/infrastructure/aws/dynamodb/DynamoDB'
 import { Config } from '@/infrastructure/Config'
 
-import { dynamoDBClient } from './DynamoDB'
-
-const documentClient = DynamoDBDocumentClient.from(dynamoDBClient, {
-  marshallOptions: {
-    convertClassInstanceToMap: true,
-    removeUndefinedValues: true
-  }
-})
-
 export class TodoRepositoryImpl implements Repository<Todo> {
-  private readonly tableName
+  private readonly tableName :string
+
+  private readonly documentClient: DynamoDBDocumentClient
   constructor (readonly config: Config) {
     this.tableName = this.config.todosTable
+    this.documentClient = dynamoDBDocumentClient
   }
 
   async create (todo: Todo): Promise<Todo> {
@@ -32,7 +27,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
       Item: todo
     }
 
-    await documentClient.send(new PutCommand(params))
+    await this.documentClient.send(new PutCommand(params))
     return todo
   }
 
@@ -42,7 +37,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
       Key: { id }
     }
 
-    const result = await documentClient.send(new GetCommand(params))
+    const result = await this.documentClient.send(new GetCommand(params))
     return result.Item as Todo || null
   }
 
@@ -51,7 +46,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
       TableName: this.tableName
     }
 
-    const result = await documentClient.send(new ScanCommand(params))
+    const result = await this.documentClient.send(new ScanCommand(params))
     return result.Items as Todo[] || []
   }
 
@@ -69,7 +64,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
       ReturnValues: 'ALL_NEW'
     }
 
-    const result = await documentClient.send(new UpdateCommand(params))
+    const result = await this.documentClient.send(new UpdateCommand(params))
     return result.Attributes as Todo
   }
 
@@ -79,6 +74,6 @@ export class TodoRepositoryImpl implements Repository<Todo> {
       Key: { id }
     }
 
-    await documentClient.send(new DeleteCommand(params))
+    await this.documentClient.send(new DeleteCommand(params))
   }
 }
