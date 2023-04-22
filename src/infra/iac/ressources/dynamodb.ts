@@ -1,7 +1,7 @@
-import { varToString } from '../utilities'
+import { varToString, withPrefix } from '../utilities'
 
 export const createTodoDynamodbTable = () : any => {
-  const tableName = '${self:service}-${sls:stage}-todos'
+  const tableName = withPrefix('todos')
   const todosTable = {
     Type: 'AWS::DynamoDB::Table',
     Properties: {

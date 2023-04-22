@@ -59,6 +59,9 @@ export const serverlessConfiguration: AWS = {
     Resources: {
       ...todoDynamodbTable.resources,
       ...cognitoUserPool.resources
+    },
+    Outputs: {
+      ...cognitoUserPool.outputs
     }
   }
 }

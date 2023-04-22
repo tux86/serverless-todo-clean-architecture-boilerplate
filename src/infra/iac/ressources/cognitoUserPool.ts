@@ -1,10 +1,11 @@
-import { varToString } from '../utilities'
+import { varToString, withPrefix } from '../utilities'
 
 export const createUserPool = () : any => {
+  const userPoolName = withPrefix('user-pool')
   const userPool = {
     Type: 'AWS::Cognito::UserPool',
     Properties: {
-      UserPoolName: '${self:service}-${sls:stage}-user-pool',
+      UserPoolName: userPoolName,
       Schema: [
         {
           Name: 'email',
@@ -43,6 +44,14 @@ export const createUserPool = () : any => {
     resources: {
       userPool,
       userPoolClient
+    },
+    outputs: {
+      UserPoolId: {
+        Value: { Ref: varToString({ userPool }) },
+        Export: {
+          Name: `${userPoolName}-UserPoolId`
+        }
+      }
     },
     userPoolId: { Ref: varToString({ userPool }) },
     userPoolArn: { 'Fn::GetAtt': [varToString({ userPool }), 'Arn'] },
