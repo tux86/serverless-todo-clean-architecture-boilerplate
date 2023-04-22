@@ -7,11 +7,11 @@ import { GetTodoUseCase } from '@/application/usecases/todo/GetTodoUseCase'
 import { ListTodosUseCase } from '@/application/usecases/todo/ListTodosUseCase'
 import { UpdateTodoUseCase } from '@/application/usecases/todo/UpdateTodoUseCase'
 import { TodoValidator } from '@/application/validators/TodoValidator'
-import { HttpStatus } from '@/common/enums/HttpStatus'
 import { Config } from '@/infra/Config'
 import { TodoRepositoryImpl } from '@/infra/repositories/TodoRepositoryImpl'
 import { withErrorHandling } from '@/presentation/middlewares/errorHandling'
 import { parseBody, response } from '@/presentation/utils/apigw'
+import { HttpStatus } from '@/presentation/utils/HttpStatus'
 
 const tableName = Config.getInstance().todosTable
 const todoRepository = new TodoRepositoryImpl(tableName)
