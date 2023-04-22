@@ -1,5 +1,5 @@
 import { Repository } from './Repository'
-import { Todo } from '../entities/Todo'
+import { Todo } from '../../models/Todo'
 
 export interface TodoRepository extends Repository<Todo> {
     create(todo: Todo): Promise<Todo>;

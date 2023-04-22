@@ -2,32 +2,34 @@ import {
   DeleteCommand,
   DynamoDBDocumentClient,
   GetCommand,
-  PutCommand,
+  PutCommand, PutCommandInput,
   ScanCommand,
   UpdateCommand
 } from '@aws-sdk/lib-dynamodb'
 
-import { Todo } from '@/domain/entities/Todo'
-import { Repository } from '@/domain/interfaces/Repository'
-import { dynamoDBDocumentClient } from '@/infra/aws/dynamodb/DynamoDB'
-import { Config } from '@/infra/Config'
+import { Repository } from '@/domain/interfaces/repositories/Repository'
+import { Todo } from '@/domain/models/Todo'
+import { TodoAdapter } from '@/infra/adapaters/TodoAdapter'
+import { dynamoDBDocumentClient } from '@/infra/clients/dynamodb'
+import { TodoModel } from '@/infra/models/TodoModel'
+import { Mapper } from '@/infra/utils/Mapper'
 
 export class TodoRepositoryImpl implements Repository<Todo> {
-  private readonly tableName :string
-
   private readonly documentClient: DynamoDBDocumentClient
-  constructor (readonly config: Config) {
-    this.tableName = this.config.todosTable
+  constructor (readonly tableName: string) {
+    this.tableName = tableName
     this.documentClient = dynamoDBDocumentClient
   }
 
   async create (todo: Todo): Promise<Todo> {
-    const params = {
+    const todoModel = Mapper.toPersistenceModel(todo, TodoAdapter.toPersistenceModel)
+    const params : PutCommandInput = {
       TableName: this.tableName,
-      Item: todo
+      Item: todoModel
     }
 
     await this.documentClient.send(new PutCommand(params))
+
     return todo
   }
 
@@ -50,22 +52,24 @@ export class TodoRepositoryImpl implements Repository<Todo> {
     return result.Items as Todo[] || []
   }
 
-  async update (todo: Todo): Promise<Todo> {
+  async update (todo: Partial<Todo>): Promise<Todo> {
+    const todoModel = Mapper.toPersistenceModel(todo, TodoAdapter.toPersistenceModel)
     const params = {
       TableName: this.tableName,
-      Key: { todoId: todo.todoId },
+      Key: { todoId: todoModel.todoId },
       UpdateExpression: 'set title = :title, description = :description, userId = :userId, status = :status',
       ExpressionAttributeValues: {
-        ':title': todo.title,
-        ':description': todo.description,
-        ':userId': todo.userId,
-        ':status': todo.status
+        ':title': todoModel.title,
+        ':description': todoModel.description,
+        ':userId': todoModel.userId,
+        ':status': todoModel.status
       },
       ReturnValues: 'ALL_NEW'
     }
 
     const result = await this.documentClient.send(new UpdateCommand(params))
-    return result.Attributes as Todo
+
+    return TodoAdapter.toDomainEntity(result.Attributes as TodoModel)
   }
 
   async delete (id: string): Promise<void> {

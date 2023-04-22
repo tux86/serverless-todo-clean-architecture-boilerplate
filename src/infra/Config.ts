@@ -17,4 +17,8 @@ export class Config {
       clientId: process.env.COGNITO_APP_CLIENT_ID
     }
   }
+
+  public static getInstance () : Config {
+    return new Config()
+  }
 }

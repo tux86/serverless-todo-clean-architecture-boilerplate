@@ -1,12 +1,15 @@
-import { User } from '@/domain/entities/User'
-import { UserService } from '@/domain/interfaces/UserService'
 
-export class CreateUserUseCase {
+import { CreateUserInput } from '@/application/dtos/user/CreateUserInput'
+import { UserService } from '@/domain/interfaces/services/UserService'
+import { UseCase } from '@/domain/interfaces/UseCase'
+import { User } from '@/domain/models/User'
+
+export class CreateUserUseCase implements UseCase<CreateUserInput, User> {
   constructor (private userService: UserService) {
   }
 
-  async execute (email: string, password: string): Promise<User> {
-    const user = new User(email, password)
+  async execute (input: CreateUserInput): Promise<User> {
+    const user = new User(input.email, input.password)
     return await this.userService.createUser(user)
   }
 }

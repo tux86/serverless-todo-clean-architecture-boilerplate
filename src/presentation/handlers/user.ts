@@ -3,26 +3,49 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { AuthenticateUserUseCase } from '@/application/usecases/user/AuthenticateUserUseCase'
 import { CreateUserUseCase } from '@/application/usecases/user/CreateUserUseCase'
 import { GetUserUseCase } from '@/application/usecases/user/GetUserUseCase'
-import { UserServiceImpl } from '@/infra/aws/cognito/UserServiceImpl'
+import { HttpStatus } from '@/common/enums/HttpStatus'
 import { Config } from '@/infra/Config'
+import { UserServiceImpl } from '@/infra/services/UserServiceImpl'
+import { parseBody, response } from '@/presentation/utils/apigw'
 
-import { UserController } from '../controllers/UserController'
-
-const config = new Config()
-const userService = new UserServiceImpl(config)
-const createUserUserCase = new CreateUserUseCase(userService)
+const { userPoolId, clientId } = Config.getInstance().cognito
+const userService = new UserServiceImpl(userPoolId, clientId)
+const createUserUseCase = new CreateUserUseCase(userService)
 const authenticateUserUseCase = new AuthenticateUserUseCase(userService)
 const getUserUseCase = new GetUserUseCase(userService)
 
-const userController = new UserController(createUserUserCase, authenticateUserUseCase, getUserUseCase)
-export const createUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  return await userController.createUser(event)
+export const createUser = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  try {
+    const userData = parseBody(event.body) as any // TODO: fix this
+    const user = await createUserUseCase.execute(userData)
+    return response(HttpStatus.CREATED, user)
+  } catch (error) {
+    return response(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR, { message: error.message })
+  }
 }
 
-export const authenticateUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  return await userController.authenticateUser(event)
+export const authenticateUser = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  try {
+    const authData = parseBody(event.body) as any // TODO: fix this
+    const authentication = await authenticateUserUseCase.execute(authData)
+    return response(HttpStatus.OK, authentication)
+  } catch (error) {
+    return response(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR, { message: error.message })
+  }
 }
 
-export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  return await userController.getUser(event)
+export const getUser = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  try {
+    const { email } = event.pathParameters || {}
+    const user = await getUserUseCase.execute(email)
+    return response(HttpStatus.OK, user)
+  } catch (error) {
+    return response(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR, { message: error.message })
+  }
 }

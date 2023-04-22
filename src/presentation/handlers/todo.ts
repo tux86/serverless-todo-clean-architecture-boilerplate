@@ -1,17 +1,31 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
+import { v4 as uuidv4 } from 'uuid'
 
 import { CreateTodoUseCase } from '@/application/usecases/todo/CreateTodoUseCase'
 import { TodoValidator } from '@/application/validators/TodoValidator'
-import { TodoRepositoryImpl } from '@/infra/aws/dynamodb/TodoRepositoryImpl'
+import { HttpStatus } from '@/common/enums/HttpStatus'
 import { Config } from '@/infra/Config'
+import { TodoRepositoryImpl } from '@/infra/repositories/TodoRepositoryImpl'
+import { logger } from '@/infra/utils/Logger'
 
-import { TodoController } from '../controllers/TodoController'
+const tableName = Config.getInstance().todosTable
+const todoRepository = new TodoRepositoryImpl(tableName)
+const createTodoUseCase = new CreateTodoUseCase(todoRepository, new TodoValidator())
 
-const config = new Config()
-const todoRepository = new TodoRepositoryImpl(config)
-const createTodo = new CreateTodoUseCase(todoRepository)
-const todoValidator = new TodoValidator()
-const todoController = new TodoController(createTodo, todoValidator)
 export const create = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  return await todoController.create(event)
+  try {
+    const todoData = JSON.parse(event.body || '{}')
+
+    // const userId = event.requestContext.authorizer?.claims.sub;
+    const userId = uuidv4()
+
+    const createdTodo = await createTodoUseCase.execute({ ...todoData, userId })
+
+    return {
+      statusCode: HttpStatus.CREATED,
+      body: JSON.stringify(createdTodo)
+    }
+  } catch (error) {
+    logger.error(error)
+  }
 }

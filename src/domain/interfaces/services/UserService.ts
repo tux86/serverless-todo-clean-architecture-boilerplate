@@ -1,4 +1,4 @@
-import { User } from '../entities/User'
+import { User } from '../../models/User'
 
 export interface UserService {
     createUser(user: User): Promise<User>;

@@ -1,17 +1,12 @@
 import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider'
 
-import { User } from '@/domain/entities/User'
-import { UserService } from '@/domain/interfaces/UserService'
-import { Config } from '@/infra/Config'
+import { UserService } from '@/domain/interfaces/services/UserService'
+import { User } from '@/domain/models/User'
 
 export class UserServiceImpl implements UserService {
-  readonly userPoolId : string
-  readonly clientId : string
   private cognitoClient: CognitoIdentityProvider
-  constructor (readonly config: Config) {
+  constructor (readonly userPoolId: string, readonly clientId: string) {
     this.cognitoClient = new CognitoIdentityProvider({})
-    this.userPoolId = config.cognito.userPoolId
-    this.clientId = config.cognito.clientId
   }
 
   async createUser (user: User): Promise<User> {
