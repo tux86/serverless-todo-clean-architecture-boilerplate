@@ -12,10 +12,10 @@ export function parseBody (body: string | null): any {
   }
 }
 
-export function response (statusCode: number, body: any): APIGatewayProxyResult {
+export function response (statusCode: number, body?: any): APIGatewayProxyResult {
   return {
     statusCode,
-    body: JSON.stringify(body),
+    body: body ? JSON.stringify(body) : undefined,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',

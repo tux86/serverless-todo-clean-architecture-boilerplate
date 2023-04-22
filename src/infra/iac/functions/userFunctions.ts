@@ -6,10 +6,9 @@ export const userFunctions : AWS['functions'] = {
     environment: {},
     events: [
       {
-        http: {
+        httpApi: {
           method: 'post',
-          path: '/user',
-          cors: true
+          path: '/user'
         }
       }
     ]
@@ -19,10 +18,9 @@ export const userFunctions : AWS['functions'] = {
     environment: {},
     events: [
       {
-        http: {
+        httpApi: {
           method: 'post',
-          path: '/authenticate',
-          cors: true
+          path: '/authenticate'
         }
       }
     ]
@@ -32,10 +30,9 @@ export const userFunctions : AWS['functions'] = {
     environment: {},
     events: [
       {
-        http: {
+        httpApi: {
           method: 'get',
-          path: '/user/{email}',
-          cors: true
+          path: '/user/{email}'
         }
       }
     ]

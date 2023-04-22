@@ -11,7 +11,7 @@ export class UpdateTodoInput {
 
     @IsOptional()
     @IsString()
-    @MaxLength(20)
+    @MaxLength(500)
       description?: string
 
     @IsOptional()

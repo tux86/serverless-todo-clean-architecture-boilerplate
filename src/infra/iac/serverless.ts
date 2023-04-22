@@ -27,7 +27,7 @@ export const serverlessConfiguration: AWS = {
       // TODO: move to the target lambda environement
       COGNITO_USER_POOL_ID: userPool.userPoolId,
       COGNITO_APP_CLIENT_ID: userPool.userPoolClientId,
-      TODOS_TABLE: todosTable.tableName
+      TODOS_TABLE: todosTable.TableName
     },
     iam: createDefaultIam()
   },

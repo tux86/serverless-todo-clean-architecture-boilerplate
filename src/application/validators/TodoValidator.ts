@@ -1,21 +1,25 @@
+import { plainToClass } from 'class-transformer'
 import { validate, ValidationError } from 'class-validator'
 
 import { CreateTodoInput } from '@/application/dtos/todo/CreateTodoInput'
 import { UpdateTodoInput } from '@/application/dtos/todo/UpdateTodoInput'
+import { InvalidInputError } from '@/application/errors'
+import { formatValidationErrors } from '@/application/utlis/formatValidationErrors'
 
 export class TodoValidator {
   async validateCreateTodoInput (input: CreateTodoInput): Promise<void> {
-    const errors: ValidationError[] = await validate(input)
+    const transformedInput = plainToClass(CreateTodoInput, input)
+    const errors: ValidationError[] = await validate(transformedInput)
     if (errors.length > 0) {
-      throw new Error('Validation failed.') // You can customize the error handling based on your requirements.
+      throw new InvalidInputError(formatValidationErrors(errors))
     }
   }
 
   async validateUpdateTodoInput (input: UpdateTodoInput): Promise<void> {
-    const errors: ValidationError[] = await validate(input)
-
+    const transformedInput = plainToClass(UpdateTodoInput, input)
+    const errors: ValidationError[] = await validate(transformedInput)
     if (errors.length > 0) {
-      throw new Error('Validation failed.') // You can customize the error handling based on your requirements.
+      throw new InvalidInputError(formatValidationErrors(errors))
     }
   }
 }

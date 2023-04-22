@@ -24,7 +24,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
   async create (todo: Todo): Promise<Todo> {
     const todoModel = Mapper.toPersistenceModel(todo, TodoAdapter.toPersistenceModel)
     const params : PutCommandInput = {
-      TableName: this.TableName,
+      TableName: this.tableName,
       Item: todoModel
     }
 
@@ -35,7 +35,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async findById (id: string): Promise<Todo | null> {
     const params = {
-      TableName: this.TableName,
+      TableName: this.tableName,
       Key: { id }
     }
 
@@ -45,7 +45,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async findAll (): Promise<Todo[]> {
     const params = {
-      TableName: this.TableName
+      TableName: this.tableName
     }
 
     const result = await this.documentClient.send(new ScanCommand(params))
@@ -55,7 +55,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
   async update (todo: Partial<Todo>): Promise<Todo> {
     const todoModel = Mapper.toPersistenceModel(todo, TodoAdapter.toPersistenceModel)
     const params = {
-      TableName: this.TableName,
+      TableName: this.tableName,
       Key: { todoId: todoModel.todoId },
       UpdateExpression: 'set title = :title, description = :description, userId = :userId, status = :status',
       ExpressionAttributeValues: {
@@ -74,7 +74,7 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
   async delete (id: string): Promise<void> {
     const params = {
-      TableName: this.TableName,
+      TableName: this.tableName,
       Key: { id }
     }
 
