@@ -3,6 +3,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { AuthenticateUserUseCase } from '@/application/usecases/user/AuthenticateUserUseCase'
 import { CreateUserUseCase } from '@/application/usecases/user/CreateUserUseCase'
 import { GetUserUseCase } from '@/application/usecases/user/GetUserUseCase'
+import { UserValidator } from '@/application/validators/UserValidator'
 import { HttpStatus } from '@/common/enums/HttpStatus'
 import { Config } from '@/infra/Config'
 import { UserServiceImpl } from '@/infra/services/UserServiceImpl'
@@ -11,7 +12,7 @@ import { parseBody, response } from '@/presentation/utils/apigw'
 const { userPoolId, clientId } = Config.getInstance().cognito
 const userService = new UserServiceImpl(userPoolId, clientId)
 const createUserUseCase = new CreateUserUseCase(userService)
-const authenticateUserUseCase = new AuthenticateUserUseCase(userService)
+const authenticateUserUseCase = new AuthenticateUserUseCase(userService, new UserValidator())
 const getUserUseCase = new GetUserUseCase(userService)
 
 export const createUser = async (

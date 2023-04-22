@@ -8,7 +8,7 @@ import { Config } from '@/infra/Config'
 import { TodoRepositoryImpl } from '@/infra/repositories/TodoRepositoryImpl'
 import { logger } from '@/infra/utils/Logger'
 
-const tableName = Config.getInstance().TodosTable
+const tableName = Config.getInstance().todosTable
 const todoRepository = new TodoRepositoryImpl(tableName)
 const createTodoUseCase = new CreateTodoUseCase(todoRepository, new TodoValidator())
 
