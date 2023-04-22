@@ -1,4 +1,4 @@
-import { varToString, withPrefix } from '../utilities'
+import { varToString, withPrefix } from '../../utilities'
 
 export const createUserPool = () : any => {
   const userPoolName = withPrefix('user-pool')

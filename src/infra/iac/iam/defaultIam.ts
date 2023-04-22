@@ -1,9 +1,6 @@
-import { AwsArn } from '@serverless/typescript'
+import { todosTable, userPool } from '@/infra/iac/ressources'
 
-export const createDefaultIam = (config: {
-    userPoolArn: AwsArn,
-    tableArn: AwsArn
-}) : any => {
+export const createDefaultIam = () : any => {
   return {
     role: {
       statements: [
@@ -20,14 +17,14 @@ export const createDefaultIam = (config: {
             'dynamodb:DeleteItem'
           ],
           Resource: [
-            config.tableArn
+            todosTable.tableArn
           ]
         },
         // cognito user pool
         {
           Effect: 'Allow',
           Action: ['cognito-idp:*'],
-          Resource: config.userPoolArn
+          Resource: userPool.userPoolArn
         }
       ]
     }

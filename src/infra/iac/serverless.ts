@@ -1,16 +1,8 @@
 import type { AWS } from '@serverless/typescript'
 
-import { functions } from './functions'
-import { createDefaultIam } from './iam/defaultIam'
-import { createUserPool } from './ressources/cognitoUserPool'
-import { createTodoDynamodbTable } from './ressources/dynamodb'
-
-const todoDynamodbTable = createTodoDynamodbTable()
-const cognitoUserPool = createUserPool()
-const defaultIam = createDefaultIam({
-  userPoolArn: cognitoUserPool.userPoolArn,
-  tableArn: todoDynamodbTable.tableArn
-})
+import { createFunctions } from '@/infra/iac/functions'
+import { createDefaultIam } from '@/infra/iac/iam/defaultIam'
+import { createResources, todosTable, userPool } from '@/infra/iac/ressources'
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-api',
@@ -33,11 +25,11 @@ export const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
       // TODO: move to the target lambda environement
-      COGNITO_USER_POOL_ID: cognitoUserPool.userPoolId,
-      COGNITO_APP_CLIENT_ID: cognitoUserPool.userPoolClientId,
-      TODOS_TABLE: todoDynamodbTable.tableName
+      COGNITO_USER_POOL_ID: userPool.userPoolId,
+      COGNITO_APP_CLIENT_ID: userPool.userPoolClientId,
+      TODOS_TABLE: todosTable.tableName
     },
-    iam: defaultIam
+    iam: createDefaultIam()
   },
   custom: {
     esbuild: {
@@ -54,14 +46,6 @@ export const serverlessConfiguration: AWS = {
       }
     }
   },
-  functions,
-  resources: {
-    Resources: {
-      ...todoDynamodbTable.resources,
-      ...cognitoUserPool.resources
-    },
-    Outputs: {
-      ...cognitoUserPool.outputs
-    }
-  }
+  functions: createFunctions(),
+  resources: createResources()
 }
