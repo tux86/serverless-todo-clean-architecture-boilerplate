@@ -1,11 +1,13 @@
+import { AWS } from '@serverless/typescript'
+
 import { varToString, withPrefix } from '../../utilities'
 
 export const createTodosTable = () : any => {
-  const tableName = withPrefix('todos')
-  const todosTable = {
+  const TableName = withPrefix('todos')
+  const TodosTable = {
     Type: 'AWS::DynamoDB::Table',
     Properties: {
-      TableName: tableName,
+      TableName,
       AttributeDefinitions: [{
         AttributeName: 'todoId',
         AttributeType: 'S'
@@ -23,9 +25,9 @@ export const createTodosTable = () : any => {
 
   return {
     resources: {
-      todosTable
-    },
-    tableName,
-    tableArn: { 'Fn::GetAtt': [varToString({ todosTable }), 'Arn'] }
+      TodosTable
+    } as AWS['resources'],
+    TableName,
+    TableArn: { 'Fn::GetAtt': [varToString({ TodosTable }), 'Arn'] }
   }
 }

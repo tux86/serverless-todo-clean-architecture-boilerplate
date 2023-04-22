@@ -14,7 +14,7 @@ export const serverlessConfiguration: AWS = {
     name: 'aws',
     runtime: 'nodejs18.x',
     stage: '${opt:stage, "dev"}',
-    region: 'eu-west-1',
+    region: '${env:AWS_REGION}' as AWS['provider']['region'],
     architecture: 'arm64',
     memorySize: 128,
     apiGateway: {

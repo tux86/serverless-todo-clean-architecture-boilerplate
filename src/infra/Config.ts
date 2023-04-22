@@ -13,7 +13,7 @@ export class Config {
     this.region = process.env.AWS_REGION
     this.todosTable = process.env.TODOS_TABLE
     this.cognito = {
-      userPoolId: process.env.COGNITO_USER_POOL_ID,
+      UserPoolId: process.env.COGNITO_USER_POOL_ID,
       clientId: process.env.COGNITO_APP_CLIENT_ID
     }
   }

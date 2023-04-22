@@ -1,11 +1,11 @@
 import { varToString, withPrefix } from '../../utilities'
 
 export const createUserPool = () : any => {
-  const userPoolName = withPrefix('user-pool')
-  const userPool = {
+  const UserPoolName = withPrefix('user-pool')
+  const UserPool = {
     Type: 'AWS::Cognito::UserPool',
     Properties: {
-      UserPoolName: userPoolName,
+      UserPoolName,
       Schema: [
         {
           Name: 'email',
@@ -27,11 +27,11 @@ export const createUserPool = () : any => {
     }
   }
 
-  const userPoolClient = {
+  const UserPoolClient = {
     Type: 'AWS::Cognito::UserPoolClient',
     Properties: {
-      ClientName: '${self:service}-${sls:stage}-api-client',
-      UserPoolId: { Ref: 'userPool' },
+      ClientName: withPrefix('api-client'),
+      UserPoolId: { Ref: varToString({ UserPool }) },
       ExplicitAuthFlows: [
         'ALLOW_USER_PASSWORD_AUTH',
         'ALLOW_REFRESH_TOKEN_AUTH'
@@ -42,19 +42,19 @@ export const createUserPool = () : any => {
 
   return {
     resources: {
-      userPool,
-      userPoolClient
+      UserPool,
+      UserPoolClient
     },
     outputs: {
       UserPoolId: {
-        Value: { Ref: varToString({ userPool }) },
+        Value: { Ref: varToString({ UserPool }) },
         Export: {
-          Name: `${userPoolName}-UserPoolId`
+          Name: `${UserPoolName}-UserPoolId`
         }
       }
     },
-    userPoolId: { Ref: varToString({ userPool }) },
-    userPoolArn: { 'Fn::GetAtt': [varToString({ userPool }), 'Arn'] },
-    userPoolClientId: { Ref: varToString({ userPoolClient }) }
+    UserPoolId: { Ref: varToString({ UserPool }) },
+    UserPoolArn: { 'Fn::GetAtt': [varToString({ UserPool }), 'Arn'] },
+    UserPoolClientId: { Ref: varToString({ UserPoolClient }) }
   }
 }

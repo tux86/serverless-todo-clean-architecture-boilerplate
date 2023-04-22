@@ -1,4 +1,6 @@
-export const userFunctions = {
+import { AWS } from '@serverless/typescript'
+
+export const userFunctions : AWS['functions'] = {
   createUser: {
     handler: 'src/presentation/handlers/user.createUser',
     environment: {},

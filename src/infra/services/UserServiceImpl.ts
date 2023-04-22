@@ -13,7 +13,7 @@ export class UserServiceImpl implements UserService {
     const { email, password } = user
 
     const params = {
-      UserPoolId: this.userPoolId,
+      UserPoolId: this.UserPoolId,
       Username: email,
       MessageAction: 'SUPPRESS', // Prevents sending a welcome email
       TemporaryPassword: password,
@@ -35,7 +35,7 @@ export class UserServiceImpl implements UserService {
 
   async findUserByEmail (email: string): Promise<User | null> {
     const params = {
-      UserPoolId: this.userPoolId,
+      UserPoolId: this.UserPoolId,
       Filter: `email = "${email}"`
     }
 
