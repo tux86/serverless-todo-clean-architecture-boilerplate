@@ -2,7 +2,12 @@
 export class Config {
   public readonly region : string
 
-  public readonly todosTable : string
+  public readonly dynamodb: {
+    tables: {
+      todosTable : string,
+      usersTable : string
+    }
+  }
 
   public readonly cognito : {
     userPoolId: string,
@@ -11,7 +16,16 @@ export class Config {
 
   constructor () {
     this.region = process.env.AWS_REGION
-    this.todosTable = process.env.TODOS_TABLE
+
+    // DynamoDB
+    this.dynamodb = {
+      tables: {
+        todosTable: process.env.TODOS_TABLE,
+        usersTable: process.env.USERS_TABLE
+      }
+    }
+
+    // Cognito
     this.cognito = {
       userPoolId: process.env.COGNITO_USER_POOL_ID,
       clientId: process.env.COGNITO_APP_CLIENT_ID

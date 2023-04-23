@@ -1,9 +1,9 @@
 import { AWS } from '@serverless/typescript'
 
-import { varToString, withPrefix } from '../../utilities'
+import { varToString, generatePrefixedResourceName } from '../../utilities'
 
 export const createTodosTable = () : any => {
-  const TableName = withPrefix('todos')
+  const TableName = generatePrefixedResourceName('todos')
   const TodosTable = {
     Type: 'AWS::DynamoDB::Table',
     Properties: {

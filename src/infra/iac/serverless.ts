@@ -2,7 +2,7 @@ import type { AWS } from '@serverless/typescript'
 
 import { createFunctions } from '@/infra/iac/functions'
 import { createDefaultIam } from '@/infra/iac/iam/defaultIam'
-import { createResources, todosTable, userPool } from '@/infra/iac/ressources'
+import { createResources } from '@/infra/iac/ressources'
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-api',
@@ -23,11 +23,7 @@ export const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      // TODO: move to the target lambda environement
-      COGNITO_USER_POOL_ID: userPool.userPoolId,
-      COGNITO_APP_CLIENT_ID: userPool.userPoolClientId,
-      TODOS_TABLE: todosTable.TableName
+      NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
     },
     iam: createDefaultIam()
   },

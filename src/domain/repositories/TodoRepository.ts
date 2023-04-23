@@ -8,5 +8,7 @@ export interface TodoRepository extends Repository<Todo> {
 
     update(todo: Todo): Promise<Todo>;
 
-    get(id: string, userId: string): Promise<Todo | null>;
+    findById(todoId: string): Promise<Todo | null>;
+
+    findAll(): Promise<Todo[]>;
 }

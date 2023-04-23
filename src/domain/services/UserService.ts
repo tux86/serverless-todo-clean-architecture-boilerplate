@@ -1,9 +1,11 @@
+import { AuthSuccessResult } from '@/application/dtos/user/AuthSuccessResult'
+
 import { User } from '../entities/User'
 
 export interface UserService {
-    createUser(user: User): Promise<User>;
+    registerUser(user: User, password: string): Promise<User>;
 
     findUserByEmail(email: string): Promise<User | null>;
 
-    authenticateUser(email: string, password: string): Promise<string>
+    authenticateUser(email: string, password: string): Promise<AuthSuccessResult>
 }

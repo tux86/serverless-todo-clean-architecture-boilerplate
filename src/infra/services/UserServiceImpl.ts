@@ -1,63 +1,26 @@
-import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider'
-
+import { AuthSuccessResult } from '@/application/dtos/user/AuthSuccessResult'
 import { User } from '@/domain/entities/User'
 import { UserService } from '@/domain/services/UserService'
+import { UserRepository } from '@/infra/repositories/UserRepositoryImpl'
+import { CognitoUserServiceImpl } from '@/infra/services/CognitoUserServiceImpl'
 
 export class UserServiceImpl implements UserService {
-  private cognitoClient: CognitoIdentityProvider
-  constructor (readonly userPoolId: string, readonly clientId: string) {
-    this.cognitoClient = new CognitoIdentityProvider({})
+  constructor (readonly cognitoUserService: CognitoUserServiceImpl, readonly userRepository: UserRepository) {
   }
 
-  async createUser (user: User): Promise<User> {
-    const { email, password } = user
-
-    const params = {
-      UserPoolId: this.userPoolId,
-      Username: email,
-      MessageAction: 'SUPPRESS', // Prevents sending a welcome email
-      TemporaryPassword: password,
-      UserAttributes: [
-        {
-          Name: 'email',
-          Value: email
-        },
-        {
-          Name: 'email_verified',
-          Value: 'true'
-        }
-      ]
-    }
-
-    await this.cognitoClient.adminCreateUser(params)
-    return user
+  async registerUser (user: User, password: string): Promise<User> {
+    // TODO: should be safe using a transaction
+    // Store user in Cognito
+    await this.cognitoUserService.createUser(user.email, password)
+    // Store user in Dynamodb
+    return await this.userRepository.create(user)
   }
 
   async findUserByEmail (email: string): Promise<User | null> {
-    const params = {
-      UserPoolId: this.userPoolId,
-      Filter: `email = "${email}"`
-    }
-
-    const response = await this.cognitoClient.listUsers(params)
-    const user = response.Users?.[0]
-
-    if (!user) return null
-
-    return new User(user.Username, user.Attributes?.find((attr) => attr.Name === 'email')?.Value || '')
+    return this.userRepository.findByEmail(email)
   }
 
-  async authenticateUser (email: string, password: string): Promise<string> {
-    const params = {
-      AuthFlow: 'USER_PASSWORD_AUTH',
-      ClientId: this.clientId,
-      AuthParameters: {
-        USERNAME: email,
-        PASSWORD: password
-      }
-    }
-
-    const response = await this.cognitoClient.initiateAuth(params)
-    return response.AuthenticationResult?.AccessToken || ''
+  async authenticateUser (email: string, password: string): Promise<AuthSuccessResult> {
+    return this.cognitoUserService.authenticateUser(email, password)
   }
 }

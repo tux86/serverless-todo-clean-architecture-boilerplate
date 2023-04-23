@@ -1,8 +1,14 @@
-import { AWS } from '@serverless/typescript'
+import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
+import { todosTable } from '@/infra/iac/ressources'
+
+const lambdaEnvironment : AwsLambdaEnvironment = {
+  TODOS_TABLE: todosTable.TableName
+}
 export const todoFunctions: AWS['functions'] = {
   createTodo: {
     handler: 'src/presentation/handlers/todoHandler.createTodo',
+    environment: lambdaEnvironment,
     events: [
       {
         httpApi: {
@@ -14,6 +20,7 @@ export const todoFunctions: AWS['functions'] = {
   },
   getTodo: {
     handler: 'src/presentation/handlers/todoHandler.getTodo',
+    environment: lambdaEnvironment,
     events: [
       {
         httpApi: {
@@ -25,6 +32,7 @@ export const todoFunctions: AWS['functions'] = {
   },
   listTodos: {
     handler: 'src/presentation/handlers/todoHandler.listTodos',
+    environment: lambdaEnvironment,
     events: [
       {
         httpApi: {
@@ -36,6 +44,7 @@ export const todoFunctions: AWS['functions'] = {
   },
   updateTodo: {
     handler: 'src/presentation/handlers/todoHandler.updateTodo',
+    environment: lambdaEnvironment,
     events: [
       {
         httpApi: {
@@ -47,6 +56,7 @@ export const todoFunctions: AWS['functions'] = {
   },
   deleteTodo: {
     handler: 'src/presentation/handlers/todoHandler.deleteTodo',
+    environment: lambdaEnvironment,
     events: [
       {
         httpApi: {

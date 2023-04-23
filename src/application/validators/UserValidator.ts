@@ -1,23 +1,28 @@
+import { plainToClass } from 'class-transformer'
 import { validate, ValidationError } from 'class-validator'
 
-import { AuthenticateUserInput } from '@/application/dtos/user/AuthenticateUserInput'
-import { CreateUserInput } from '@/application/dtos/user/CreateUserInput'
+import { RegisterUserInput } from '@/application/dtos/user/RegisterUserInput'
 import { InvalidInputError } from '@/application/errors'
+import { formatValidationErrors } from '@/application/utlis/formatValidationErrors'
+
+import { AuthUserInput } from '@/application/dtos/user/AuthUserInput'
 
 export class UserValidator {
-  async validateCreateTodoInput (input: CreateUserInput): Promise<void> {
-    const errors: ValidationError[] = await validate(input)
+  async validateRegisterUserInput (input: RegisterUserInput): Promise<void> {
+    const transformedInput = plainToClass(RegisterUserInput, input)
+    const errors: ValidationError[] = await validate(transformedInput)
 
     if (errors.length > 0) {
-      throw new InvalidInputError('Validation failed.')
+      throw new InvalidInputError(formatValidationErrors(errors))
     }
   }
 
-  async validateAuthenticateUserInput (input: AuthenticateUserInput): Promise<void> {
-    const errors: ValidationError[] = await validate(input)
+  async validateAuthUserInput (input: AuthUserInput): Promise<void> {
+    const transformedInput = plainToClass(AuthUserInput, input)
+    const errors: ValidationError[] = await validate(transformedInput)
 
     if (errors.length > 0) {
-      throw new InvalidInputError('Validation failed.') // You can customize the error handling based on your requirements.
+      throw new InvalidInputError(formatValidationErrors(errors))
     }
   }
 }

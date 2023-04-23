@@ -11,7 +11,7 @@ import { Todo } from '@/domain/entities/Todo'
 import { Repository } from '@/domain/repositories/Repository'
 import { TodoAdapter } from '@/infra/adapaters/TodoAdapter'
 import { dynamoDBDocumentClient } from '@/infra/clients/dynamodb'
-import { TodoModel } from '@/infra/entities/TodoModel'
+import { TodoEntity } from '@/infra/entities/TodoEntity'
 import { Mapper } from '@/infra/utils/Mapper'
 
 export class TodoRepositoryImpl implements Repository<Todo> {
@@ -33,10 +33,10 @@ export class TodoRepositoryImpl implements Repository<Todo> {
     return todo
   }
 
-  async findById (id: string): Promise<Todo | null> {
+  async findById (todoId: string): Promise<Todo | null> {
     const params = {
       TableName: this.tableName,
-      Key: { id }
+      Key: { todoId }
     }
 
     const result = await this.documentClient.send(new GetCommand(params))
@@ -69,13 +69,13 @@ export class TodoRepositoryImpl implements Repository<Todo> {
 
     const result = await this.documentClient.send(new UpdateCommand(params))
 
-    return TodoAdapter.toDomainEntity(result.Attributes as TodoModel)
+    return TodoAdapter.toDomainEntity(result.Attributes as TodoEntity)
   }
 
-  async delete (id: string): Promise<void> {
+  async delete (todoId: string): Promise<void> {
     const params = {
       TableName: this.tableName,
-      Key: { id }
+      Key: { todoId }
     }
 
     await this.documentClient.send(new DeleteCommand(params))

@@ -1,33 +1,41 @@
-import { AWS } from '@serverless/typescript'
+import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
+import { usersTable } from '@/infra/iac/ressources'
+import { ssmParameter } from '@/infra/iac/utilities'
+
+const lambdaEnvironment : AwsLambdaEnvironment = {
+  COGNITO_USER_POOL_ID: ssmParameter('cognito/userPoolId'),
+  COGNITO_APP_CLIENT_ID: ssmParameter('cognito/userPoolClientId'),
+  USERS_TABLE: usersTable.TableName
+}
 export const userFunctions : AWS['functions'] = {
-  createUser: {
-    handler: 'src/presentation/handlers/userHandler.createUser',
-    environment: {},
+  registerUser: {
+    handler: 'src/presentation/handlers/userHandler.registerUser',
+    environment: lambdaEnvironment,
     events: [
       {
         httpApi: {
           method: 'post',
-          path: '/user'
+          path: '/users/register'
         }
       }
     ]
   },
   authenticateUser: {
     handler: 'src/presentation/handlers/userHandler.authenticateUser',
-    environment: {},
+    environment: lambdaEnvironment,
     events: [
       {
         httpApi: {
           method: 'post',
-          path: '/authenticate'
+          path: '/users/auth'
         }
       }
     ]
   },
   getUser: {
     handler: 'src/presentation/handlers/userHandler.getUser',
-    environment: {},
+    environment: lambdaEnvironment,
     events: [
       {
         httpApi: {

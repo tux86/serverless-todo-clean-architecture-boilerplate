@@ -1,17 +1,16 @@
-import { CreateTodoInput } from '@/application/dtos/todo/CreateTodoInput'
 import { Todo } from '@/domain/entities/Todo'
-import { TodoModel } from '@/infra/entities/TodoModel'
+import { TodoEntity } from '@/infra/entities/TodoEntity'
 
 export class TodoAdapter {
-  static toDomainEntity (todoModel: TodoModel): Todo {
+  static toDomainEntity (todoModel: TodoEntity): Todo {
     const { todoId, userId, title, description, status } = todoModel
     const todo = new Todo(title, description, userId, status, todoId)
     return todo
   }
 
-  static toPersistenceModel (todo: Todo): TodoModel {
+  static toPersistenceModel (todo: Todo): TodoEntity {
     const { todoId, userId, title, description, status } = todo
-    const todoModel: TodoModel = {
+    const todoModel: TodoEntity = {
       todoId,
       title,
       description,
@@ -21,15 +20,5 @@ export class TodoAdapter {
       updatedAt: new Date()
     }
     return todoModel
-  }
-
-  static toCreateTodoInput (todo: Todo): CreateTodoInput {
-    const { userId, title, description } = todo
-    const createTodoDTO: CreateTodoInput = {
-      userId,
-      title,
-      description
-    }
-    return createTodoDTO
   }
 }

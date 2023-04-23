@@ -1,7 +1,7 @@
-import { varToString, withPrefix } from '../../utilities'
+import { generatePrefixedSsmParameterName, varToString, generatePrefixedResourceName } from '../../utilities'
 
 export const createUserPool = () : any => {
-  const UserPoolName = withPrefix('user-pool')
+  const UserPoolName = generatePrefixedResourceName('user-pool')
   const UserPool = {
     Type: 'AWS::Cognito::UserPool',
     Properties: {
@@ -27,12 +27,22 @@ export const createUserPool = () : any => {
     }
   }
 
+  const UserPoolIdParameter = {
+    Type: 'AWS::SSM::Parameter',
+    Properties: {
+      Name: generatePrefixedSsmParameterName('cognito/userPoolId'),
+      Type: 'String',
+      Value: { Ref: varToString({ UserPool }) }
+    }
+  }
+
   const UserPoolClient = {
     Type: 'AWS::Cognito::UserPoolClient',
     Properties: {
-      ClientName: withPrefix('api-client'),
+      ClientName: generatePrefixedResourceName('api-client'),
       UserPoolId: { Ref: varToString({ UserPool }) },
       ExplicitAuthFlows: [
+        'ALLOW_ADMIN_USER_PASSWORD_AUTH',
         'ALLOW_USER_PASSWORD_AUTH',
         'ALLOW_REFRESH_TOKEN_AUTH'
       ],
@@ -40,9 +50,20 @@ export const createUserPool = () : any => {
     }
   }
 
+  const UserPoolClientIdParameter = {
+    Type: 'AWS::SSM::Parameter',
+    Properties: {
+      Name: generatePrefixedSsmParameterName('cognito/userPoolClientId'),
+      Type: 'String',
+      Value: { Ref: varToString({ UserPoolClient }) }
+    }
+  }
+
   return {
     resources: {
       UserPool,
+      UserPoolIdParameter,
+      UserPoolClientIdParameter,
       UserPoolClient
     },
     outputs: {
@@ -50,6 +71,12 @@ export const createUserPool = () : any => {
         Value: { Ref: varToString({ UserPool }) },
         Export: {
           Name: `${UserPoolName}-UserPoolId`
+        }
+      },
+      UserPoolClientId: {
+        Value: { Ref: varToString({ UserPoolClient }) },
+        Export: {
+          Name: `${UserPoolName}-UserPoolClientId`
         }
       }
     },

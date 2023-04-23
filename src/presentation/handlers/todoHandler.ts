@@ -13,8 +13,9 @@ import { withErrorHandling } from '@/presentation/middlewares/errorHandling'
 import { parseBody, response } from '@/presentation/utils/apiGateway'
 import { HttpStatus } from '@/presentation/utils/HttpStatus'
 
-const tableName = Config.getInstance().todosTable
-const todoRepository = new TodoRepositoryImpl(tableName)
+// Initialize user services, repositories, and use cases for management.
+const { todosTable } = Config.getInstance().dynamodb.tables
+const todoRepository = new TodoRepositoryImpl(todosTable)
 const getTodoUseCase = new GetTodoUseCase(todoRepository)
 const listTodosUseCase = new ListTodosUseCase(todoRepository)
 const createTodoUseCase = new CreateTodoUseCase(todoRepository, new TodoValidator())

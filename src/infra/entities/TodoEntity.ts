@@ -1,5 +1,5 @@
 
-export class TodoModel {
+export class TodoEntity {
   todoId: string
 
   title: string
