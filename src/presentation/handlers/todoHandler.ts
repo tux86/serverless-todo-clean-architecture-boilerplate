@@ -1,5 +1,4 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
-import { v4 as uuidv4 } from 'uuid'
 
 import { CreateTodoInput } from '@/application/dtos/todo/CreateTodoInput'
 import { UpdateTodoInput } from '@/application/dtos/todo/UpdateTodoInput'
@@ -9,6 +8,7 @@ import { GetTodoUseCase } from '@/application/usecases/todo/GetTodoUseCase'
 import { ListTodosUseCase } from '@/application/usecases/todo/ListTodosUseCase'
 import { UpdateTodoUseCase } from '@/application/usecases/todo/UpdateTodoUseCase'
 import { TodoValidator } from '@/application/validators/TodoValidator'
+import { uuidV4 } from '@/domain/utils/uuidGenerator'
 import { Config } from '@/infra/Config'
 import { TodoRepositoryImpl } from '@/infra/repositories/TodoRepositoryImpl'
 import { parseApiGwRequestBody, toApiGwResponse } from '@/presentation/utils/apiGateway'
@@ -26,7 +26,7 @@ const deleteTodoUseCase = new DeleteTodoUseCase(todoRepository)
 
 const createTodoHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const input = parseApiGwRequestBody<CreateTodoInput>(event.body)
-  input.userId = uuidv4() // TODO: get real user id from token
+  input.userId = uuidV4() // TODO: get real user id from token
   const createdTodo = await createTodoUseCase.execute(input)
   return toApiGwResponse(HttpStatus.CREATED, createdTodo)
 }

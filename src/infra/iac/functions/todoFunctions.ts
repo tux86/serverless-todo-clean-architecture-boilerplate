@@ -12,6 +12,7 @@ export const todoFunctions = (): AWS['functions'] => {
     createTodo: {
       handler: createHandlerPath('todoHandler', 'createTodo'),
       environment: lambdaEnvironment,
+      timeout: 10,
       events: [
         {
           httpApi: {
@@ -24,6 +25,7 @@ export const todoFunctions = (): AWS['functions'] => {
     getTodo: {
       handler: createHandlerPath('todoHandler', 'getTodo'),
       environment: lambdaEnvironment,
+      timeout: 10,
       events: [
         {
           httpApi: {
@@ -36,6 +38,7 @@ export const todoFunctions = (): AWS['functions'] => {
     listTodos: {
       handler: createHandlerPath('todoHandler', 'listTodos'),
       environment: lambdaEnvironment,
+      timeout: 10,
       events: [
         {
           httpApi: {
@@ -48,6 +51,7 @@ export const todoFunctions = (): AWS['functions'] => {
     updateTodo: {
       handler: createHandlerPath('todoHandler', 'updateTodo'),
       environment: lambdaEnvironment,
+      timeout: 10,
       events: [
         {
           httpApi: {
@@ -60,6 +64,7 @@ export const todoFunctions = (): AWS['functions'] => {
     deleteTodo: {
       handler: createHandlerPath('todoHandler', 'deleteTodo'),
       environment: lambdaEnvironment,
+      timeout: 10,
       events: [
         {
           httpApi: {

@@ -1,6 +1,6 @@
-import { generatePrefixedSsmParameterName, varToString, generatePrefixedResourceName } from '../../utilities'
+import { generatePrefixedResourceName, generatePrefixedSsmParameterName, varToString } from '../../utilities'
 
-export const createUserPool = (): any => {
+export const cognitoUserPool = (): any => {
   const UserPoolName = generatePrefixedResourceName('user-pool')
   const UserPool = {
     Type: 'AWS::Cognito::UserPool',

@@ -5,7 +5,7 @@ import { userFunctions } from './userFunctions'
 
 export const functions = (): AWS['functions'] => {
   return {
-    ...userFunctions,
-    ...todoFunctions
+    ...userFunctions(),
+    ...todoFunctions()
   }
 }

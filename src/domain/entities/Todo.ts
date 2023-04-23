@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
+import { uuidV4 } from '@/domain/utils/uuidGenerator'
 
 export class Todo {
   todoId: string
@@ -12,7 +12,7 @@ export class Todo {
   status?: string
 
   constructor(title: string, description: string, userId: string, status?: string, todoId?: string) {
-    this.todoId = todoId || uuidv4()
+    this.todoId = todoId || uuidV4()
     this.title = title
     this.description = description
     this.userId = userId
