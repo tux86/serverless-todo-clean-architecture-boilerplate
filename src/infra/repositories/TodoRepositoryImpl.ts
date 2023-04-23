@@ -7,11 +7,11 @@ import {
   UpdateCommand
 } from '@aws-sdk/lib-dynamodb'
 
-import { Repository } from '@/domain/interfaces/repositories/Repository'
-import { Todo } from '@/domain/models/Todo'
+import { Todo } from '@/domain/entities/Todo'
+import { Repository } from '@/domain/repositories/Repository'
 import { TodoAdapter } from '@/infra/adapaters/TodoAdapter'
 import { dynamoDBDocumentClient } from '@/infra/clients/dynamodb'
-import { TodoModel } from '@/infra/models/TodoModel'
+import { TodoModel } from '@/infra/entities/TodoModel'
 import { Mapper } from '@/infra/utils/Mapper'
 
 export class TodoRepositoryImpl implements Repository<Todo> {

@@ -1,7 +1,7 @@
 import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider'
 
-import { UserService } from '@/domain/interfaces/services/UserService'
-import { User } from '@/domain/models/User'
+import { User } from '@/domain/entities/User'
+import { UserService } from '@/domain/services/UserService'
 
 export class UserServiceImpl implements UserService {
   private cognitoClient: CognitoIdentityProvider

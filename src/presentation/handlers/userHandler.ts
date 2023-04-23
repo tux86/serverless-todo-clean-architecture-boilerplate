@@ -6,7 +6,7 @@ import { GetUserUseCase } from '@/application/usecases/user/GetUserUseCase'
 import { UserValidator } from '@/application/validators/UserValidator'
 import { Config } from '@/infra/Config'
 import { UserServiceImpl } from '@/infra/services/UserServiceImpl'
-import { parseBody, response } from '@/presentation/utils/apigw'
+import { parseBody, response } from '@/presentation/utils/apiGateway'
 import { HttpStatus } from '@/presentation/utils/HttpStatus'
 
 const { userPoolId, clientId } = Config.getInstance().cognito

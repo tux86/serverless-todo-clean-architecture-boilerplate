@@ -1,6 +1,6 @@
 import { CreateTodoInput } from '@/application/dtos/todo/CreateTodoInput'
-import { Todo } from '@/domain/models/Todo'
-import { TodoModel } from '@/infra/models/TodoModel'
+import { Todo } from '@/domain/entities/Todo'
+import { TodoModel } from '@/infra/entities/TodoModel'
 
 export class TodoAdapter {
   static toDomainEntity (todoModel: TodoModel): Todo {

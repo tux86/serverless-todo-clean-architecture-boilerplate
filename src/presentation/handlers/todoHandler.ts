@@ -10,7 +10,7 @@ import { TodoValidator } from '@/application/validators/TodoValidator'
 import { Config } from '@/infra/Config'
 import { TodoRepositoryImpl } from '@/infra/repositories/TodoRepositoryImpl'
 import { withErrorHandling } from '@/presentation/middlewares/errorHandling'
-import { parseBody, response } from '@/presentation/utils/apigw'
+import { parseBody, response } from '@/presentation/utils/apiGateway'
 import { HttpStatus } from '@/presentation/utils/HttpStatus'
 
 const tableName = Config.getInstance().todosTable

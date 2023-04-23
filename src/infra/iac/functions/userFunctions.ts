@@ -2,7 +2,7 @@ import { AWS } from '@serverless/typescript'
 
 export const userFunctions : AWS['functions'] = {
   createUser: {
-    handler: 'src/presentation/handlers/user.createUser',
+    handler: 'src/presentation/handlers/userHandler.createUser',
     environment: {},
     events: [
       {
@@ -14,7 +14,7 @@ export const userFunctions : AWS['functions'] = {
     ]
   },
   authenticateUser: {
-    handler: 'src/presentation/handlers/user.getUser',
+    handler: 'src/presentation/handlers/userHandler.authenticateUser',
     environment: {},
     events: [
       {
@@ -26,13 +26,13 @@ export const userFunctions : AWS['functions'] = {
     ]
   },
   getUser: {
-    handler: 'src/presentation/handlers/user.getUser',
+    handler: 'src/presentation/handlers/userHandler.getUser',
     environment: {},
     events: [
       {
         httpApi: {
           method: 'get',
-          path: '/user/{email}'
+          path: '/users/{email}'
         }
       }
     ]

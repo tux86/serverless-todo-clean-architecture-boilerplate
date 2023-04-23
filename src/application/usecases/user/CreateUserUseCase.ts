@@ -1,8 +1,8 @@
 
 import { CreateUserInput } from '@/application/dtos/user/CreateUserInput'
-import { UserService } from '@/domain/interfaces/services/UserService'
+import { User } from '@/domain/entities/User'
 import { UseCase } from '@/domain/interfaces/UseCase'
-import { User } from '@/domain/models/User'
+import { UserService } from '@/domain/services/UserService'
 
 export class CreateUserUseCase implements UseCase<CreateUserInput, User> {
   constructor (private userService: UserService) {

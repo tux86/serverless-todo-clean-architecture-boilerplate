@@ -3,7 +3,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { UseCaseError } from '@/application/errors'
 import { EntityNotFound } from '@/domain/errors'
 import { BadRequestError, InternalServerError, NotFoundError } from '@/presentation/errors'
-import { response } from '@/presentation/utils/apigw'
+import { response } from '@/presentation/utils/apiGateway'
 
 export const withErrorHandling = (
   handler: (event: APIGatewayProxyEvent) => Promise<APIGatewayProxyResult>

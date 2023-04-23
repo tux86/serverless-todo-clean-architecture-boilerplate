@@ -1,8 +1,8 @@
 import { CreateTodoInput } from '@/application/dtos/todo/CreateTodoInput'
 import { TodoValidator } from '@/application/validators/TodoValidator'
-import { Repository } from '@/domain/interfaces/repositories/Repository'
+import { Todo } from '@/domain/entities/Todo'
 import { UseCase } from '@/domain/interfaces/UseCase'
-import { Todo } from '@/domain/models/Todo'
+import { Repository } from '@/domain/repositories/Repository'
 
 export class CreateTodoUseCase implements UseCase<CreateTodoInput, Todo> {
   constructor (private todoRepository: Repository<Todo>, private validator: TodoValidator) {

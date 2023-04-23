@@ -1,7 +1,7 @@
 import { AuthenticateUserInput } from '@/application/dtos/user/AuthenticateUserInput'
 import { UserValidator } from '@/application/validators/UserValidator'
-import { UserService } from '@/domain/interfaces/services/UserService'
 import { UseCase } from '@/domain/interfaces/UseCase'
+import { UserService } from '@/domain/services/UserService'
 
 export class AuthenticateUserUseCase implements UseCase<AuthenticateUserInput, string> {
   constructor (private userService: UserService, private validator: UserValidator) {

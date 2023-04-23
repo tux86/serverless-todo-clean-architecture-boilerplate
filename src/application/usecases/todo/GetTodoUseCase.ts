@@ -1,7 +1,7 @@
 
-import { Repository } from '@/domain/interfaces/repositories/Repository'
+import { Todo } from '@/domain/entities/Todo'
 import { UseCase } from '@/domain/interfaces/UseCase'
-import { Todo } from '@/domain/models/Todo'
+import { Repository } from '@/domain/repositories/Repository'
 
 export class GetTodoUseCase implements UseCase<string, Todo> {
   constructor (private todoRepository: Repository<Todo>) {}

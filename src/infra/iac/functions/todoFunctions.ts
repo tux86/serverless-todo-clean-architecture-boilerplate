@@ -2,7 +2,7 @@ import { AWS } from '@serverless/typescript'
 
 export const todoFunctions: AWS['functions'] = {
   createTodo: {
-    handler: 'src/presentation/handlers/todo.createTodo',
+    handler: 'src/presentation/handlers/todoHandler.createTodo',
     events: [
       {
         httpApi: {
@@ -13,7 +13,7 @@ export const todoFunctions: AWS['functions'] = {
     ]
   },
   getTodo: {
-    handler: 'src/presentation/handlers/todo.getTodo',
+    handler: 'src/presentation/handlers/todoHandler.getTodo',
     events: [
       {
         httpApi: {
@@ -24,7 +24,7 @@ export const todoFunctions: AWS['functions'] = {
     ]
   },
   listTodos: {
-    handler: 'src/presentation/handlers/todo.listTodos',
+    handler: 'src/presentation/handlers/todoHandler.listTodos',
     events: [
       {
         httpApi: {
@@ -35,7 +35,7 @@ export const todoFunctions: AWS['functions'] = {
     ]
   },
   updateTodo: {
-    handler: 'src/presentation/handlers/todo.updateTodo',
+    handler: 'src/presentation/handlers/todoHandler.updateTodo',
     events: [
       {
         httpApi: {
@@ -46,7 +46,7 @@ export const todoFunctions: AWS['functions'] = {
     ]
   },
   deleteTodo: {
-    handler: 'src/presentation/handlers/todo.deleteTodo',
+    handler: 'src/presentation/handlers/todoHandler.deleteTodo',
     events: [
       {
         httpApi: {
