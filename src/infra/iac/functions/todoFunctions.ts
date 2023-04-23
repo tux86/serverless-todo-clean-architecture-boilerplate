@@ -1,13 +1,14 @@
 import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
 import { todosTable } from '@/infra/iac/ressources'
+import { createHandlerPath } from '@/infra/iac/utilities'
 
 const lambdaEnvironment : AwsLambdaEnvironment = {
   TODOS_TABLE: todosTable.TableName
 }
 export const todoFunctions: AWS['functions'] = {
   createTodo: {
-    handler: 'src/presentation/handlers/todoHandler.createTodo',
+    handler: createHandlerPath('todoHandler', 'createTodo'),
     environment: lambdaEnvironment,
     events: [
       {
@@ -19,7 +20,7 @@ export const todoFunctions: AWS['functions'] = {
     ]
   },
   getTodo: {
-    handler: 'src/presentation/handlers/todoHandler.getTodo',
+    handler: createHandlerPath('todoHandler', 'getTodo'),
     environment: lambdaEnvironment,
     events: [
       {
@@ -31,7 +32,7 @@ export const todoFunctions: AWS['functions'] = {
     ]
   },
   listTodos: {
-    handler: 'src/presentation/handlers/todoHandler.listTodos',
+    handler: createHandlerPath('todoHandler', 'listTodos'),
     environment: lambdaEnvironment,
     events: [
       {
@@ -43,7 +44,7 @@ export const todoFunctions: AWS['functions'] = {
     ]
   },
   updateTodo: {
-    handler: 'src/presentation/handlers/todoHandler.updateTodo',
+    handler: createHandlerPath('todoHandler', 'updateTodo'),
     environment: lambdaEnvironment,
     events: [
       {
@@ -55,7 +56,7 @@ export const todoFunctions: AWS['functions'] = {
     ]
   },
   deleteTodo: {
-    handler: 'src/presentation/handlers/todoHandler.deleteTodo',
+    handler: createHandlerPath('todoHandler', 'deleteTodo'),
     environment: lambdaEnvironment,
     events: [
       {

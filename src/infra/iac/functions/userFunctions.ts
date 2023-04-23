@@ -1,7 +1,7 @@
 import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
-import { usersTable } from '@/infra/iac/ressources'
-import { ssmParameter } from '@/infra/iac/utilities'
+import { usersTable, userPool } from '@/infra/iac/ressources'
+import { createHandlerPath, ssmParameter } from '@/infra/iac/utilities'
 
 const lambdaEnvironment : AwsLambdaEnvironment = {
   COGNITO_USER_POOL_ID: ssmParameter('cognito/userPoolId'),
@@ -10,7 +10,7 @@ const lambdaEnvironment : AwsLambdaEnvironment = {
 }
 export const userFunctions : AWS['functions'] = {
   registerUser: {
-    handler: 'src/presentation/handlers/userHandler.registerUser',
+    handler: createHandlerPath('userHandler', 'registerUser'),
     environment: lambdaEnvironment,
     events: [
       {
@@ -22,7 +22,7 @@ export const userFunctions : AWS['functions'] = {
     ]
   },
   authenticateUser: {
-    handler: 'src/presentation/handlers/userHandler.authenticateUser',
+    handler: createHandlerPath('userHandler', 'authenticateUser'),
     environment: lambdaEnvironment,
     events: [
       {
@@ -34,13 +34,25 @@ export const userFunctions : AWS['functions'] = {
     ]
   },
   getUser: {
-    handler: 'src/presentation/handlers/userHandler.getUser',
+    handler: createHandlerPath('userHandler', 'getUser'),
     environment: lambdaEnvironment,
     events: [
       {
         httpApi: {
           method: 'get',
           path: '/users/{email}'
+        }
+      }
+    ]
+  },
+  preSignUp: {
+    handler: createHandlerPath('userHandler', 'preSignUp'),
+    events: [
+      {
+        cognitoUserPool: {
+          pool: userPool.UserPoolName,
+          existing: true,
+          trigger: 'PreSignUp'
         }
       }
     ]

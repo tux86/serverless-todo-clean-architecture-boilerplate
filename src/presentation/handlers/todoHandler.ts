@@ -1,6 +1,8 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { v4 as uuidv4 } from 'uuid'
 
+import { CreateTodoInput } from '@/application/dtos/todo/CreateTodoInput'
+import { UpdateTodoInput } from '@/application/dtos/todo/UpdateTodoInput'
 import { CreateTodoUseCase } from '@/application/usecases/todo/CreateTodoUseCase'
 import { DeleteTodoUseCase } from '@/application/usecases/todo/DeleteTodoUseCase'
 import { GetTodoUseCase } from '@/application/usecases/todo/GetTodoUseCase'
@@ -9,8 +11,8 @@ import { UpdateTodoUseCase } from '@/application/usecases/todo/UpdateTodoUseCase
 import { TodoValidator } from '@/application/validators/TodoValidator'
 import { Config } from '@/infra/Config'
 import { TodoRepositoryImpl } from '@/infra/repositories/TodoRepositoryImpl'
-import { withErrorHandling } from '@/presentation/middlewares/errorHandling'
-import { parseBody, response } from '@/presentation/utils/apiGateway'
+import { parseApiGwRequestBody, toApiGwResponse } from '@/presentation/utils/apiGateway'
+import { apiGatewayHandler } from '@/presentation/utils/apiGatewayHandler'
 import { HttpStatus } from '@/presentation/utils/HttpStatus'
 
 // Initialize user services, repositories, and use cases for management.
@@ -23,47 +25,39 @@ const updateTodoUseCase = new UpdateTodoUseCase(todoRepository, new TodoValidato
 const deleteTodoUseCase = new DeleteTodoUseCase(todoRepository)
 
 const createTodoHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const todoData = parseBody(event.body) as any // TODO: fix this
-  const userId = uuidv4()
-
-  const createdTodo = await createTodoUseCase.execute({ ...todoData, userId })
-
-  return response(HttpStatus.CREATED, createdTodo)
+  const input = parseApiGwRequestBody<CreateTodoInput>(event.body)
+  input.userId = uuidv4() // TODO: get real user id from token
+  const createdTodo = await createTodoUseCase.execute(input)
+  return toApiGwResponse(HttpStatus.CREATED, createdTodo)
 }
-export const createTodo = withErrorHandling(createTodoHandler)
 
-// READ
 const getTodoHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const { todoId } = event.pathParameters
-
   const todo = await getTodoUseCase.execute(todoId)
-
-  return response(HttpStatus.OK, todo)
+  return toApiGwResponse(HttpStatus.OK, todo)
 }
-export const getTodo = withErrorHandling(getTodoHandler)
 
 const listTodosHandler = async (): Promise<APIGatewayProxyResult> => {
   const todos = await listTodosUseCase.execute()
-
-  return response(HttpStatus.OK, todos)
+  return toApiGwResponse(HttpStatus.OK, todos)
 }
-export const listTodos = withErrorHandling(listTodosHandler)
 
 const updateTodoHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const { todoId } = event.pathParameters
-  const todoData = parseBody(event.body) as any // TODO: fix this
-
-  const updatedTodo = await updateTodoUseCase.execute({ todoId, ...todoData })
-
-  return response(HttpStatus.OK, updatedTodo)
+  const input = parseApiGwRequestBody<UpdateTodoInput>(event.body)
+  input.todoId = todoId
+  const updatedTodo = await updateTodoUseCase.execute(input)
+  return toApiGwResponse(HttpStatus.OK, updatedTodo)
 }
-export const updateTodo = withErrorHandling(updateTodoHandler)
 
 const deleteTodoHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const { todoId } = event.pathParameters
-
   await deleteTodoUseCase.execute(todoId)
-
-  return response(HttpStatus.NO_CONTENT)
+  return toApiGwResponse(HttpStatus.NO_CONTENT)
 }
-export const deleteTodo = withErrorHandling(deleteTodoHandler)
+
+export const createTodo = apiGatewayHandler(createTodoHandler)
+export const updateTodo = apiGatewayHandler(updateTodoHandler)
+export const getTodo = apiGatewayHandler(getTodoHandler)
+export const listTodos = apiGatewayHandler(listTodosHandler)
+export const deleteTodo = apiGatewayHandler(deleteTodoHandler)

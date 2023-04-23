@@ -8,6 +8,7 @@ export const serverlessConfiguration: AWS = {
   service: 'todo-api',
   frameworkVersion: '3',
   useDotenv: true,
+  configValidationMode: 'error',
   plugins: ['serverless-esbuild', 'serverless-offline'],
   package: { individually: true },
   provider: {

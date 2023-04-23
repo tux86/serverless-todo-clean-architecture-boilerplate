@@ -1,11 +1,10 @@
 import { plainToClass } from 'class-transformer'
 import { validate, ValidationError } from 'class-validator'
 
+import { AuthUserInput } from '@/application/dtos/user/AuthUserInput'
 import { RegisterUserInput } from '@/application/dtos/user/RegisterUserInput'
 import { InvalidInputError } from '@/application/errors'
 import { formatValidationErrors } from '@/application/utlis/formatValidationErrors'
-
-import { AuthUserInput } from '@/application/dtos/user/AuthUserInput'
 
 export class UserValidator {
   async validateRegisterUserInput (input: RegisterUserInput): Promise<void> {

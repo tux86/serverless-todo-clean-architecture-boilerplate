@@ -1,7 +1,7 @@
 import {
-  AdminCreateUserCommand,
+  AdminCreateUserCommand, AdminInitiateAuthCommand, AdminSetUserPasswordCommand,
   AuthFlowType,
-  CognitoIdentityProvider, InitiateAuthCommand,
+  CognitoIdentityProvider,
   ListUsersCommand
 } from '@aws-sdk/client-cognito-identity-provider'
 
@@ -15,12 +15,12 @@ export class CognitoUserServiceImpl {
     this.cognitoIdentityProvider = new CognitoIdentityProvider({})
   }
 
-  async createUser (email: string, password: string): Promise<void> {
+  async createUser (email: string): Promise<void> {
     const command = new AdminCreateUserCommand({
       UserPoolId: this.userPoolId,
       Username: email,
       MessageAction: 'SUPPRESS', // Prevents sending a welcome email
-      TemporaryPassword: password,
+      // TemporaryPassword: password,
       UserAttributes: [
         {
           Name: 'email',
@@ -33,6 +33,16 @@ export class CognitoUserServiceImpl {
       ]
     })
 
+    await this.cognitoIdentityProvider.send(command)
+  }
+
+  async setUserPassword (email: string, password: string): Promise<void> {
+    const command = new AdminSetUserPasswordCommand({
+      UserPoolId: this.userPoolId,
+      Username: email,
+      Password: password,
+      Permanent: true
+    })
     await this.cognitoIdentityProvider.send(command)
   }
 
@@ -51,8 +61,9 @@ export class CognitoUserServiceImpl {
   }
 
   async authenticateUser (email: string, password: string): Promise<AuthSuccessResult> {
-    const command = new InitiateAuthCommand({
-      AuthFlow: AuthFlowType.USER_PASSWORD_AUTH,
+    const command = new AdminInitiateAuthCommand({
+      AuthFlow: AuthFlowType.ADMIN_USER_PASSWORD_AUTH,
+      UserPoolId: this.userPoolId,
       ClientId: this.clientId,
       AuthParameters: {
         USERNAME: email,

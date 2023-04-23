@@ -1,5 +1,7 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
+import { APIGatewayProxyEvent, APIGatewayProxyResult, PreSignUpTriggerEvent } from 'aws-lambda'
 
+import { AuthUserInput } from '@/application/dtos/user/AuthUserInput'
+import { RegisterUserInput } from '@/application/dtos/user/RegisterUserInput'
 import { AuthenticateUserUseCase } from '@/application/usecases/user/AuthenticateUserUseCase'
 import { GetUserUseCase } from '@/application/usecases/user/GetUserUseCase'
 import { RegisterUserUseCase } from '@/application/usecases/user/RegisterUserUseCase'
@@ -8,8 +10,8 @@ import { Config } from '@/infra/Config'
 import { UserRepository } from '@/infra/repositories/UserRepositoryImpl'
 import { CognitoUserServiceImpl } from '@/infra/services/CognitoUserServiceImpl'
 import { UserServiceImpl } from '@/infra/services/UserServiceImpl'
-import { withErrorHandling } from '@/presentation/middlewares/errorHandling'
-import { parseBody, response } from '@/presentation/utils/apiGateway'
+import { parseApiGwRequestBody, toApiGwResponse } from '@/presentation/utils/apiGateway'
+import { apiGatewayHandler } from '@/presentation/utils/apiGatewayHandler'
 import { HttpStatus } from '@/presentation/utils/HttpStatus'
 
 const { userPoolId, clientId } = Config.getInstance().cognito
@@ -23,22 +25,29 @@ const authenticateUserUseCase = new AuthenticateUserUseCase(userService, new Use
 const getUserUseCase = new GetUserUseCase(userService)
 
 const registerUserHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const userData = parseBody(event.body) as any // TODO: fix this
-  const user = await registerUserUseCase.execute(userData)
-  return response(HttpStatus.CREATED, user)
+  const input = parseApiGwRequestBody<RegisterUserInput>(event.body)
+  const user = await registerUserUseCase.execute(input)
+  return toApiGwResponse(HttpStatus.CREATED, user)
 }
-export const registerUser = withErrorHandling(registerUserHandler)
 
 const authenticateUserHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const authData = parseBody(event.body) as any // TODO: fix this
-  const authentication = await authenticateUserUseCase.execute(authData)
-  return response(HttpStatus.OK, authentication)
+  const input = parseApiGwRequestBody<AuthUserInput>(event.body)
+  const authentication = await authenticateUserUseCase.execute(input)
+  return toApiGwResponse(HttpStatus.OK, authentication)
 }
-export const authenticateUser = withErrorHandling(authenticateUserHandler)
 
 const getUserHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const { email } = event.pathParameters || {}
   const user = await getUserUseCase.execute(email)
-  return response(HttpStatus.OK, user)
+  return toApiGwResponse(HttpStatus.OK, user)
 }
-export const getUser = withErrorHandling(getUserHandler)
+
+export const preSignUp = async (event: PreSignUpTriggerEvent): Promise<PreSignUpTriggerEvent> => {
+  event.response.autoConfirmUser = true
+  event.response.autoVerifyEmail = true
+  return event
+}
+
+export const registerUser = apiGatewayHandler(registerUserHandler)
+export const authenticateUser = apiGatewayHandler(authenticateUserHandler)
+export const getUser = apiGatewayHandler(getUserHandler)

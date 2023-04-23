@@ -11,7 +11,9 @@ export class UserServiceImpl implements UserService {
   async registerUser (user: User, password: string): Promise<User> {
     // TODO: should be safe using a transaction
     // Store user in Cognito
-    await this.cognitoUserService.createUser(user.email, password)
+    await this.cognitoUserService.createUser(user.email)
+    // Set permanent password for the user
+    await this.cognitoUserService.setUserPassword(user.email, password)
     // Store user in Dynamodb
     return await this.userRepository.create(user)
   }

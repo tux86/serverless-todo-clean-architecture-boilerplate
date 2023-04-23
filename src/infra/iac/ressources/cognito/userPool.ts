@@ -46,7 +46,15 @@ export const createUserPool = () : any => {
         'ALLOW_USER_PASSWORD_AUTH',
         'ALLOW_REFRESH_TOKEN_AUTH'
       ],
-      GenerateSecret: false
+      GenerateSecret: false,
+      TokenValidityUnits: {
+        AccessToken: 'hours',
+        IdToken: 'hours',
+        RefreshToken: 'hours'
+      },
+      AccessTokenValidity: 24,
+      IdTokenValidity: 24,
+      RefreshTokenValidity: 72
     }
   }
 
@@ -80,6 +88,7 @@ export const createUserPool = () : any => {
         }
       }
     },
+    UserPoolName,
     UserPoolId: { Ref: varToString({ UserPool }) },
     UserPoolArn: { 'Fn::GetAtt': [varToString({ UserPool }), 'Arn'] },
     UserPoolClientId: { Ref: varToString({ UserPoolClient }) }
