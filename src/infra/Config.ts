@@ -1,20 +1,19 @@
-
 export class Config {
-  public readonly region : string
+  public readonly region: string
 
   public readonly dynamodb: {
     tables: {
-      todosTable : string,
-      usersTable : string
+      todosTable: string
+      usersTable: string
     }
   }
 
-  public readonly cognito : {
-    userPoolId: string,
+  public readonly cognito: {
+    userPoolId: string
     clientId: string
   }
 
-  constructor () {
+  constructor() {
     this.region = process.env.AWS_REGION
 
     // DynamoDB
@@ -32,7 +31,7 @@ export class Config {
     }
   }
 
-  public static getInstance () : Config {
+  public static getInstance(): Config {
     return new Config()
   }
 }

@@ -1,8 +1,8 @@
 import type { AWS } from '@serverless/typescript'
 
-import { createFunctions } from '@/infra/iac/functions'
-import { createDefaultIam } from '@/infra/iac/iam/defaultIam'
-import { createResources } from '@/infra/iac/ressources'
+import { functions } from '@/infra/iac/functions'
+import { defaultIam } from '@/infra/iac/iam/defaultIam'
+import { resources } from '@/infra/iac/ressources'
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-api',
@@ -26,7 +26,7 @@ export const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
     },
-    iam: createDefaultIam()
+    iam: defaultIam()
   },
   custom: {
     esbuild: {
@@ -43,6 +43,6 @@ export const serverlessConfiguration: AWS = {
       }
     }
   },
-  functions: createFunctions(),
-  resources: createResources()
+  functions: functions(),
+  resources: resources()
 }

@@ -1,6 +1,6 @@
 import { generatePrefixedSsmParameterName, varToString, generatePrefixedResourceName } from '../../utilities'
 
-export const createUserPool = () : any => {
+export const createUserPool = (): any => {
   const UserPoolName = generatePrefixedResourceName('user-pool')
   const UserPool = {
     Type: 'AWS::Cognito::UserPool',
@@ -41,11 +41,7 @@ export const createUserPool = () : any => {
     Properties: {
       ClientName: generatePrefixedResourceName('api-client'),
       UserPoolId: { Ref: varToString({ UserPool }) },
-      ExplicitAuthFlows: [
-        'ALLOW_ADMIN_USER_PASSWORD_AUTH',
-        'ALLOW_USER_PASSWORD_AUTH',
-        'ALLOW_REFRESH_TOKEN_AUTH'
-      ],
+      ExplicitAuthFlows: ['ALLOW_ADMIN_USER_PASSWORD_AUTH', 'ALLOW_USER_PASSWORD_AUTH', 'ALLOW_REFRESH_TOKEN_AUTH'],
       GenerateSecret: false,
       TokenValidityUnits: {
         AccessToken: 'hours',

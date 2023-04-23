@@ -6,7 +6,7 @@ export class User {
   public lastName: string
   public email: string
 
-  constructor (firstName: string, lastName: string, email: string) {
+  constructor(firstName: string, lastName: string, email: string) {
     this.userId = uuidv4()
     this.firstName = firstName
     this.lastName = lastName

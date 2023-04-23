@@ -1,6 +1,6 @@
 import { APIGatewayProxyResult } from 'aws-lambda'
 
-export function parseApiGwRequestBody<T> (body: string | null): T {
+export function parseApiGwRequestBody<T>(body: string | null): T {
   if (!body) {
     throw new Error('Request body is missing')
   }
@@ -12,7 +12,7 @@ export function parseApiGwRequestBody<T> (body: string | null): T {
   }
 }
 
-export function toApiGwResponse (statusCode: number, body?: any): APIGatewayProxyResult {
+export function toApiGwResponse(statusCode: number, body?: any): APIGatewayProxyResult {
   return {
     statusCode,
     body: body ? JSON.stringify(body) : undefined,

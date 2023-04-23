@@ -1,4 +1,3 @@
-
 export class TodoEntity {
   todoId: string
 

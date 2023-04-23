@@ -5,10 +5,9 @@ import { UseCase } from '@/domain/interfaces/UseCase'
 import { Repository } from '@/domain/repositories/Repository'
 
 export class CreateTodoUseCase implements UseCase<CreateTodoInput, Todo> {
-  constructor (private todoRepository: Repository<Todo>, private validator: TodoValidator) {
-  }
+  constructor(private todoRepository: Repository<Todo>, private validator: TodoValidator) {}
 
-  async execute (input: CreateTodoInput): Promise<Todo> {
+  async execute(input: CreateTodoInput): Promise<Todo> {
     await this.validator.validateCreateTodoInput(input)
     const todo = new Todo(input.title, input.description, input.userId, input.status)
     return this.todoRepository.create(todo)

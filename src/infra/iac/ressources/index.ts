@@ -8,7 +8,7 @@ export const usersTable = createUsersTable()
 export const todosTable = createTodosTable()
 export const userPool = createUserPool()
 
-export const createResources = () : AWS['resources'] => {
+export const resources = (): AWS['resources'] => {
   return {
     Resources: {
       ...usersTable.resources,

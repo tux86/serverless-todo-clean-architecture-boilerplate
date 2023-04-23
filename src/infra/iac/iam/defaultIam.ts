@@ -2,7 +2,7 @@ import { AWS } from '@serverless/typescript'
 
 import { todosTable, userPool } from '@/infra/iac/ressources'
 
-export const createDefaultIam = () : AWS['provider']['iam'] => {
+export const defaultIam = (): AWS['provider']['iam'] => {
   return {
     role: {
       statements: [
@@ -18,9 +18,7 @@ export const createDefaultIam = () : AWS['provider']['iam'] => {
             'dynamodb:UpdateItem',
             'dynamodb:DeleteItem'
           ],
-          Resource: [
-            todosTable.TableArn
-          ]
+          Resource: [todosTable.TableArn]
         },
         // cognito user pool
         {

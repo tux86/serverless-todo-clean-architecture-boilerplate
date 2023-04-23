@@ -4,7 +4,7 @@ export class HttpError extends Error {
   public readonly message: string
   public readonly statusCode: number
 
-  constructor (message: string, statusCode = HttpStatus.BAD_REQUEST) {
+  constructor(message: string, statusCode = HttpStatus.BAD_REQUEST) {
     super(message)
     this.message = message
     this.statusCode = statusCode
@@ -14,37 +14,37 @@ export class HttpError extends Error {
 }
 
 export class BadRequestError extends HttpError {
-  constructor (message: string) {
+  constructor(message: string) {
     super(message, HttpStatus.BAD_REQUEST)
   }
 }
 
 export class UnauthorizedError extends HttpError {
-  constructor (message: string) {
+  constructor(message: string) {
     super(message, HttpStatus.UNAUTHORIZED)
   }
 }
 
 export class NotFoundError extends HttpError {
-  constructor (message: string) {
+  constructor(message: string) {
     super(message, HttpStatus.NOT_FOUND)
   }
 }
 
 export class ConflictError extends HttpError {
-  constructor (message: string) {
+  constructor(message: string) {
     super(message, HttpStatus.CONFLICT)
   }
 }
 
 export class ForbiddenError extends HttpError {
-  constructor (message: string) {
+  constructor(message: string) {
     super(message, HttpStatus.FORBIDDEN)
   }
 }
 
 export class InternalServerError extends HttpError {
-  constructor (message: string) {
+  constructor(message: string) {
     super(message, HttpStatus.INTERNAL_SERVER_ERROR)
   }
 }

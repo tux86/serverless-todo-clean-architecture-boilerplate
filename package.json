@@ -9,7 +9,8 @@
     "start": "sls offline --reloadHandler start ",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint 'src/**/*.{js,ts}'",
-    "lint:fix": "eslint 'src/**/*.{js,ts}' --fix"
+    "lint:fix": "eslint 'src/**/*.{js,ts}' --fix",
+    "prettier": "prettier --write ."
   },
   "keywords": [
     "serverless",
@@ -41,13 +42,16 @@
     "aws-lambda": "^1.0.7",
     "esbuild": "^0.14.11",
     "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
     "json-schema-to-ts": "^1.5.0",
+    "prettier": "^2.8.8",
     "serverless": "^3.0.0",
     "serverless-esbuild": "^1.23.3",
     "serverless-offline": "^12.0.4",

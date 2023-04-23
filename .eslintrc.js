@@ -9,21 +9,18 @@ module.exports = {
       }
     }
   },
-  plugins: [
-    '@typescript-eslint',
-    'import',
-    'node',
-    'promise'
-  ],
+  plugins: ['@typescript-eslint', 'import', 'node', 'promise'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'standard',
     'plugin:import/errors',
     'plugin:import/warnings',
-    'plugin:import/typescript'
+    'plugin:import/typescript',
+    'plugin:prettier/recommended'
   ],
   rules: {
+    'max-len': ['error', { code: 120 }],
     'no-console': 'warn',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],

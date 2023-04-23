@@ -11,7 +11,7 @@ export class Todo {
 
   status?: string
 
-  constructor (title: string, description: string, userId: string, status?: string, todoId?: string) {
+  constructor(title: string, description: string, userId: string, status?: string, todoId?: string) {
     this.todoId = todoId || uuidv4()
     this.title = title
     this.description = description

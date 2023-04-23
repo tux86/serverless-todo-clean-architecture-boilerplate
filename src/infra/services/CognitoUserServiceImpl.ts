@@ -1,5 +1,7 @@
 import {
-  AdminCreateUserCommand, AdminInitiateAuthCommand, AdminSetUserPasswordCommand,
+  AdminCreateUserCommand,
+  AdminInitiateAuthCommand,
+  AdminSetUserPasswordCommand,
   AuthFlowType,
   CognitoIdentityProvider,
   ListUsersCommand
@@ -11,11 +13,11 @@ import { AuthUser } from '@/domain/models/AuthUser'
 export class CognitoUserServiceImpl {
   private cognitoIdentityProvider: CognitoIdentityProvider
 
-  constructor (readonly userPoolId: string, readonly clientId: string) {
+  constructor(readonly userPoolId: string, readonly clientId: string) {
     this.cognitoIdentityProvider = new CognitoIdentityProvider({})
   }
 
-  async createUser (email: string): Promise<void> {
+  async createUser(email: string): Promise<void> {
     const command = new AdminCreateUserCommand({
       UserPoolId: this.userPoolId,
       Username: email,
@@ -36,7 +38,7 @@ export class CognitoUserServiceImpl {
     await this.cognitoIdentityProvider.send(command)
   }
 
-  async setUserPassword (email: string, password: string): Promise<void> {
+  async setUserPassword(email: string, password: string): Promise<void> {
     const command = new AdminSetUserPasswordCommand({
       UserPoolId: this.userPoolId,
       Username: email,
@@ -46,7 +48,7 @@ export class CognitoUserServiceImpl {
     await this.cognitoIdentityProvider.send(command)
   }
 
-  async findUserByEmail (email: string): Promise<AuthUser | null> {
+  async findUserByEmail(email: string): Promise<AuthUser | null> {
     const command = new ListUsersCommand({
       UserPoolId: this.userPoolId,
       Filter: `email = "${email}"`
@@ -60,7 +62,7 @@ export class CognitoUserServiceImpl {
     return new AuthUser(user.Username, user.Attributes?.find((attr) => attr.Name === 'email')?.Value || '')
   }
 
-  async authenticateUser (email: string, password: string): Promise<AuthSuccessResult> {
+  async authenticateUser(email: string, password: string): Promise<AuthSuccessResult> {
     const command = new AdminInitiateAuthCommand({
       AuthFlow: AuthFlowType.ADMIN_USER_PASSWORD_AUTH,
       UserPoolId: this.userPoolId,

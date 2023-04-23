@@ -7,7 +7,7 @@ import { InvalidInputError } from '@/application/errors'
 import { formatValidationErrors } from '@/application/utlis/formatValidationErrors'
 
 export class TodoValidator {
-  async validateCreateTodoInput (input: CreateTodoInput): Promise<void> {
+  async validateCreateTodoInput(input: CreateTodoInput): Promise<void> {
     const transformedInput = plainToClass(CreateTodoInput, input)
     const errors: ValidationError[] = await validate(transformedInput)
     if (errors.length > 0) {
@@ -15,7 +15,7 @@ export class TodoValidator {
     }
   }
 
-  async validateUpdateTodoInput (input: UpdateTodoInput): Promise<void> {
+  async validateUpdateTodoInput(input: UpdateTodoInput): Promise<void> {
     const transformedInput = plainToClass(UpdateTodoInput, input)
     const errors: ValidationError[] = await validate(transformedInput)
     if (errors.length > 0) {

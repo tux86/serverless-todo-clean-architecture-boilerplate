@@ -2,13 +2,13 @@ import { Repository } from './Repository'
 import { Todo } from '../entities/Todo'
 
 export interface TodoRepository extends Repository<Todo> {
-    create(todo: Todo): Promise<Todo>;
+  create(todo: Todo): Promise<Todo>
 
-    delete(id: string): Promise<void>;
+  delete(id: string): Promise<void>
 
-    update(todo: Todo): Promise<Todo>;
+  update(todo: Todo): Promise<Todo>
 
-    findById(todoId: string): Promise<Todo | null>;
+  findById(todoId: string): Promise<Todo | null>
 
-    findAll(): Promise<Todo[]>;
+  findAll(): Promise<Todo[]>
 }

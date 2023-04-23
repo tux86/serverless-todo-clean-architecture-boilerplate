@@ -7,7 +7,7 @@ import { InvalidInputError } from '@/application/errors'
 import { formatValidationErrors } from '@/application/utlis/formatValidationErrors'
 
 export class UserValidator {
-  async validateRegisterUserInput (input: RegisterUserInput): Promise<void> {
+  async validateRegisterUserInput(input: RegisterUserInput): Promise<void> {
     const transformedInput = plainToClass(RegisterUserInput, input)
     const errors: ValidationError[] = await validate(transformedInput)
 
@@ -16,7 +16,7 @@ export class UserValidator {
     }
   }
 
-  async validateAuthUserInput (input: AuthUserInput): Promise<void> {
+  async validateAuthUserInput(input: AuthUserInput): Promise<void> {
     const transformedInput = plainToClass(AuthUserInput, input)
     const errors: ValidationError[] = await validate(transformedInput)
 

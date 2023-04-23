@@ -2,10 +2,16 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 
 import { UseCaseError } from '@/application/errors'
 import { AuthFailedError, EntityNotFound } from '@/domain/errors'
-import { BadRequestError, HttpError, InternalServerError, NotFoundError, UnauthorizedError } from '@/presentation/errors'
+import {
+  BadRequestError,
+  HttpError,
+  InternalServerError,
+  NotFoundError,
+  UnauthorizedError
+} from '@/presentation/errors'
 import { toApiGwResponse } from '@/presentation/utils/apiGateway'
 
-const mapDomainErrorToHttpError = (error: Error) : HttpError => {
+const mapDomainErrorToHttpError = (error: Error): HttpError => {
   if (error instanceof EntityNotFound) {
     return new NotFoundError(error.message)
   } else if (error instanceof UseCaseError) {
@@ -17,15 +23,16 @@ const mapDomainErrorToHttpError = (error: Error) : HttpError => {
   }
 }
 
-export const apiGatewayHandler = (
-  handler: (event: APIGatewayProxyEvent) => Promise<APIGatewayProxyResult>
-) => {
+export const apiGatewayHandler = (handler: (event: APIGatewayProxyEvent) => Promise<APIGatewayProxyResult>) => {
   return async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
       return await handler(event)
     } catch (error) {
       const httpError = mapDomainErrorToHttpError(error)
-      return toApiGwResponse(httpError.statusCode, { statusCode: httpError.statusCode, message: httpError.message })
+      return toApiGwResponse(httpError.statusCode, {
+        statusCode: httpError.statusCode,
+        message: httpError.message
+      })
     }
   }
 }

@@ -1,7 +1,7 @@
-export function createHandlerPath (modulePath: string, handlerName: string): string {
+export function createHandlerPath(modulePath: string, handlerName: string): string {
   return `src/presentation/handlers/${modulePath}.${handlerName}`
 }
-export const varToString = (varObj: Record<string, unknown>) : string => {
+export const varToString = (varObj: Record<string, unknown>): string => {
   return Object.keys(varObj)[0]
 }
 

@@ -5,10 +5,9 @@ import { UserRepository } from '@/infra/repositories/UserRepositoryImpl'
 import { CognitoUserServiceImpl } from '@/infra/services/CognitoUserServiceImpl'
 
 export class UserServiceImpl implements UserService {
-  constructor (readonly cognitoUserService: CognitoUserServiceImpl, readonly userRepository: UserRepository) {
-  }
+  constructor(readonly cognitoUserService: CognitoUserServiceImpl, readonly userRepository: UserRepository) {}
 
-  async registerUser (user: User, password: string): Promise<User> {
+  async registerUser(user: User, password: string): Promise<User> {
     // TODO: should be safe using a transaction
     // Store user in Cognito
     await this.cognitoUserService.createUser(user.email)
@@ -18,11 +17,11 @@ export class UserServiceImpl implements UserService {
     return await this.userRepository.create(user)
   }
 
-  async findUserByEmail (email: string): Promise<User | null> {
+  async findUserByEmail(email: string): Promise<User | null> {
     return this.userRepository.findByEmail(email)
   }
 
-  async authenticateUser (email: string, password: string): Promise<AuthSuccessResult> {
+  async authenticateUser(email: string, password: string): Promise<AuthSuccessResult> {
     return this.cognitoUserService.authenticateUser(email, password)
   }
 }
