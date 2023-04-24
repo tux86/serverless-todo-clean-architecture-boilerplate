@@ -1,6 +1,7 @@
 # AWS Serverless Todo API (Clean Architecture)
 
-This repository contains a Todo API built using the Serverless Framework and Clean Architecture principles. It uses AWS Lambda, API Gateway, DynamoDB, and Cognito to create a serverless architecture for managing Todo items.
+This repository contains a Todo API built using the Serverless Framework and Clean Architecture principles. It uses AWS
+Lambda, API Gateway, DynamoDB, and Cognito to create a serverless architecture for managing Todo items.
 
 ## Features
 
@@ -43,7 +44,8 @@ npm install
 serverless deploy
 ```
 
-The Serverless Framework will package and deploy the application to your AWS account. After the deployment is complete, the API endpoints will be displayed in the terminal.
+The Serverless Framework will package and deploy the application to your AWS account. After the deployment is complete,
+the API endpoints will be displayed in the terminal.
 
 ## Usage
 
@@ -58,7 +60,7 @@ You can interact with the Todo API using any HTTP client, such as `curl`, Postma
 - `GET /todos`: Retrieve all Todo items for the authenticated user
 - `GET /todos/{id}`: Retrieve a specific Todo item by ID
 - `PUT /todos/{id}`: Update a Todo item
-- `DELETE /todos/{id}`: Delete a Todo item
+- `DELETE /todos/{id}`: DeleteTodo a Todo item
 
 ## Development
 
@@ -66,18 +68,22 @@ During development, you can run the application locally using the Serverless Fra
 
 npm test
 
-This will start a local server that simulates API Gateway and Lambda. You can make requests to the local server just like you would to the deployed API.
+This will start a local server that simulates API Gateway and Lambda. You can make requests to the local server just
+like you would to the deployed API.
 
 ## Testing
 
-You can write unit tests for your application using a testing framework like Jest. To run the tests, execute the following command:
+You can write unit tests for your application using a testing framework like Jest. To run the tests, execute the
+following command:
 
 ```shell
 npm test
 ```
 
-Make sure to create test files for your controllers, use cases, and other components to ensure the correct functionality and maintainability of your application.
+Make sure to create test files for your controllers, use cases, and other components to ensure the correct functionality
+and maintainability of your application.
 
 ## Contributing
 
-Feel free to submit issues, feature requests, or pull requests to improve this project. Please ensure that your code follows the existing style and structure, and that your changes are covered by tests.
+Feel free to submit issues, feature requests, or pull requests to improve this project. Please ensure that your code
+follows the existing style and structure, and that your changes are covered by tests.

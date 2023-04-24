@@ -1,6 +1,6 @@
 import { AuthSuccessResult } from '@/application/dtos/user/AuthSuccessResult'
 
-import { User } from '../entities/User'
+import { User } from '../models/User'
 
 export interface UserService {
   registerUser(user: User, password: string): Promise<User>
