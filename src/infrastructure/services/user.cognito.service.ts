@@ -1,5 +1,6 @@
 import {
   AdminCreateUserCommand,
+  AdminDeleteUserCommand,
   AdminInitiateAuthCommand,
   AdminSetUserPasswordCommand,
   AuthFlowType,
@@ -82,5 +83,14 @@ export class UserCognitoService {
     }
 
     return new AuthSuccessResult(response.AuthenticationResult?.AccessToken || '')
+  }
+
+  async delete(email: string): Promise<void> {
+    const command = new AdminDeleteUserCommand({
+      UserPoolId: this.userPoolId,
+      Username: email
+    })
+
+    await this.cognitoIdentityProvider.send(command)
   }
 }

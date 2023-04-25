@@ -1,4 +1,4 @@
-import { generatePrefixedResourceName, generatePrefixedSsmParameterName, varToString } from '../../utilities'
+import { generatePrefixedResourceName, generatePrefixedSsmParameterName, varToString } from '../../utils/common.util'
 
 export const cognitoUserPool = (): any => {
   const UserPoolName = generatePrefixedResourceName('user-pool')

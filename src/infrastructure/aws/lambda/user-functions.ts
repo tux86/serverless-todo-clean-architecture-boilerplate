@@ -1,4 +1,4 @@
-import { PreSignUpTriggerEvent } from 'aws-lambda'
+import { DynamoDBStreamEvent, DynamoDBStreamHandler, PreSignUpTriggerEvent } from 'aws-lambda'
 
 import { AuthenticateUser } from '@/application/usecases/user/authenticate-user'
 import { GetUser } from '@/application/usecases/user/get-user'
@@ -33,4 +33,14 @@ export const preSignUp = async (event: PreSignUpTriggerEvent): Promise<PreSignUp
   event.response.autoConfirmUser = true
   event.response.autoVerifyEmail = true
   return event
+}
+
+export const userDynamodbStreamHandler: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent) => {
+  for (const record of event.Records) {
+    // Deletes a user from the Cognito User Pool by their email address
+    if (record.eventName === 'REMOVE') {
+      const email = record.dynamodb.OldImage.email.S
+      await userCognitoService.delete(email)
+    }
+  }
 }

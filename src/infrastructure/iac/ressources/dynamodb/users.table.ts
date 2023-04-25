@@ -1,6 +1,6 @@
 import { AWS } from '@serverless/typescript'
 
-import { generatePrefixedResourceName, varToString } from '../../utilities'
+import { generatePrefixedResourceName, varToString } from '../../utils/common.util'
 
 export const dynamodbUsersTable = (): any => {
   const TableName = generatePrefixedResourceName('users')
@@ -45,6 +45,9 @@ export const dynamodbUsersTable = (): any => {
       ProvisionedThroughput: {
         ReadCapacityUnits: 1,
         WriteCapacityUnits: 1
+      },
+      StreamSpecification: {
+        StreamViewType: 'NEW_AND_OLD_IMAGES'
       }
     }
   }
@@ -54,6 +57,7 @@ export const dynamodbUsersTable = (): any => {
       UsersTable
     } as AWS['resources'],
     TableName,
-    TableArn: { 'Fn::GetAtt': [varToString({ UsersTable }), 'Arn'] }
+    TableArn: { 'Fn::GetAtt': [varToString({ UsersTable }), 'Arn'] },
+    StreamArn: { 'Fn::GetAtt': [varToString({ UsersTable }), 'StreamArn'] }
   }
 }

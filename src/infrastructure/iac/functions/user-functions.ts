@@ -1,66 +1,77 @@
 import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
+import {
+  authenticateUser,
+  getUser,
+  preSignUp,
+  registerUser,
+  userDynamodbStreamHandler
+} from '@/infrastructure/aws/lambda/user-functions'
 import { userPool, usersTable } from '@/infrastructure/iac/ressources'
-import { createHandlerPath, ssmParameter } from '@/infrastructure/iac/utilities'
+import { awsFunction, dynamodbStreamEvent, httpApiEvent } from '@/infrastructure/iac/utils/aws-function.util'
+import { ssmParameter } from '@/infrastructure/iac/utils/common.util'
 
-const lambdaEnvironment: AwsLambdaEnvironment = {
+const environment: AwsLambdaEnvironment = {
   COGNITO_USER_POOL_ID: ssmParameter('cognito/userPoolId'),
   COGNITO_APP_CLIENT_ID: ssmParameter('cognito/userPoolClientId'),
   USERS_TABLE: usersTable.TableName
 }
+
+const moduleName = 'user-functions'
 export const userFunctions = (): AWS['functions'] => {
   return {
-    registerUser: {
-      handler: createHandlerPath('user-functions', 'registerUser'),
-      environment: lambdaEnvironment,
-      timeout: 10,
-      events: [
-        {
-          httpApi: {
-            method: 'post',
-            path: '/users/register'
+    ...awsFunction(
+      moduleName,
+      { registerUser },
+      {
+        environment,
+        timeout: 10,
+        events: [httpApiEvent('post', '/users/register')]
+      }
+    ),
+    ...awsFunction(
+      moduleName,
+      { authenticateUser },
+      {
+        environment,
+        timeout: 10,
+        events: [httpApiEvent('post', '/users/auth')]
+      }
+    ),
+    ...awsFunction(
+      moduleName,
+      { getUser },
+      {
+        environment,
+        timeout: 10,
+        events: [httpApiEvent('get', '/users/{email}')]
+      }
+    ),
+    ...awsFunction(
+      moduleName,
+      { preSignUp },
+      {
+        timeout: 10,
+        events: [
+          // TODO : fix existing helper
+          {
+            cognitoUserPool: {
+              pool: userPool.UserPoolName,
+              existing: true,
+              trigger: 'PreSignUp'
+            }
           }
-        }
-      ]
-    },
-    authenticateUser: {
-      handler: createHandlerPath('user-functions', 'authenticateUser'),
-      environment: lambdaEnvironment,
-      timeout: 10,
-      events: [
-        {
-          httpApi: {
-            method: 'post',
-            path: '/users/auth'
-          }
-        }
-      ]
-    },
-    getUser: {
-      handler: createHandlerPath('user-functions', 'getUser'),
-      environment: lambdaEnvironment,
-      timeout: 10,
-      events: [
-        {
-          httpApi: {
-            method: 'get',
-            path: '/users/{email}'
-          }
-        }
-      ]
-    },
-    preSignUp: {
-      handler: createHandlerPath('user-functions', 'preSignUp'),
-      timeout: 10,
-      events: [
-        {
-          cognitoUserPool: {
-            pool: userPool.UserPoolName,
-            existing: true,
-            trigger: 'PreSignUp'
-          }
-        }
-      ]
-    }
+        ]
+      }
+    ),
+    ...awsFunction(
+      moduleName,
+      { userDynamodbStreamHandler },
+      {
+        environment,
+        timeout: 10,
+        events: [dynamodbStreamEvent(usersTable.StreamArn)]
+      }
+    )
   }
 }

@@ -1,78 +1,61 @@
 import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
+import { createTodo, deleteTodo, getTodo, listTodos, updateTodo } from '@/infrastructure/aws/lambda/todo-functions'
 import { todosTable } from '@/infrastructure/iac/ressources'
-import { createHandlerPath } from '@/infrastructure/iac/utilities'
+import { awsFunction, httpApiEvent } from '@/infrastructure/iac/utils/aws-function.util'
 
-const lambdaEnvironment: AwsLambdaEnvironment = {
+const environment: AwsLambdaEnvironment = {
   TODOS_TABLE: todosTable.TableName
 }
 
+const moduleName = 'todo-functions'
+
 export const todoFunctions = (): AWS['functions'] => {
   return {
-    createTodo: {
-      handler: createHandlerPath('todo-functions', 'createTodo'),
-      environment: lambdaEnvironment,
-      timeout: 10,
-      events: [
-        {
-          httpApi: {
-            method: 'post',
-            path: '/todos'
-          }
-        }
-      ]
-    },
-    getTodo: {
-      handler: createHandlerPath('todo-functions', 'getTodo'),
-      environment: lambdaEnvironment,
-      timeout: 10,
-      events: [
-        {
-          httpApi: {
-            method: 'get',
-            path: '/todos/{id}'
-          }
-        }
-      ]
-    },
-    listTodos: {
-      handler: createHandlerPath('todo-functions', 'listTodos'),
-      environment: lambdaEnvironment,
-      timeout: 10,
-      events: [
-        {
-          httpApi: {
-            method: 'get',
-            path: '/todos'
-          }
-        }
-      ]
-    },
-    updateTodo: {
-      handler: createHandlerPath('todo-functions', 'updateTodo'),
-      environment: lambdaEnvironment,
-      timeout: 10,
-      events: [
-        {
-          httpApi: {
-            method: 'put',
-            path: '/todos/{todoId}'
-          }
-        }
-      ]
-    },
-    deleteTodo: {
-      handler: createHandlerPath('todo-functions', 'deleteTodo'),
-      environment: lambdaEnvironment,
-      timeout: 10,
-      events: [
-        {
-          httpApi: {
-            method: 'delete',
-            path: '/todos/{todoId}'
-          }
-        }
-      ]
-    }
+    ...awsFunction(
+      moduleName,
+      { createTodo },
+      {
+        environment,
+        timeout: 10,
+        events: [httpApiEvent('post', '/todos')]
+      }
+    ),
+    ...awsFunction(
+      moduleName,
+      { getTodo },
+      {
+        environment,
+        timeout: 10,
+        events: [httpApiEvent('get', '/todos/{id}')]
+      }
+    ),
+    ...awsFunction(
+      moduleName,
+      { listTodos },
+      {
+        environment,
+        timeout: 10,
+        events: [httpApiEvent('get', '/todos')]
+      }
+    ),
+    ...awsFunction(
+      moduleName,
+      { updateTodo },
+      {
+        environment,
+        timeout: 10,
+        events: [httpApiEvent('put', '/todos/{todoId}')]
+      }
+    ),
+    ...awsFunction(
+      moduleName,
+      { deleteTodo },
+      {
+        environment,
+        timeout: 10,
+        events: [httpApiEvent('delete', '/todos/{todoId}')]
+      }
+    )
   }
 }
