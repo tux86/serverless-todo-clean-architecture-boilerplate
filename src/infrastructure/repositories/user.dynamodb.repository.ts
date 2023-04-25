@@ -12,12 +12,12 @@ import {
 import { User } from '@/domain/models/user'
 import { Repository } from '@/domain/repositories/repository'
 import { uuidV4 } from '@/domain/utils/uuid-generator'
-import { UserAdapter } from '@/infrastructure/adapaters/user-adapter'
+import { UserAdapter } from '@/infrastructure/adapaters/user.adapter'
 import { dynamoDBDocumentClient } from '@/infrastructure/aws/dynamodb/libs/dynamodb.client'
-import { UserEntity } from '@/infrastructure/entities/user-entity'
+import { UserEntity } from '@/infrastructure/entities/user.entity'
 import { Mapper } from '@/infrastructure/utils/mapper'
 
-export class UserRepository implements Repository<User> {
+export class UserDynamodbRepository implements Repository<User> {
   private readonly documentClient: DynamoDBDocumentClient
 
   constructor(readonly tableName: string) {

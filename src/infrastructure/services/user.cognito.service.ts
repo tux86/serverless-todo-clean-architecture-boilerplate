@@ -10,7 +10,7 @@ import {
 import { AuthSuccessResult } from '@/application/dtos/user/auth-success-result'
 import { AuthUser } from '@/domain/models/auth-user'
 
-export class CognitoUserServiceImpl {
+export class UserCognitoService {
   private cognitoIdentityProvider: CognitoIdentityProvider
 
   constructor(readonly userPoolId: string, readonly clientId: string) {

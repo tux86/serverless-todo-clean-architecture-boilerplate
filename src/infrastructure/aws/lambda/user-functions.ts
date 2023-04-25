@@ -7,19 +7,19 @@ import { UserValidator } from '@/application/validators/user.validator'
 import { createApiGatewayHandler } from '@/infrastructure/aws/api-gw/libs/aws-handler-adapter'
 import { cognitoConfig } from '@/infrastructure/aws/cognito/config'
 import { dynamodbConfig } from '@/infrastructure/aws/dynamodb/config'
-import { UserRepository } from '@/infrastructure/repositories/user-repository-impl'
-import { CognitoUserServiceImpl } from '@/infrastructure/services/cognito-user-service-impl'
-import { UserServiceImpl } from '@/infrastructure/services/user-service-impl'
-import { AuthenticateUserController } from '@/presentation/controllers/user/authenticate-user-controller'
-import { GetUserController } from '@/presentation/controllers/user/get-user-controller'
-import { RegisterUserController } from '@/presentation/controllers/user/register-user-controller'
+import { UserDynamodbRepository } from '@/infrastructure/repositories/user.dynamodb.repository'
+import { UserCognitoService } from '@/infrastructure/services/user.cognito.service'
+import { UserServiceImpl } from '@/infrastructure/services/user.service-impl'
+import { AuthenticateUserController } from '@/presentation/controllers/user/authenticate-user.controller'
+import { GetUserController } from '@/presentation/controllers/user/get-user.controller'
+import { RegisterUserController } from '@/presentation/controllers/user/register-user.controller'
 
-const cognitoUserServiceImpl = new CognitoUserServiceImpl(cognitoConfig.userPoolId, cognitoConfig.clientId)
-const userRepository = new UserRepository(dynamodbConfig.tables.usersTable)
-const userService = new UserServiceImpl(cognitoUserServiceImpl, userRepository)
-const registerUserUseCase = new RegisterUser(userService, new UserValidator())
-const authenticateUserUseCase = new AuthenticateUser(userService, new UserValidator())
-const getUserUseCase = new GetUser(userService)
+const userCognitoService = new UserCognitoService(cognitoConfig.userPoolId, cognitoConfig.clientId)
+const userDynamodbRepository = new UserDynamodbRepository(dynamodbConfig.tables.usersTable)
+const userServiceImpl = new UserServiceImpl(userCognitoService, userDynamodbRepository)
+const registerUserUseCase = new RegisterUser(userServiceImpl, new UserValidator())
+const authenticateUserUseCase = new AuthenticateUser(userServiceImpl, new UserValidator())
+const getUserUseCase = new GetUser(userServiceImpl)
 
 const registerUserController = new RegisterUserController(registerUserUseCase)
 const authenticateUserController = new AuthenticateUserController(authenticateUserUseCase)

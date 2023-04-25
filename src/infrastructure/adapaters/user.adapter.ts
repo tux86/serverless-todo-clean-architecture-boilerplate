@@ -1,5 +1,5 @@
 import { User } from '@/domain/models/user'
-import { UserEntity } from '@/infrastructure/entities/user-entity'
+import { UserEntity } from '@/infrastructure/entities/user.entity'
 
 export class UserAdapter {
   static toDomainEntity(userModel: UserEntity): User {

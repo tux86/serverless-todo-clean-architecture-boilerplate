@@ -1,18 +1,18 @@
 import { AuthSuccessResult } from '@/application/dtos/user/auth-success-result'
 import { User } from '@/domain/models/user'
 import { UserService } from '@/domain/services/user-service'
-import { UserRepository } from '@/infrastructure/repositories/user-repository-impl'
-import { CognitoUserServiceImpl } from '@/infrastructure/services/cognito-user-service-impl'
+import { UserDynamodbRepository } from '@/infrastructure/repositories/user.dynamodb.repository'
+import { UserCognitoService } from '@/infrastructure/services/user.cognito.service'
 
 export class UserServiceImpl implements UserService {
-  constructor(readonly cognitoUserService: CognitoUserServiceImpl, readonly userRepository: UserRepository) {}
+  constructor(readonly userCognitoService: UserCognitoService, readonly userRepository: UserDynamodbRepository) {}
 
   async registerUser(user: User, password: string): Promise<User> {
     // TODO: should be safe using a transaction
     // Store user in Cognito
-    await this.cognitoUserService.createUser(user.email)
+    await this.userCognitoService.createUser(user.email)
     // Set permanent password for the user
-    await this.cognitoUserService.setUserPassword(user.email, password)
+    await this.userCognitoService.setUserPassword(user.email, password)
     // Store user in Dynamodb
     return await this.userRepository.create(user)
   }
@@ -22,6 +22,6 @@ export class UserServiceImpl implements UserService {
   }
 
   async authenticateUser(email: string, password: string): Promise<AuthSuccessResult> {
-    return this.cognitoUserService.authenticateUser(email, password)
+    return this.userCognitoService.authenticateUser(email, password)
   }
 }

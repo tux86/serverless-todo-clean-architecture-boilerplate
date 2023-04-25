@@ -1,5 +1,5 @@
 import { Todo } from '@/domain/models/todo'
-import { TodoEntity } from '@/infrastructure/entities/todo-entity'
+import { TodoEntity } from '@/infrastructure/entities/todo.entity'
 
 export class TodoAdapter {
   static toDomainEntity(todoModel: TodoEntity): Todo {

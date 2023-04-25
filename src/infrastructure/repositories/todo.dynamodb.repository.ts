@@ -11,12 +11,12 @@ import {
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
 import { uuidV4 } from '@/domain/utils/uuid-generator'
-import { TodoAdapter } from '@/infrastructure/adapaters/todo-adapter'
+import { TodoAdapter } from '@/infrastructure/adapaters/todo.adapter'
 import { dynamoDBDocumentClient } from '@/infrastructure/aws/dynamodb/libs/dynamodb.client'
-import { TodoEntity } from '@/infrastructure/entities/todo-entity'
+import { TodoEntity } from '@/infrastructure/entities/todo.entity'
 import { Mapper } from '@/infrastructure/utils/mapper'
 
-export class TodoRepositoryImpl implements Repository<Todo> {
+export class TodoDynamodbRepository implements Repository<Todo> {
   private readonly documentClient: DynamoDBDocumentClient
 
   constructor(readonly tableName: string) {
