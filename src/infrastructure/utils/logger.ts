@@ -22,28 +22,30 @@ export class ConsoleLogger implements ILogger {
     this.logLevel = logLevel
   }
 
-  public static getInstance() {}
-
   error(message: string, ...optionalParams: any[]): void {
     if (this.shouldLog(LogLevel.Error)) {
+      // eslint-disable-next-line no-console
       console.error(`[ERROR] ${message}`, ...optionalParams)
     }
   }
 
   warn(message: string, ...optionalParams: any[]): void {
     if (this.shouldLog(LogLevel.Warn)) {
+      // eslint-disable-next-line no-console
       console.warn(`[WARN] ${message}`, ...optionalParams)
     }
   }
 
   info(message: string, ...optionalParams: any[]): void {
     if (this.shouldLog(LogLevel.Info)) {
+      // eslint-disable-next-line no-console
       console.info(`[INFO] ${message}`, ...optionalParams)
     }
   }
 
   debug(message: string, ...optionalParams: any[]): void {
     if (this.shouldLog(LogLevel.Debug)) {
+      // eslint-disable-next-line no-console
       console.debug(`[DEBUG] ${message}`, ...optionalParams)
     }
   }

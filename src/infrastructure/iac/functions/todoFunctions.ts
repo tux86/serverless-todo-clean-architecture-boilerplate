@@ -10,7 +10,7 @@ const lambdaEnvironment: AwsLambdaEnvironment = {
 export const todoFunctions = (): AWS['functions'] => {
   return {
     createTodo: {
-      handler: createHandlerPath('todo', 'createTodo'),
+      handler: createHandlerPath('todoFunctions', 'createTodo'),
       environment: lambdaEnvironment,
       timeout: 10,
       events: [
@@ -23,7 +23,7 @@ export const todoFunctions = (): AWS['functions'] => {
       ]
     },
     getTodo: {
-      handler: createHandlerPath('todo', 'getTodo'),
+      handler: createHandlerPath('todoFunctions', 'getTodo'),
       environment: lambdaEnvironment,
       timeout: 10,
       events: [
@@ -36,7 +36,7 @@ export const todoFunctions = (): AWS['functions'] => {
       ]
     },
     listTodos: {
-      handler: createHandlerPath('todo', 'listTodos'),
+      handler: createHandlerPath('todoFunctions', 'listTodos'),
       environment: lambdaEnvironment,
       timeout: 10,
       events: [
@@ -49,7 +49,7 @@ export const todoFunctions = (): AWS['functions'] => {
       ]
     },
     updateTodo: {
-      handler: createHandlerPath('todo', 'updateTodo'),
+      handler: createHandlerPath('todoFunctions', 'updateTodo'),
       environment: lambdaEnvironment,
       timeout: 10,
       events: [
@@ -62,7 +62,7 @@ export const todoFunctions = (): AWS['functions'] => {
       ]
     },
     deleteTodo: {
-      handler: createHandlerPath('todo', 'deleteTodo'),
+      handler: createHandlerPath('todoFunctions', 'deleteTodo'),
       environment: lambdaEnvironment,
       timeout: 10,
       events: [

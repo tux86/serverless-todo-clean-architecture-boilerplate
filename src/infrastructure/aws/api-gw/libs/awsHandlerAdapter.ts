@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 
 import { Controller } from '@/application/interfaces/Controller'
 import { Request } from '@/application/interfaces/Request'
-import { parseApiGwRequestBody, toApiGwResponse } from '@/infrastructure/aws/apiGateway'
+import { parseApiGwRequestBody, toApiGwResponse } from '@/infrastructure/aws/api-gw/libs/utils'
 import { withHttpErrorResolver } from '@/infrastructure/aws/withHttpErrorResolver'
 
 export const awsHandlerAdapter = async <T>(

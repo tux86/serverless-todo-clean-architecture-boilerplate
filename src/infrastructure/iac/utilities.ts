@@ -1,5 +1,5 @@
 export function createHandlerPath(modulePath: string, handlerName: string): string {
-  return `src/infrastructure/handlers/${modulePath}.${handlerName}`
+  return `src/infrastructure/aws/lambda/${modulePath}.${handlerName}`
 }
 
 export const varToString = (varObj: Record<string, unknown>): string => {

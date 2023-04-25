@@ -11,7 +11,7 @@ const lambdaEnvironment: AwsLambdaEnvironment = {
 export const userFunctions = (): AWS['functions'] => {
   return {
     registerUser: {
-      handler: createHandlerPath('user', 'registerUser'),
+      handler: createHandlerPath('userFunctions', 'registerUser'),
       environment: lambdaEnvironment,
       timeout: 10,
       events: [
@@ -24,7 +24,7 @@ export const userFunctions = (): AWS['functions'] => {
       ]
     },
     authenticateUser: {
-      handler: createHandlerPath('user', 'authenticateUser'),
+      handler: createHandlerPath('userFunctions', 'authenticateUser'),
       environment: lambdaEnvironment,
       timeout: 10,
       events: [
@@ -37,7 +37,7 @@ export const userFunctions = (): AWS['functions'] => {
       ]
     },
     getUser: {
-      handler: createHandlerPath('user', 'getUser'),
+      handler: createHandlerPath('userFunctions', 'getUser'),
       environment: lambdaEnvironment,
       timeout: 10,
       events: [
@@ -50,7 +50,7 @@ export const userFunctions = (): AWS['functions'] => {
       ]
     },
     preSignUp: {
-      handler: createHandlerPath('user', 'preSignUp'),
+      handler: createHandlerPath('userFunctions', 'preSignUp'),
       timeout: 10,
       events: [
         {

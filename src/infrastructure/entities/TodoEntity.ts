@@ -1,14 +1,11 @@
-export class TodoEntity {
-  todoId: string
+import { Todo } from '@/domain/models/Todo'
 
-  title: string
-
+export class TodoEntity implements Todo {
   description: string
-
-  userId: string
-
   status?: string
-
+  title: string
+  todoId: string
+  userId: string
   createdAt: Date
   updatedAt?: Date
 }

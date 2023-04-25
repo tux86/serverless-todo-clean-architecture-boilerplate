@@ -4,8 +4,8 @@ import { GetTodo } from '@/application/usecases/todo/GetTodo'
 import { ListTodos } from '@/application/usecases/todo/ListTodos'
 import { UpdateTodo } from '@/application/usecases/todo/UpdateTodo'
 import { TodoValidator } from '@/application/validators/TodoValidator'
-import { createApiGatewayHandler } from '@/infrastructure/aws/awsHandlerAdapter'
-import { Config } from '@/infrastructure/Config'
+import { createApiGatewayHandler } from '@/infrastructure/aws/api-gw/libs/awsHandlerAdapter'
+import { dynamodbConfig } from '@/infrastructure/aws/dynamodb/config'
 import { TodoRepositoryImpl } from '@/infrastructure/repositories/TodoRepositoryImpl'
 import { CreateTodoController } from '@/presentation/controllers/todo/CreateTodoController'
 import { DeleteTodoController } from '@/presentation/controllers/todo/DeleteTodoController'
@@ -13,8 +13,7 @@ import { GetTodoController } from '@/presentation/controllers/todo/GetTodoContro
 import { ListTodoController } from '@/presentation/controllers/todo/ListTodosController'
 import { UpdateTodoController } from '@/presentation/controllers/todo/UpdateTodoController'
 
-const { todosTable } = Config.getInstance().dynamodb.tables
-const todoRepository = new TodoRepositoryImpl(todosTable)
+const todoRepository = new TodoRepositoryImpl(dynamodbConfig.tables.todosTable)
 const createTodoUseCase = new CreateTodo(todoRepository, new TodoValidator())
 const updateTodoUseCase = new UpdateTodo(todoRepository, new TodoValidator())
 const getTodoUseCase = new GetTodo(todoRepository)

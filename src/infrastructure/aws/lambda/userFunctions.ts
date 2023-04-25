@@ -4,8 +4,9 @@ import { AuthenticateUser } from '@/application/usecases/user/AuthenticateUser'
 import { GetUser } from '@/application/usecases/user/GetUser'
 import { RegisterUser } from '@/application/usecases/user/RegisterUser'
 import { UserValidator } from '@/application/validators/UserValidator'
-import { createApiGatewayHandler } from '@/infrastructure/aws/awsHandlerAdapter'
-import { Config } from '@/infrastructure/Config'
+import { createApiGatewayHandler } from '@/infrastructure/aws/api-gw/libs/awsHandlerAdapter'
+import { cognitoConfig } from '@/infrastructure/aws/cognito/config'
+import { dynamodbConfig } from '@/infrastructure/aws/dynamodb/config'
 import { UserRepository } from '@/infrastructure/repositories/UserRepositoryImpl'
 import { CognitoUserServiceImpl } from '@/infrastructure/services/CognitoUserServiceImpl'
 import { UserServiceImpl } from '@/infrastructure/services/UserServiceImpl'
@@ -13,11 +14,8 @@ import { AuthenticateUserController } from '@/presentation/controllers/user/Auth
 import { GetUserController } from '@/presentation/controllers/user/GetUserController'
 import { RegisterUserController } from '@/presentation/controllers/user/RegisterUserController'
 
-const { userPoolId, clientId } = Config.getInstance().cognito
-const { usersTable } = Config.getInstance().dynamodb.tables
-
-const cognitoUserServiceImpl = new CognitoUserServiceImpl(userPoolId, clientId)
-const userRepository = new UserRepository(usersTable)
+const cognitoUserServiceImpl = new CognitoUserServiceImpl(cognitoConfig.userPoolId, cognitoConfig.clientId)
+const userRepository = new UserRepository(dynamodbConfig.tables.usersTable)
 const userService = new UserServiceImpl(cognitoUserServiceImpl, userRepository)
 const registerUserUseCase = new RegisterUser(userService, new UserValidator())
 const authenticateUserUseCase = new AuthenticateUser(userService, new UserValidator())

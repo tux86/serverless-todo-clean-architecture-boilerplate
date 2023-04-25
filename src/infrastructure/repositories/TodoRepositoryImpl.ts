@@ -12,7 +12,7 @@ import { Todo } from '@/domain/models/Todo'
 import { Repository } from '@/domain/repositories/Repository'
 import { uuidV4 } from '@/domain/utils/uuidGenerator'
 import { TodoAdapter } from '@/infrastructure/adapaters/TodoAdapter'
-import { dynamoDBDocumentClient } from '@/infrastructure/clients/dynamodb'
+import { dynamoDBDocumentClient } from '@/infrastructure/aws/dynamodb/libs/dynamodbClient'
 import { TodoEntity } from '@/infrastructure/entities/TodoEntity'
 import { Mapper } from '@/infrastructure/utils/Mapper'
 

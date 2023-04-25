@@ -13,7 +13,7 @@ import { User } from '@/domain/models/User'
 import { Repository } from '@/domain/repositories/Repository'
 import { uuidV4 } from '@/domain/utils/uuidGenerator'
 import { UserAdapter } from '@/infrastructure/adapaters/UserAdapter'
-import { dynamoDBDocumentClient } from '@/infrastructure/clients/dynamodb'
+import { dynamoDBDocumentClient } from '@/infrastructure/aws/dynamodb/libs/dynamodbClient'
 import { UserEntity } from '@/infrastructure/entities/UserEntity'
 import { Mapper } from '@/infrastructure/utils/Mapper'
 

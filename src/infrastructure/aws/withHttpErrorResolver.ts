@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 
 import { ApplicationError, AuthFailedError, EntityNotFound } from '@/application/errors'
-import { toApiGwResponse } from '@/infrastructure/aws/apiGateway'
+import { toApiGwResponse } from '@/infrastructure/aws/api-gw/libs/utils'
 import { LoggerFactory } from '@/infrastructure/utils/logger'
 import {
   BadRequestError,
