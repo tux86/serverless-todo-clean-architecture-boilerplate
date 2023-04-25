@@ -1,7 +1,7 @@
 import type { AWS } from '@serverless/typescript'
 
 import { functions } from '@/infrastructure/iac/functions'
-import { defaultIam } from '@/infrastructure/iac/iam/defaultIam'
+import { defaultIam } from '@/infrastructure/iac/iam/default-iam'
 import { custom } from '@/infrastructure/iac/provider/custom'
 import { stackTags, tags } from '@/infrastructure/iac/provider/tags'
 import { resources } from '@/infrastructure/iac/ressources'

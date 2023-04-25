@@ -1,5 +1,5 @@
-import { Response as IResponse } from '@/application/interfaces/Response'
-import { HttpStatus } from '@/presentation/utils/HttpStatus'
+import { Response as IResponse } from '@/application/interfaces/response'
+import { HttpStatus } from '@/presentation/utils/http-status'
 
 class Response<T = any> implements IResponse<T> {
   constructor(public statusCode: number, public body: T, public headers?: { [key: string]: string }) {}

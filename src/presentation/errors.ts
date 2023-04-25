@@ -1,4 +1,4 @@
-import { HttpStatus } from '@/presentation/utils/HttpStatus'
+import { HttpStatus } from '@/presentation/utils/http-status'
 
 export class HttpError extends Error {
   public readonly message: string
