@@ -17,7 +17,10 @@ export const awsFunction = (
   }
 }
 
-export const httpApiEvent = (method: string, path: string): any => ({
+export const httpApiEvent = (
+  method: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options',
+  path: string
+): any => ({
   httpApi: {
     method,
     path
