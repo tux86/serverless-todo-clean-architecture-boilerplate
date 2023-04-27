@@ -1,17 +1,19 @@
 import { RegisterUserInput } from '@/application/dtos/user/register-user-input'
-import { Controller } from '@/application/interfaces/controller'
-import { Request } from '@/application/interfaces/request'
-import { Response } from '@/application/interfaces/response'
 import { RegisterUser } from '@/application/usecases/user/register-user'
 import { User } from '@/domain/models/user'
-import { CreatedResponse } from '@/presentation/utils/response'
+import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
+import { WithInterceptor } from '@/presentation/interceptors/interceptor'
+import { Controller } from '@/presentation/protocols/controller'
+import { IHttpRequest } from '@/presentation/protocols/http-request'
+import { CreatedHttpResponse, IHttpResponse } from '@/presentation/protocols/http-response'
 
 export class RegisterUserController implements Controller<User | never> {
   constructor(readonly registerUser: RegisterUser) {}
 
-  async handleRequest(request: Request<RegisterUserInput>): Promise<Response<User>> {
+  @WithInterceptor(new ErrorInterceptor())
+  async handleRequest(request: IHttpRequest<RegisterUserInput>): Promise<IHttpResponse<User>> {
     const input = request.body
     const user = await this.registerUser.execute(input)
-    return new CreatedResponse(user)
+    return new CreatedHttpResponse(user)
   }
 }

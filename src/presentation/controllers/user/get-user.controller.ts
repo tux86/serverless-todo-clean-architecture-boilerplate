@@ -1,15 +1,17 @@
-import { Controller } from '@/application/interfaces/controller'
-import { Request } from '@/application/interfaces/request'
-import { Response } from '@/application/interfaces/response'
 import { GetUser } from '@/application/usecases/user/get-user'
 import { User } from '@/domain/models/user'
-import { SuccessResponse } from '@/presentation/utils/response'
+import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
+import { WithInterceptor } from '@/presentation/interceptors/interceptor'
+import { Controller } from '@/presentation/protocols/controller'
+import { IHttpRequest } from '@/presentation/protocols/http-request'
+import { IHttpResponse, SuccessHttpResponse } from '@/presentation/protocols/http-response'
 
 export class GetUserController implements Controller<User | never> {
   constructor(readonly getUser: GetUser) {}
 
-  async handleRequest(request: Request<{ userId: string }>): Promise<Response<User>> {
+  @WithInterceptor(new ErrorInterceptor())
+  async handleRequest(request: IHttpRequest<{ userId: string }>): Promise<IHttpResponse<User>> {
     const user = await this.getUser.execute(request.params.userId)
-    return new SuccessResponse(user)
+    return new SuccessHttpResponse(user)
   }
 }
