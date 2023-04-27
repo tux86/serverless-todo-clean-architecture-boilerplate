@@ -11,9 +11,9 @@ import { injectable } from 'inversify'
 
 import { AuthSuccessResult } from '@/application/dtos/user/auth-success-result'
 import { AuthUser } from '@/domain/models/auth-user'
-import { awsConfig } from '@/infrastructure/config/aws'
-import { cognitoConfig } from '@/infrastructure/config/aws/cognito.config'
-import { Logger } from '@/infrastructure/helpers/Logger'
+import { awsConfig } from '@/infrastructure/aws/config'
+import { cognitoConfig } from '@/infrastructure/aws/config/cognito.config'
+import { Logger } from '@/infrastructure/utils/Logger'
 
 const logger = Logger.getInstance()
 

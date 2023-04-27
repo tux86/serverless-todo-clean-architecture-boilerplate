@@ -1,6 +1,6 @@
 import { AWS } from '@serverless/typescript'
 
-import { LambdaFunction, LambdaHTTPAPIPath } from '@/infrastructure/iac/aws/types'
+import { LambdaFunction, LambdaHTTPAPIPath } from '@/infrastructure/aws/iac/types'
 
 export const awsFunction = (
   functionName: string,

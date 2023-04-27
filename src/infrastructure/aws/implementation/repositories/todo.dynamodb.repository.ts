@@ -12,10 +12,10 @@ import { inject, injectable } from 'inversify'
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
 import { uuidV4 } from '@/domain/utils/uuid-generator'
-import { Mapper } from '@/infrastructure/adapaters/entity/mapper'
-import { TodoAdapter } from '@/infrastructure/adapaters/entity/todo.adapter'
+import { Mapper } from '@/infrastructure/aws/adapaters/model/mapper'
+import { TodoAdapter } from '@/infrastructure/aws/adapaters/model/todo.adapter'
+import { DynamodbClientProvider } from '@/infrastructure/aws/providers/dynamodb.provider'
 import { TodoEntity } from '@/infrastructure/entities/todo.entity'
-import { DynamodbClientProvider } from '@/infrastructure/providers/aws/dynamodb.provider'
 import { TYPES } from '@/ioc/types'
 
 @injectable()

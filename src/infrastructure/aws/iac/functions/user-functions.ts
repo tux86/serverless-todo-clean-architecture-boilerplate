@@ -1,13 +1,13 @@
 import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
-import { userPool, usersTable } from '@/infrastructure/iac/aws/ressources'
+import { userPool, usersTable } from '@/infrastructure/aws/iac/ressources'
 import {
   awsFunction,
   cognitoUserPoolEvent,
   dynamodbStreamEvent,
   httpApiEvent
-} from '@/infrastructure/iac/aws/utils/aws-function.util'
-import { ssmParameter } from '@/infrastructure/iac/aws/utils/common.util'
+} from '@/infrastructure/aws/iac/utils/aws-function.util'
+import { ssmParameter } from '@/infrastructure/aws/iac/utils/common.util'
 
 const environment: AwsLambdaEnvironment = {
   COGNITO_USER_POOL_ID: ssmParameter('cognito/userPoolId'),

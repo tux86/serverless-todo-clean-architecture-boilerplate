@@ -1,7 +1,7 @@
 import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
-import { todosTable } from '@/infrastructure/iac/aws/ressources'
-import { awsFunction, httpApiEvent } from '@/infrastructure/iac/aws/utils/aws-function.util'
+import { todosTable } from '@/infrastructure/aws/iac/ressources'
+import { awsFunction, httpApiEvent } from '@/infrastructure/aws/iac/utils/aws-function.util'
 
 const environment: AwsLambdaEnvironment = {
   TODOS_TABLE: todosTable.TableName

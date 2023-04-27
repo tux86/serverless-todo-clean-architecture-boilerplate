@@ -1,5 +1,5 @@
-import { Logger } from '@/infrastructure/helpers/Logger'
-import { Interceptor } from '@/presentation/interceptors/interceptor'
+import { Logger } from '@/infrastructure/utils/Logger'
+import { Interceptor } from '@/presentation/interfaces/interceptor'
 import { IHttpRequest } from '@/presentation/protocols/http-request'
 import { IHttpResponse } from '@/presentation/protocols/http-response'
 

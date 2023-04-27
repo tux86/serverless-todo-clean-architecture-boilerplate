@@ -4,8 +4,8 @@ import { ListTodos } from '@/application/usecases/todo/list-todos'
 import { Todo } from '@/domain/models/todo'
 import { TYPES } from '@/ioc/types'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
-import { WithInterceptor } from '@/presentation/interceptors/interceptor'
-import { Controller } from '@/presentation/protocols/controller'
+import { Controller } from '@/presentation/interfaces/controller'
+import { WithInterceptor } from '@/presentation/interfaces/interceptor'
 import { IHttpResponse, SuccessHttpResponse } from '@/presentation/protocols/http-response'
 
 @injectable()

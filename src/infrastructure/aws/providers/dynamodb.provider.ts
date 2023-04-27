@@ -2,7 +2,7 @@ import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 import { injectable } from 'inversify'
 
-import { Logger } from '@/infrastructure/helpers/Logger'
+import { Logger } from '@/infrastructure/utils/Logger'
 
 const logger = Logger.getInstance()
 

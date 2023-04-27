@@ -1,8 +1,8 @@
 import { AWS } from '@serverless/typescript'
 
-import { cognitoUserPool } from '@/infrastructure/iac/aws/ressources/cognito/user-pool'
-import { dynamodbTodosTable } from '@/infrastructure/iac/aws/ressources/dynamodb/todos.table'
-import { dynamodbUsersTable } from '@/infrastructure/iac/aws/ressources/dynamodb/users.table'
+import { cognitoUserPool } from '@/infrastructure/aws/iac/ressources/cognito/user-pool'
+import { dynamodbTodosTable } from '@/infrastructure/aws/iac/ressources/dynamodb/todos.table'
+import { dynamodbUsersTable } from '@/infrastructure/aws/iac/ressources/dynamodb/users.table'
 
 export const usersTable = dynamodbUsersTable()
 export const todosTable = dynamodbTodosTable()

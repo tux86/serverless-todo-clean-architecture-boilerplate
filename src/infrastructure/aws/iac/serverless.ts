@@ -1,10 +1,10 @@
 import type { AWS } from '@serverless/typescript'
 
-import { functions } from '@/infrastructure/iac/aws/functions'
-import { defaultIam } from '@/infrastructure/iac/aws/iam/default-iam'
-import { custom } from '@/infrastructure/iac/aws/provider/custom'
-import { stackTags, tags } from '@/infrastructure/iac/aws/provider/tags'
-import { resources } from '@/infrastructure/iac/aws/ressources'
+import { functions } from '@/infrastructure/aws/iac/functions'
+import { defaultIam } from '@/infrastructure/aws/iac/iam/default-iam'
+import { custom } from '@/infrastructure/aws/iac/provider/custom'
+import { stackTags, tags } from '@/infrastructure/aws/iac/provider/tags'
+import { resources } from '@/infrastructure/aws/iac/ressources'
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-api',

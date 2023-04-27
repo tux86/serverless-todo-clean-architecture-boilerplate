@@ -13,10 +13,10 @@ import { inject, injectable } from 'inversify'
 import { User } from '@/domain/models/user'
 import { UserRepository } from '@/domain/repositories/user-repository'
 import { uuidV4 } from '@/domain/utils/uuid-generator'
-import { Mapper } from '@/infrastructure/adapaters/entity/mapper'
-import { UserAdapter } from '@/infrastructure/adapaters/entity/user.adapter'
+import { Mapper } from '@/infrastructure/aws/adapaters/model/mapper'
+import { UserAdapter } from '@/infrastructure/aws/adapaters/model/user.adapter'
+import { DynamodbClientProvider } from '@/infrastructure/aws/providers/dynamodb.provider'
 import { UserEntity } from '@/infrastructure/entities/user.entity'
-import { DynamodbClientProvider } from '@/infrastructure/providers/aws/dynamodb.provider'
 import { TYPES } from '@/ioc/types'
 
 @injectable()

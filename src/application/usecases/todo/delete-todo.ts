@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify'
 import { UseCase } from '@/application/usecases/use-case'
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
-import { Logger } from '@/infrastructure/helpers/Logger'
+import { Logger } from '@/infrastructure/utils/Logger'
 import { TYPES } from '@/ioc/types'
 
 const logger = Logger.getInstance()

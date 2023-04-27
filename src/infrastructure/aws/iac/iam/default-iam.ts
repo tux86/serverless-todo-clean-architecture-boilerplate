@@ -1,6 +1,6 @@
 import { AWS } from '@serverless/typescript'
 
-import { todosTable, userPool } from '@/infrastructure/iac/aws/ressources'
+import { todosTable, userPool } from '@/infrastructure/aws/iac/ressources'
 
 export const defaultIam = (): AWS['provider']['iam'] => {
   return {

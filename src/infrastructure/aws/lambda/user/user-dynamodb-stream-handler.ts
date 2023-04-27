@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { DynamoDBStreamEvent, DynamoDBStreamHandler } from 'aws-lambda'
 
-import { UserCognitoService } from '@/infrastructure/implementation/services/user.cognito.service'
+import { UserCognitoService } from '@/infrastructure/aws/implementation/services/user.cognito.service'
 import { container } from '@/ioc/container'
 import { TYPES } from '@/ioc/types'
 

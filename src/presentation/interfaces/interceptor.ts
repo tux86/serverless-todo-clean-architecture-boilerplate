@@ -1,4 +1,4 @@
-import { Controller } from '@/presentation/protocols/controller'
+import { Controller } from '@/presentation/interfaces/controller'
 import { IHttpRequest } from '@/presentation/protocols/http-request'
 import { IHttpResponse } from '@/presentation/protocols/http-response'
 
