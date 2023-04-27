@@ -1,89 +1,79 @@
-# AWS Serverless Todo API (Clean Architecture)
+# AWS Serverless Todo API with Clean Architecture
 
-This repository contains a Todo API built using the Serverless Framework and Clean Architecture principles. It uses AWS
-Lambda, API Gateway, DynamoDB, and Cognito to create a serverless architecture for managing Todo items.
+This project is a Todo App API built with Serverless Framework, TypeScript, and Clean Architecture. It is designed to
+run on AWS Lambda and uses Amazon DynamoDB as the database and Amazon Cognito for user authentication and authorization.
 
 ## Features
 
-- Create, retrieve, update, and delete Todo items
-- User authentication and authorization using AWS Cognito
-- TypeScript support for better type safety and maintainability
-- Clean Architecture principles for better separation of concerns and extensibility
-- Logging using a custom Logger utility
-- Request validation using class-validator
+- Serverless Framework with AWS Lambda functions
+- TypeScript for strong typing and better code maintainability
+- Clean Architecture for separation of concerns and improved testability
+- Amazon DynamoDB for storing todos and user data
+- Amazon Cognito for user authentication and authorization
+- Unit and integration testing support (not yet implemented)
 
-## Prerequisites
-
-- Node.js 18.x
-- NPM
-- AWS CLI (configured with your AWS account credentials)
-- Serverless Framework
-
-## Installation
+## Getting Started
 
 1. Clone the repository:
 
-```shell
-git clone https://github.com/tux86/aws-serverless-todo-api-clean-architecture.git
 ```
-
-2. Install the dependencies:
-
-```shell
+git clone https://github.com/yourusername/aws-serverless-todo-api-clean-architecture.git
 cd aws-serverless-todo-api-clean-architecture
-npm install
 ```
 
-## Deployment
+2. Install dependencies:
 
-1. Configure the `serverless.ts` file with the appropriate AWS region, stage, and other settings.
-
-2. Deploy the application:
-
-```shell
-serverless deploy
+```
+yarn install
 ```
 
-The Serverless Framework will package and deploy the application to your AWS account. After the deployment is complete,
-the API endpoints will be displayed in the terminal.
+3. Configure your AWS credentials, following
+   the [Serverless Framework guide](https://www.serverless.com/framework/docs/providers/aws/guide/credentials/).
 
-## Usage
+4. Deploy the application to AWS:
 
-You can interact with the Todo API using any HTTP client, such as `curl`, Postman, or a web application.
-
-- Register a new user and authenticate with AWS Cognito to get an access token.
-- Include the access token in the `Authorization` header of your API requests.
-
-### Endpoints
-
-- `POST /todos`: Create a new Todo item
-- `GET /todos`: Retrieve all Todo items for the authenticated user
-- `GET /todos/{id}`: Retrieve a specific Todo item by ID
-- `PUT /todos/{id}`: Update a Todo item
-- `DELETE /todos/{id}`: DeleteTodo a Todo item
-
-## Development
-
-During development, you can run the application locally using the Serverless Framework:
-
-npm test
-
-This will start a local server that simulates API Gateway and Lambda. You can make requests to the local server just
-like you would to the deployed API.
-
-## Testing
-
-You can write unit tests for your application using a testing framework like Jest. To run the tests, execute the
-following command:
-
-```shell
-npm test
+```
+yarn deploy
 ```
 
-Make sure to create test files for your controllers, use cases, and other components to ensure the correct functionality
-and maintainability of your application.
+5. To remove the application from AWS, run:
+
+```
+yarn remove
+```
+
+## Available Scripts
+
+- `yarn deploy`: Deploy the application to AWS.
+- `yarn remove`: Remove the application from AWS.
+- `yarn start`: Start the application locally using serverless-offline.
+- `yarn test`: Run tests (not yet implemented).
+- `yarn lint`: Lint the code with ESLint.
+- `yarn lint:fix`: Lint and automatically fix issues with ESLint.
+- `yarn prettier`: Format the code with Prettier.
+
+## Directory Structure
+
+This project follows the Clean Architecture principles and has the following directory structure:
+
+- `src/`
+    - `application/`: Application layer, containing use cases, validators, and DTOs.
+    - `domain/`: Domain layer, containing domain models, services, and repositories.
+    - `infrastructure/`: Infrastructure layer, containing adapters, AWS Lambda functions, configuration, entities,
+      helpers, IAC, implementation, and providers.
+    - `main/`: The main layer serves as the assembly point for the entire system. it contains most of the factories and
+      is interdependent with all other layers in the system.
+    - `presentation/`: Presentation layer, containing controllers, interceptors, mappers, and HTTP-related protocols.
 
 ## Contributing
 
-Feel free to submit issues, feature requests, or pull requests to improve this project. Please ensure that your code
-follows the existing style and structure, and that your changes are covered by tests.
+Feel free to submit issues, fork the repository and send pull requests. To run the linters and formatters before
+submitting your changes, use:
+
+```
+yarn lint:fix && yarn prettier
+```
+
+## License
+
+This project is licensed under the MIT License.
