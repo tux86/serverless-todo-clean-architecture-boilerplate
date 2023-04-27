@@ -5,7 +5,7 @@ import { IHttpResponse } from '@/presentation/protocols/http-response'
 
 const logger = Logger.getInstance()
 
-export class LoggingInterceptor implements Interceptor {
+export class LoggingInterceptor implements Interceptor<IHttpRequest, IHttpResponse> {
   onRequest(request: IHttpRequest): IHttpRequest {
     logger.info('request ===> ', request)
     return request
