@@ -1,8 +1,10 @@
-import { LoggerFactory } from '@/infrastructure/helpers/logger'
+import { Logger } from '@/infrastructure/helpers/Logger'
 import { Interceptor } from '@/presentation/interceptors/interceptor'
 import { mapDomainErrorToHttpError } from '@/presentation/mappers/domain-to-http-error.mapper'
 import { IHttpRequest } from '@/presentation/protocols/http-request'
 import { HttpResponse, IHttpResponse } from '@/presentation/protocols/http-response'
+
+const logger = Logger.getInstance()
 
 export class ErrorInterceptor implements Interceptor {
   onRequest(request: IHttpRequest): IHttpRequest {
@@ -15,7 +17,7 @@ export class ErrorInterceptor implements Interceptor {
 
   onError(error: Error): IHttpResponse {
     // log error to console
-    LoggerFactory.getInstance().error(error.message, error)
+    logger.error(error.message, error)
 
     const { statusCode, message } = mapDomainErrorToHttpError(error)
 

@@ -7,20 +7,31 @@ import {
   CognitoIdentityProvider,
   ListUsersCommand
 } from '@aws-sdk/client-cognito-identity-provider'
+import { injectable } from 'inversify'
 
 import { AuthSuccessResult } from '@/application/dtos/user/auth-success-result'
 import { AuthUser } from '@/domain/models/auth-user'
+import { awsConfig } from '@/infrastructure/config/aws'
+import { cognitoConfig } from '@/infrastructure/config/aws/cognito.config'
+import { Logger } from '@/infrastructure/helpers/Logger'
 
+const logger = Logger.getInstance()
+
+@injectable()
 export class UserCognitoService {
-  constructor(
-    readonly cognitoIdentityProvider: CognitoIdentityProvider,
-    readonly userPoolId: string,
-    readonly clientId: string
-  ) {}
+  private readonly cognitoIdentityProvider: CognitoIdentityProvider
+
+  private readonly userPoolId: string = awsConfig.cognito.userPoolId
+  private readonly clientId: string = awsConfig.cognito.clientId
+
+  constructor() {
+    logger.info('----------------------- initializing UserCognitoService -------------------')
+    this.cognitoIdentityProvider = new CognitoIdentityProvider({ region: awsConfig.region })
+  }
 
   async createUser(email: string): Promise<void> {
     const command = new AdminCreateUserCommand({
-      UserPoolId: this.userPoolId,
+      UserPoolId: cognitoConfig.userPoolId,
       Username: email,
       MessageAction: 'SUPPRESS', // Prevents sending a welcome email
       // TemporaryPassword: password,

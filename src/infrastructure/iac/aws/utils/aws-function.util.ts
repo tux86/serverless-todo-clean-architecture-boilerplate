@@ -1,17 +1,15 @@
 import { AWS } from '@serverless/typescript'
 
 import { LambdaFunction, LambdaHTTPAPIPath } from '@/infrastructure/iac/aws/types'
-import { varToString } from '@/infrastructure/iac/aws/utils/common.util'
 
 export const awsFunction = (
-  moduleName: string,
-  handler: Record<string, unknown>,
+  functionName: string,
+  handler: string,
   params: Omit<LambdaFunction, 'handler'>
 ): AWS['functions'] => {
-  const functionName = varToString(handler)
   return {
     [functionName]: {
-      handler: `src/infrastructure/aws/lambda/${moduleName}.${functionName}`,
+      handler,
       ...params
     }
   }

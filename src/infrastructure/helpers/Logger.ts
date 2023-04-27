@@ -15,11 +15,19 @@ export interface ILogger {
   debug(message: string, ...optionalParams: any[]): void
 }
 
-export class ConsoleLogger implements ILogger {
+export class Logger implements ILogger {
+  private static instance: ILogger | null = null
   private readonly logLevel: LogLevel
 
   constructor(logLevel: LogLevel = LogLevel.Info) {
     this.logLevel = logLevel
+  }
+
+  public static getInstance(): ILogger {
+    if (!Logger.instance) {
+      Logger.instance = new Logger(LogLevel.Debug)
+    }
+    return Logger.instance
   }
 
   error(message: string, ...optionalParams: any[]): void {
@@ -53,22 +61,5 @@ export class ConsoleLogger implements ILogger {
   private shouldLog(level: LogLevel): boolean {
     const levels = Object.values(LogLevel)
     return levels.indexOf(level) <= levels.indexOf(this.logLevel)
-  }
-}
-
-export class LoggerFactory {
-  private static instance: ILogger | null = null
-
-  static getInstance(loggerType: 'console' = 'console'): ILogger {
-    if (!LoggerFactory.instance) {
-      switch (loggerType) {
-        case 'console':
-          LoggerFactory.instance = new ConsoleLogger()
-          break
-        default:
-          throw new Error(`Unsupported logger type: ${loggerType}`)
-      }
-    }
-    return LoggerFactory.instance
   }
 }

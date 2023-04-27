@@ -1,11 +1,13 @@
 import { plainToClass } from 'class-transformer'
 import { validate, ValidationError } from 'class-validator'
+import { injectable } from 'inversify'
 
 import { AuthUserInput } from '@/application/dtos/user/auth-user-input'
 import { RegisterUserInput } from '@/application/dtos/user/register-user-input'
 import { InvalidInputError } from '@/application/errors'
 import { formatValidationErrors } from '@/application/utlis/format-validation-errors'
 
+@injectable()
 export class UserValidator {
   async validateRegisterUserInput(input: RegisterUserInput): Promise<void> {
     const transformedInput = plainToClass(RegisterUserInput, input)

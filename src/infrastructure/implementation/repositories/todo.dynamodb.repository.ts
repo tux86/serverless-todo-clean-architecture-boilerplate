@@ -7,6 +7,7 @@ import {
   ScanCommand,
   UpdateCommand
 } from '@aws-sdk/lib-dynamodb'
+import { inject, injectable } from 'inversify'
 
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
@@ -14,14 +15,17 @@ import { uuidV4 } from '@/domain/utils/uuid-generator'
 import { Mapper } from '@/infrastructure/adapaters/entity/mapper'
 import { TodoAdapter } from '@/infrastructure/adapaters/entity/todo.adapter'
 import { TodoEntity } from '@/infrastructure/entities/todo.entity'
-import { dynamoDBDocumentClient } from '@/infrastructure/providers/aws/dynamodb.provider'
+import { DynamodbClientProvider } from '@/infrastructure/providers/aws/dynamodb.provider'
+import { TYPES } from '@/ioc/types'
 
+@injectable()
 export class TodoDynamodbRepository implements Repository<Todo> {
-  private readonly documentClient: DynamoDBDocumentClient
+  private readonly tableName: string
+  private readonly docClient: DynamoDBDocumentClient
 
-  constructor(readonly tableName: string) {
-    this.tableName = tableName
-    this.documentClient = dynamoDBDocumentClient
+  constructor(@inject(TYPES.DynamodbClientProvider) readonly dynamodbClientProvider: DynamodbClientProvider) {
+    this.tableName = process.env.TODOS_TABLE
+    this.docClient = dynamodbClientProvider.documentClient
   }
 
   async create(todo: Todo): Promise<Todo> {
@@ -31,7 +35,7 @@ export class TodoDynamodbRepository implements Repository<Todo> {
       TableName: this.tableName,
       Item: todoModel
     }
-    await this.documentClient.send(new PutCommand(params))
+    await this.docClient.send(new PutCommand(params))
     return Mapper.toDomainEntity(todoModel, TodoAdapter.toDomainEntity)
   }
 
@@ -41,7 +45,7 @@ export class TodoDynamodbRepository implements Repository<Todo> {
       Key: { todoId }
     }
 
-    const result = await this.documentClient.send(new GetCommand(params))
+    const result = await this.docClient.send(new GetCommand(params))
     return (result.Item as Todo) || null
   }
 
@@ -50,7 +54,7 @@ export class TodoDynamodbRepository implements Repository<Todo> {
       TableName: this.tableName
     }
 
-    const result = await this.documentClient.send(new ScanCommand(params))
+    const result = await this.docClient.send(new ScanCommand(params))
     return (result.Items as Todo[]) || []
   }
 
@@ -69,7 +73,7 @@ export class TodoDynamodbRepository implements Repository<Todo> {
       ReturnValues: 'ALL_NEW'
     }
 
-    const result = await this.documentClient.send(new UpdateCommand(params))
+    const result = await this.docClient.send(new UpdateCommand(params))
 
     return TodoAdapter.toDomainEntity(result.Attributes as TodoEntity)
   }
@@ -80,6 +84,6 @@ export class TodoDynamodbRepository implements Repository<Todo> {
       Key: { todoId }
     }
 
-    await this.documentClient.send(new DeleteCommand(params))
+    await this.docClient.send(new DeleteCommand(params))
   }
 }

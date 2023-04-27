@@ -1,13 +1,5 @@
 import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
-import {
-  authenticateUser,
-  deleteUser,
-  getUser,
-  preSignUp,
-  registerUser,
-  userDynamodbStreamHandler
-} from '@/infrastructure/aws/lambda/user-functions'
 import { userPool, usersTable } from '@/infrastructure/iac/aws/ressources'
 import {
   awsFunction,
@@ -23,61 +15,38 @@ const environment: AwsLambdaEnvironment = {
   USERS_TABLE: usersTable.TableName
 }
 
-const moduleName = 'user-functions'
+const moduleName = 'src/infrastructure/aws/lambda/user'
+
 export const userFunctions = (): AWS['functions'] => {
   return {
-    ...awsFunction(
-      moduleName,
-      { registerUser },
-      {
-        environment,
-        timeout: 10,
-        events: [httpApiEvent('post', '/users/register')]
-      }
-    ),
-    ...awsFunction(
-      moduleName,
-      { authenticateUser },
-      {
-        environment,
-        timeout: 10,
-        events: [httpApiEvent('post', '/users/auth')]
-      }
-    ),
-    ...awsFunction(
-      moduleName,
-      { getUser },
-      {
-        environment,
-        timeout: 10,
-        events: [httpApiEvent('get', '/users/{email}')]
-      }
-    ),
-    ...awsFunction(
-      moduleName,
-      { deleteUser },
-      {
-        environment,
-        timeout: 10,
-        events: [httpApiEvent('delete', '/users/{userId}')]
-      }
-    ),
-    ...awsFunction(
-      moduleName,
-      { preSignUp },
-      {
-        timeout: 10,
-        events: [cognitoUserPoolEvent(userPool.UserPoolName, 'PreSignUp', true)]
-      }
-    ),
-    ...awsFunction(
-      moduleName,
-      { userDynamodbStreamHandler },
-      {
-        environment,
-        timeout: 10,
-        events: [dynamodbStreamEvent(usersTable.StreamArn)]
-      }
-    )
+    ...awsFunction('registerUser', `${moduleName}/register-user-handler.handler`, {
+      environment,
+      timeout: 10,
+      events: [httpApiEvent('post', '/users/register')]
+    }),
+    ...awsFunction('authenticateUser', `${moduleName}/authenticate-user-handler.handler`, {
+      environment,
+      timeout: 10,
+      events: [httpApiEvent('post', '/users/auth')]
+    }),
+    ...awsFunction('getUser', `${moduleName}/get-user-handler.handler`, {
+      environment,
+      timeout: 10,
+      events: [httpApiEvent('get', '/users/{email}')]
+    }),
+    ...awsFunction('deleteUser', `${moduleName}/delete-user-handler.handler`, {
+      environment,
+      timeout: 10,
+      events: [httpApiEvent('delete', '/users/{userId}')]
+    }),
+    ...awsFunction('preSignUp', `${moduleName}/pre-signup-handler.handler`, {
+      timeout: 10,
+      events: [cognitoUserPoolEvent(userPool.UserPoolName, 'PreSignUp', true)]
+    }),
+    ...awsFunction('userDynamodbStreamHandler', `${moduleName}/user-dynamodb-stream-handler.handler`, {
+      environment,
+      timeout: 10,
+      events: [dynamodbStreamEvent(usersTable.StreamArn)]
+    })
   }
 }
