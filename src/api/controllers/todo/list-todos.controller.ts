@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify'
 
+import { WithInterceptor } from '@/api/decorators/interceptor.decorator'
+import { ErrorInterceptor } from '@/api/interceptors/error.interceptor'
+import { Controller } from '@/api/interfaces/controller'
+import { IHttpResponse, SuccessHttpResponse } from '@/api/protocols/http-response'
 import { ListTodosUseCase } from '@/application/usecases/todo/list-todos/list-todos.use-case'
 import { Todo } from '@/domain/models/todo'
-import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
-import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
-import { Controller } from '@/presentation/interfaces/controller'
-import { IHttpResponse, SuccessHttpResponse } from '@/presentation/protocols/http-response'
 
 @injectable()
 export class ListTodosController implements Controller<Todo[] | never> {

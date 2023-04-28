@@ -1,8 +1,8 @@
+import { Interceptor } from '@/api/interfaces/interceptor'
+import { mapDomainErrorToHttpError } from '@/api/mappers/domain-to-http-error.mapper'
+import { IHttpRequest } from '@/api/protocols/http-request'
+import { HttpResponse, IHttpResponse } from '@/api/protocols/http-response'
 import { Logger } from '@/infrastructure/utils/Logger'
-import { Interceptor } from '@/presentation/interfaces/interceptor'
-import { mapDomainErrorToHttpError } from '@/presentation/mappers/domain-to-http-error.mapper'
-import { IHttpRequest } from '@/presentation/protocols/http-request'
-import { HttpResponse, IHttpResponse } from '@/presentation/protocols/http-response'
 
 export class ErrorInterceptor implements Interceptor<IHttpRequest, IHttpResponse> {
   onRequest(request: IHttpRequest): IHttpRequest {

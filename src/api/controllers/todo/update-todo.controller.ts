@@ -1,13 +1,13 @@
 import { inject, injectable } from 'inversify'
 
+import { WithInterceptor } from '@/api/decorators/interceptor.decorator'
+import { ErrorInterceptor } from '@/api/interceptors/error.interceptor'
+import { Controller } from '@/api/interfaces/controller'
+import { IHttpRequest } from '@/api/protocols/http-request'
+import { IHttpResponse, UpdatedHttpResponse } from '@/api/protocols/http-response'
 import { UpdateTodoInput } from '@/application/usecases/todo/update-todo/update-todo-input'
 import { UpdateTodoUseCase } from '@/application/usecases/todo/update-todo/update-todo.use-case'
 import { Todo } from '@/domain/models/todo'
-import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
-import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
-import { Controller } from '@/presentation/interfaces/controller'
-import { IHttpRequest } from '@/presentation/protocols/http-request'
-import { IHttpResponse, UpdatedHttpResponse } from '@/presentation/protocols/http-response'
 
 @injectable()
 export class UpdateTodoController implements Controller<Todo | never> {

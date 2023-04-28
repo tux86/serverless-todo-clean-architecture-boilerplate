@@ -1,7 +1,7 @@
 import 'reflect-metadata'
+import { GetTodoController } from '@/api/controllers/todo/get-todo.controller'
 import { DIContainer } from '@/common/ioc/di-container'
 import { lambdaHandlerAdapter } from '@/infrastructure/aws/adapaters/lambda-handler.adapter'
-import { GetTodoController } from '@/presentation/controllers/todo/get-todo.controller'
 
 const getTodosController = DIContainer.getInstance().get(GetTodoController)
 

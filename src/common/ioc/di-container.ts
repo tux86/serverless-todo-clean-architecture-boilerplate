@@ -1,5 +1,14 @@
 import { Container } from 'inversify'
 
+import { CreateTodoController } from '@/api/controllers/todo/create-todo.controller'
+import { DeleteTodoController } from '@/api/controllers/todo/delete-todo.controller'
+import { GetTodoController } from '@/api/controllers/todo/get-todo.controller'
+import { ListTodosController } from '@/api/controllers/todo/list-todos.controller'
+import { UpdateTodoController } from '@/api/controllers/todo/update-todo.controller'
+import { AuthenticateUserController } from '@/api/controllers/user/authenticate-user.controller'
+import { DeleteUserController } from '@/api/controllers/user/delete-user.controller'
+import { GetUserController } from '@/api/controllers/user/get-user.controller'
+import { RegisterUserController } from '@/api/controllers/user/register-user.controller'
 import { CreateTodoUseCase } from '@/application/usecases/todo/create-todo/create-todo.use-case'
 import { DeleteTodoUseCase } from '@/application/usecases/todo/delete-todo/delete-todo.use-case'
 import { GetTodoUseCase } from '@/application/usecases/todo/get-todo/get-todo.use-case.'
@@ -17,15 +26,6 @@ import { DynamodbTodoRepository } from '@/infrastructure/aws/repositories/dynamo
 import { DynamodbUserRepository } from '@/infrastructure/aws/repositories/dynamodb.user.repository'
 import { AuthServiceImpl } from '@/infrastructure/aws/services/auth-service.impl'
 import { CognitoUserService } from '@/infrastructure/aws/services/cognito.user.service'
-import { CreateTodoController } from '@/presentation/controllers/todo/create-todo.controller'
-import { DeleteTodoController } from '@/presentation/controllers/todo/delete-todo.controller'
-import { GetTodoController } from '@/presentation/controllers/todo/get-todo.controller'
-import { ListTodosController } from '@/presentation/controllers/todo/list-todos.controller'
-import { UpdateTodoController } from '@/presentation/controllers/todo/update-todo.controller'
-import { AuthenticateUserController } from '@/presentation/controllers/user/authenticate-user.controller'
-import { DeleteUserController } from '@/presentation/controllers/user/delete-user.controller'
-import { GetUserController } from '@/presentation/controllers/user/get-user.controller'
-import { RegisterUserController } from '@/presentation/controllers/user/register-user.controller'
 
 export class DIContainer extends Container {
   private static instance: DIContainer | null = null

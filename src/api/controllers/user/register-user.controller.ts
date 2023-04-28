@@ -1,13 +1,13 @@
 import { inject, injectable } from 'inversify'
 
+import { WithInterceptor } from '@/api/decorators/interceptor.decorator'
+import { ErrorInterceptor } from '@/api/interceptors/error.interceptor'
+import { Controller } from '@/api/interfaces/controller'
+import { IHttpRequest } from '@/api/protocols/http-request'
+import { CreatedHttpResponse, IHttpResponse } from '@/api/protocols/http-response'
 import { RegisterUserInput } from '@/application/usecases/user/register-user/register-user.input'
 import { RegisterUserUseCase } from '@/application/usecases/user/register-user/register-user.use-case'
 import { User } from '@/domain/models/user'
-import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
-import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
-import { Controller } from '@/presentation/interfaces/controller'
-import { IHttpRequest } from '@/presentation/protocols/http-request'
-import { CreatedHttpResponse, IHttpResponse } from '@/presentation/protocols/http-response'
 
 @injectable()
 export class RegisterUserController implements Controller<User | never> {

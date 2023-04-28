@@ -1,13 +1,13 @@
 import { inject, injectable } from 'inversify'
 
+import { WithInterceptor } from '@/api/decorators/interceptor.decorator'
+import { ErrorInterceptor } from '@/api/interceptors/error.interceptor'
+import { Controller } from '@/api/interfaces/controller'
+import { IHttpRequest } from '@/api/protocols/http-request'
+import { IHttpResponse, SuccessHttpResponse } from '@/api/protocols/http-response'
 import { AuthSuccessResult } from '@/application/usecases/user/authenticate-user/auth-success.result'
 import { AuthUserInput } from '@/application/usecases/user/authenticate-user/auth-user.input'
 import { AuthenticateUserUseCase } from '@/application/usecases/user/authenticate-user/authenticate-user.use-case'
-import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
-import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
-import { Controller } from '@/presentation/interfaces/controller'
-import { IHttpRequest } from '@/presentation/protocols/http-request'
-import { IHttpResponse, SuccessHttpResponse } from '@/presentation/protocols/http-response'
 
 @injectable()
 export class AuthenticateUserController implements Controller<AuthSuccessResult | never> {

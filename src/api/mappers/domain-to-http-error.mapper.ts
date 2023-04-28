@@ -1,11 +1,11 @@
-import { ApplicationError, AuthFailedError, EntityNotFound } from '@/application/errors'
 import {
   BadRequestError,
   HttpError,
   InternalServerError,
   NotFoundError,
   UnauthorizedError
-} from '@/presentation/protocols/http-error'
+} from '@/api/protocols/http-error'
+import { ApplicationError, AuthFailedError, EntityNotFound } from '@/application/errors'
 
 // Define an interface for the error mapping object.
 interface ErrorMapping {

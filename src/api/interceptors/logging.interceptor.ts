@@ -1,7 +1,7 @@
+import { Interceptor } from '@/api/interfaces/interceptor'
+import { IHttpRequest } from '@/api/protocols/http-request'
+import { IHttpResponse } from '@/api/protocols/http-response'
 import { Logger } from '@/infrastructure/utils/Logger'
-import { Interceptor } from '@/presentation/interfaces/interceptor'
-import { IHttpRequest } from '@/presentation/protocols/http-request'
-import { IHttpResponse } from '@/presentation/protocols/http-response'
 
 export class LoggingInterceptor implements Interceptor<IHttpRequest, IHttpResponse> {
   onRequest(request: IHttpRequest): IHttpRequest {

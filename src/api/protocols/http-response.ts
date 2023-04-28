@@ -1,4 +1,4 @@
-import { HttpStatus } from '@/presentation/protocols/http-status'
+import { HttpStatus } from '@/api/protocols/http-status'
 
 export interface IHttpResponse<T = unknown> {
   body: T

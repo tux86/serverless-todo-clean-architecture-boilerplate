@@ -1,14 +1,14 @@
 import { inject, injectable } from 'inversify'
 
+import { WithInterceptor } from '@/api/decorators/interceptor.decorator'
+import { ErrorInterceptor } from '@/api/interceptors/error.interceptor'
+import { Controller } from '@/api/interfaces/controller'
+import { IHttpRequest } from '@/api/protocols/http-request'
+import { CreatedHttpResponse, IHttpResponse } from '@/api/protocols/http-response'
 import { CreateTodoInput } from '@/application/usecases/todo/create-todo/create-todo.input'
 import { CreateTodoUseCase } from '@/application/usecases/todo/create-todo/create-todo.use-case'
 import { Todo } from '@/domain/models/todo'
 import { uuidV4 } from '@/domain/utils/uuid-generator'
-import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
-import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
-import { Controller } from '@/presentation/interfaces/controller'
-import { IHttpRequest } from '@/presentation/protocols/http-request'
-import { CreatedHttpResponse, IHttpResponse } from '@/presentation/protocols/http-response'
 
 @injectable()
 export class CreateTodoController implements Controller<Todo | never> {

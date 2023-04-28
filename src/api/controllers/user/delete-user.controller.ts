@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify'
 
+import { WithInterceptor } from '@/api/decorators/interceptor.decorator'
+import { ErrorInterceptor } from '@/api/interceptors/error.interceptor'
+import { Controller } from '@/api/interfaces/controller'
+import { IHttpRequest } from '@/api/protocols/http-request'
+import { DeletedHttpResponse, IHttpResponse } from '@/api/protocols/http-response'
 import { DeleteUserUseCase } from '@/application/usecases/user/delete-user/delete-user.use-case'
-import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
-import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
-import { Controller } from '@/presentation/interfaces/controller'
-import { IHttpRequest } from '@/presentation/protocols/http-request'
-import { DeletedHttpResponse, IHttpResponse } from '@/presentation/protocols/http-response'
 
 @injectable()
 export class DeleteUserController implements Controller<void | never> {
