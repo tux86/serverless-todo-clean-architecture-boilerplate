@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify'
 
 import { GetUser } from '@/application/usecases/user/get-user'
+import { TYPES } from '@/common/ioc/types'
 import { User } from '@/domain/models/user'
-import { TYPES } from '@/ioc/types'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
 import { Controller } from '@/presentation/interfaces/controller'

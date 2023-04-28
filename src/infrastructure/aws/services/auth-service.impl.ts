@@ -1,12 +1,12 @@
 import { inject, injectable } from 'inversify'
 
 import { AuthSuccessResult } from '@/application/dtos/user/auth-success-result'
+import { TYPES } from '@/common/ioc/types'
 import { User } from '@/domain/models/user'
 import { AuthService } from '@/domain/services/auth-service'
-import { UserDynamodbRepository } from '@/infrastructure/aws/implementation/repositories/user.dynamodb.repository'
-import { UserCognitoService } from '@/infrastructure/aws/implementation/services/user.cognito.service'
+import { UserDynamodbRepository } from '@/infrastructure/aws/repositories/user.dynamodb.repository'
+import { UserCognitoService } from '@/infrastructure/aws/services/user.cognito.service'
 import { Logger } from '@/infrastructure/utils/Logger'
-import { TYPES } from '@/ioc/types'
 
 const logger = Logger.getInstance()
 

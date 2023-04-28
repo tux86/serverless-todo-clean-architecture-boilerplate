@@ -3,9 +3,9 @@ import { inject, injectable } from 'inversify'
 import { UpdateTodoInput } from '@/application/dtos/todo/update-todo-input'
 import { UseCase } from '@/application/usecases/use-case'
 import { TodoValidator } from '@/application/validators/todo.validator'
+import { TYPES } from '@/common/ioc/types'
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
-import { TYPES } from '@/ioc/types'
 
 @injectable()
 export class UpdateTodo implements UseCase<UpdateTodoInput, Todo> {

@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify'
 
 import { ListTodos } from '@/application/usecases/todo/list-todos'
+import { TYPES } from '@/common/ioc/types'
 import { Todo } from '@/domain/models/todo'
-import { TYPES } from '@/ioc/types'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
 import { Controller } from '@/presentation/interfaces/controller'

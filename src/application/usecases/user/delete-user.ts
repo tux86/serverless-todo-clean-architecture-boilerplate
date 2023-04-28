@@ -2,9 +2,9 @@ import { inject, injectable } from 'inversify'
 
 import { EntityNotFound } from '@/application/errors'
 import { UseCase } from '@/application/usecases/use-case'
+import { TYPES } from '@/common/ioc/types'
 import { User } from '@/domain/models/user'
 import { UserRepository } from '@/domain/repositories/user-repository'
-import { TYPES } from '@/ioc/types'
 
 @injectable()
 export class DeleteUser implements UseCase<string, void> {

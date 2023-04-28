@@ -28,7 +28,6 @@ export const TYPES = {
   // services
   AuthServiceImpl: Symbol.for('AuthServiceImpl'),
   UserCognitoService: Symbol.for('UserCognitoService'),
-  UserSecurityServiceImpl: Symbol.for('UserSecurityServiceImpl'),
 
   // repositories
   TodoDynamodbRepository: Symbol.for('TodoDynamodbRepository'),

@@ -1,6 +1,6 @@
-import { cognitoConfig } from '@/infrastructure/aws/config/cognito.config'
+import { COGNITO_CONFIG } from '@/infrastructure/aws/config/cognito.config'
 
-export const awsConfig = {
+export const AWS_CONFIG = {
   region: process.env.AWS_REGION,
-  cognito: cognitoConfig
+  cognito: COGNITO_CONFIG
 }

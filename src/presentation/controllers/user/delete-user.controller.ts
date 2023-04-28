@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify'
 
 import { DeleteUser } from '@/application/usecases/user/delete-user'
-import { TYPES } from '@/ioc/types'
+import { TYPES } from '@/common/ioc/types'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
 import { Controller } from '@/presentation/interfaces/controller'

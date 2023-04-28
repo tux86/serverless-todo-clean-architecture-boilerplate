@@ -1,7 +1,7 @@
 import 'reflect-metadata'
+import { container } from '@/common/ioc/container'
+import { TYPES } from '@/common/ioc/types'
 import { awsHandlerAdapter } from '@/infrastructure/aws/adapaters/aws-handler.adapter'
-import { container } from '@/ioc/container'
-import { TYPES } from '@/ioc/types'
 import { GetTodoController } from '@/presentation/controllers/todo/get-todo.controller'
 
 const getTodosController = container.get<GetTodoController>(TYPES.GetTodoController)

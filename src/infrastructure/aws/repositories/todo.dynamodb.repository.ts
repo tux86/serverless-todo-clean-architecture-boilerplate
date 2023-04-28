@@ -9,6 +9,7 @@ import {
 } from '@aws-sdk/lib-dynamodb'
 import { inject, injectable } from 'inversify'
 
+import { TYPES } from '@/common/ioc/types'
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
 import { uuidV4 } from '@/domain/utils/uuid-generator'
@@ -16,7 +17,6 @@ import { Mapper } from '@/infrastructure/aws/adapaters/model/mapper'
 import { TodoAdapter } from '@/infrastructure/aws/adapaters/model/todo.adapter'
 import { DynamodbClientProvider } from '@/infrastructure/aws/providers/dynamodb.provider'
 import { TodoEntity } from '@/infrastructure/entities/todo.entity'
-import { TYPES } from '@/ioc/types'
 
 @injectable()
 export class TodoDynamodbRepository implements Repository<Todo> {

@@ -2,9 +2,9 @@ import { inject, injectable } from 'inversify'
 
 import { EntityNotFound } from '@/application/errors'
 import { UseCase } from '@/application/usecases/use-case'
+import { TYPES } from '@/common/ioc/types'
 import { User } from '@/domain/models/user'
 import { AuthService } from '@/domain/services/auth-service'
-import { TYPES } from '@/ioc/types'
 
 @injectable()
 export class GetUser implements UseCase<string, User> {
