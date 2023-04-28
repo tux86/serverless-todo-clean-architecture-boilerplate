@@ -14,6 +14,7 @@ import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
 import { Mapper } from '@/infrastructure/adapaters/model/mapper'
 import { TodoAdapter } from '@/infrastructure/adapaters/model/todo.adapter'
+import { AWS_CONFIG } from '@/infrastructure/config'
 import { TodoEntity } from '@/infrastructure/entities/todo.entity'
 import { DynamodbClientProvider } from '@/infrastructure/providers/dynamodb.provider'
 
@@ -23,8 +24,7 @@ export class DynamodbTodoRepository implements Repository<Todo> {
   private readonly docClient: DynamoDBDocumentClient
 
   constructor(@inject(DynamodbClientProvider) readonly dynamodbClientProvider: DynamodbClientProvider) {
-    this.tableName = process.env.TODOS_TABLE
-    console.log(process.env.TODOS_TABLE)
+    this.tableName = AWS_CONFIG.dynamodb.todosTable.name
     this.docClient = dynamodbClientProvider.documentClient
   }
 

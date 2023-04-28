@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { DynamoDBStreamEvent, DynamoDBStreamHandler } from 'aws-lambda'
 
 import { DIContainer } from '@/common/ioc/di-container'
-import { CognitoUserService } from '@/infrastructure/services/cognito.user.service'
+import { CognitoUserService } from '@/infrastructure/services/cognito-user.service'
 
 const userCognitoService = DIContainer.getInstance().get(CognitoUserService)
 export const handler: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent) => {

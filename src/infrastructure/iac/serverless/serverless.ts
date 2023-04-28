@@ -21,13 +21,16 @@ export const serverlessConfiguration: AWS = {
     runtime: 'nodejs18.x',
     architecture: 'arm64',
     memorySize: 128,
+    timeout: 20,
+    versionFunctions: false,
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+      NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      STAGE: '${sls:stage}'
     },
     iam: defaultIam(),
     stackTags: stackTags(),

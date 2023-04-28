@@ -1,19 +1,17 @@
-import { AWS } from '@serverless/typescript'
+import { LambdaHTTPAPIPath } from '@/infrastructure/iac/serverless/types'
 
-import { LambdaFunction, LambdaHTTPAPIPath } from '@/infrastructure/iac/serverless/types'
-
-export const awsFunction = (
-  functionName: string,
-  handler: string,
-  params: Omit<LambdaFunction, 'handler'>
-): AWS['functions'] => {
-  return {
-    [functionName]: {
-      handler,
-      ...params
-    }
-  }
-}
+// export const awsFunction = (
+//   functionName: string,
+//   handler: string,
+//   params: Omit<LambdaFunction, 'handler'>
+// ): AWS['functions'] => {
+//   return {
+//     [functionName]: {
+//       handler,
+//       ...params
+//     }
+//   }
+// }
 
 export const httpApiEvent = (
   method: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options',

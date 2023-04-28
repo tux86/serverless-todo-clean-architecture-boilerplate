@@ -4,7 +4,7 @@ import { UseCase } from '@/application/usecases/use-case'
 import { RegisterUserInput } from '@/application/usecases/user/register-user/register-user.input'
 import { UserValidator } from '@/application/validators/user.validator'
 import { User } from '@/domain/models/user'
-import { AuthService } from '@/domain/services/auth-service'
+import { AuthService } from '@/domain/services/auth.service'
 import { AuthServiceImpl } from '@/infrastructure/services/auth-service.impl'
 
 @injectable()

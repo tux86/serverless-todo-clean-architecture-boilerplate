@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify'
 import { EntityNotFound } from '@/application/errors'
 import { UseCase } from '@/application/usecases/use-case'
 import { User } from '@/domain/models/user'
-import { AuthService } from '@/domain/services/auth-service'
+import { AuthService } from '@/domain/services/auth.service'
 import { AuthServiceImpl } from '@/infrastructure/services/auth-service.impl'
 
 @injectable()

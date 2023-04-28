@@ -1,8 +1,8 @@
 import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
+import { handlersPath } from '@/infrastructure/iac/serverless/functions/index'
 import { userPool, usersTable } from '@/infrastructure/iac/serverless/ressources'
 import {
-  awsFunction,
   cognitoUserPoolEvent,
   dynamodbStreamEvent,
   httpApiEvent
@@ -15,38 +15,36 @@ const environment: AwsLambdaEnvironment = {
   USERS_TABLE: usersTable.TableName
 }
 
-const moduleName = 'src/infrastructure/handlers/user'
-
 export const userFunctions = (): AWS['functions'] => {
   return {
-    ...awsFunction('registerUser', `${moduleName}/register-user-handler.handler`, {
+    registerUser: {
+      handler: `${handlersPath}/user/register-user.handler`,
       environment,
-      timeout: 10,
       events: [httpApiEvent('post', '/users/register')]
-    }),
-    ...awsFunction('authenticateUser', `${moduleName}/authenticate-user-handler.handler`, {
+    },
+    authenticateUser: {
+      handler: `${handlersPath}/user/authenticate-user.handler`,
       environment,
-      timeout: 10,
       events: [httpApiEvent('post', '/users/auth')]
-    }),
-    ...awsFunction('getUser', `${moduleName}/get-user-handler.handler`, {
+    },
+    getUser: {
+      handler: `${handlersPath}/user/get-user.handler`,
       environment,
-      timeout: 10,
       events: [httpApiEvent('get', '/users/{email}')]
-    }),
-    ...awsFunction('deleteUser', `${moduleName}/delete-user-handler.handler`, {
+    },
+    deleteUser: {
+      handler: `${handlersPath}/user/delete-user.handler`,
       environment,
-      timeout: 10,
       events: [httpApiEvent('delete', '/users/{userId}')]
-    }),
-    ...awsFunction('preSignUp', `${moduleName}/pre-signup-handler.handler`, {
-      timeout: 10,
+    },
+    preSignUp: {
+      handler: `${handlersPath}/user/pre-signup.handler`,
       events: [cognitoUserPoolEvent(userPool.UserPoolName, 'PreSignUp', true)]
-    }),
-    ...awsFunction('userDynamodbStreamHandler', `${moduleName}/user-dynamodb-stream-handler.handler`, {
+    },
+    userDynamodbStreamHandler: {
+      handler: `${handlersPath}/user/user-dynamodb-stream.handler`,
       environment,
-      timeout: 10,
       events: [dynamodbStreamEvent(usersTable.StreamArn)]
-    })
+    }
   }
 }

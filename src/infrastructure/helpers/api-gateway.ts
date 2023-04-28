@@ -2,7 +2,7 @@ import { APIGatewayProxyResult } from 'aws-lambda'
 
 export function parseApiGwRequestBody<T>(body: string | null): T {
   try {
-    return JSON.parse(body) as T // Todo  Remove generic
+    return JSON.parse(body) as T
   } catch (error) {
     throw new Error('Invalid JSON format in request body')
   }

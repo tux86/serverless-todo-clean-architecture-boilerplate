@@ -1,40 +1,39 @@
 import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
 
+import { handlersPath } from '@/infrastructure/iac/serverless/functions/index'
 import { todosTable } from '@/infrastructure/iac/serverless/ressources'
-import { awsFunction, httpApiEvent } from '@/infrastructure/iac/serverless/utils/aws-function.util'
+import { httpApiEvent } from '@/infrastructure/iac/serverless/utils/aws-function.util'
 
 const environment: AwsLambdaEnvironment = {
   TODOS_TABLE: todosTable.TableName
 }
 
-const moduleName = 'src/infrastructure/handlers/todo'
-
 export const todoFunctions = (): AWS['functions'] => {
   return {
-    ...awsFunction('createTodo', `${moduleName}/create-todo-handler.handler`, {
+    createTodo: {
+      handler: `${handlersPath}/todo/create-todo.handler`,
       environment,
-      timeout: 10,
       events: [httpApiEvent('post', '/todos')]
-    }),
-    ...awsFunction('getTodo', `${moduleName}/get-todo-handler.handler`, {
+    },
+    getTodo: {
+      handler: `${handlersPath}/todo/get-todo.handler`,
       environment,
-      timeout: 10,
       events: [httpApiEvent('get', '/todos/{id}')]
-    }),
-    ...awsFunction('listTodos', `${moduleName}/list-todos-handler.handler`, {
+    },
+    listTodos: {
+      handler: `${handlersPath}/todo/list-todos.handler`,
       environment,
-      timeout: 10,
       events: [httpApiEvent('get', '/todos')]
-    }),
-    ...awsFunction('updateTodo', `${moduleName}/update-todo-handler.handler`, {
+    },
+    updateTodo: {
+      handler: `${handlersPath}/todo/update-todo.handler`,
       environment,
-      timeout: 10,
       events: [httpApiEvent('put', '/todos/{todoId}')]
-    }),
-    ...awsFunction('deleteTodo', `${moduleName}/delete-todo-handler.handler`, {
+    },
+    deleteTodo: {
+      handler: `${handlersPath}/todo/delete-todo.handler`,
       environment,
-      timeout: 10,
       events: [httpApiEvent('delete', '/todos/{todoId}')]
-    })
+    }
   }
 }

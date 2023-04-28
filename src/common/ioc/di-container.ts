@@ -25,7 +25,7 @@ import { DynamodbClientProvider } from '@/infrastructure/providers/dynamodb.prov
 import { DynamodbTodoRepository } from '@/infrastructure/repositories/dynamodb.todo.repository'
 import { DynamodbUserRepository } from '@/infrastructure/repositories/dynamodb.user.repository'
 import { AuthServiceImpl } from '@/infrastructure/services/auth-service.impl'
-import { CognitoUserService } from '@/infrastructure/services/cognito.user.service'
+import { CognitoUserService } from '@/infrastructure/services/cognito-user.service'
 
 export class DIContainer extends Container {
   private static instance: DIContainer | null = null

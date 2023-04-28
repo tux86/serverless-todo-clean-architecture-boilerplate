@@ -5,7 +5,7 @@ import { UseCase } from '@/application/usecases/use-case'
 import { AuthSuccessResult } from '@/application/usecases/user/authenticate-user/auth-success.result'
 import { AuthUserInput } from '@/application/usecases/user/authenticate-user/auth-user.input'
 import { UserValidator } from '@/application/validators/user.validator'
-import { AuthService } from '@/domain/services/auth-service'
+import { AuthService } from '@/domain/services/auth.service'
 import { AuthServiceImpl } from '@/infrastructure/services/auth-service.impl'
 
 @injectable()
