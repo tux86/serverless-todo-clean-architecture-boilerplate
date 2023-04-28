@@ -1,6 +1,7 @@
-import { AWS, AwsLambdaEnvironment } from '@serverless/typescript'
+import { AwsLambdaEnvironment } from '@serverless/typescript'
 
 import { userPool, usersTable } from '@/infrastructure/iac/serverless/ressources'
+import { AWSFunctions } from '@/infrastructure/iac/serverless/types'
 import {
   cognitoUserPoolEvent,
   dynamodbStreamEvent,
@@ -12,9 +13,9 @@ import { ssmParameter } from '@/infrastructure/iac/serverless/utils/common.util'
 const environment: AwsLambdaEnvironment = {
   COGNITO_USER_POOL_ID: ssmParameter('cognito/userPoolId'),
   COGNITO_APP_CLIENT_ID: ssmParameter('cognito/userPoolClientId'),
-  USERS_TABLE: usersTable.TableName
+  USERS_TABLE: usersTable.vars.TableName
 }
-export const userFunctions = (): AWS['functions'] => {
+export const userFunctions = (): AWSFunctions => {
   return {
     registerUser: {
       handler: getHandlerPath('user/register-user.handler'),
@@ -38,12 +39,12 @@ export const userFunctions = (): AWS['functions'] => {
     },
     preSignUp: {
       handler: getHandlerPath('user/pre-signup.handler'),
-      events: [cognitoUserPoolEvent(userPool.UserPoolName, 'PreSignUp', true)]
+      events: [cognitoUserPoolEvent(userPool.vars.UserPoolName, 'PreSignUp', true)]
     },
     userDynamodbStreamHandler: {
       handler: getHandlerPath('user/user-dynamodb-stream.handler'),
       environment,
-      events: [dynamodbStreamEvent(usersTable.StreamArn)]
+      events: [dynamodbStreamEvent(usersTable.vars.StreamArn)]
     }
   }
 }

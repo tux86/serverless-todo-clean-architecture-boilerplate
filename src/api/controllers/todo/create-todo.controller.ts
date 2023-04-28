@@ -7,7 +7,7 @@ import { IHttpRequest } from '@/api/protocols/http-request'
 import { CreatedHttpResponse, IHttpResponse } from '@/api/protocols/http-response'
 import { CreateTodoInput } from '@/application/usecases/todo/create-todo/create-todo.input'
 import { CreateTodoUseCase } from '@/application/usecases/todo/create-todo/create-todo.use-case'
-import { uuidV4 } from '@/common/utils/uuid-generator'
+import { uuidV4 } from '@/common/utils/uuid'
 import { Todo } from '@/domain/models/todo'
 
 @injectable()

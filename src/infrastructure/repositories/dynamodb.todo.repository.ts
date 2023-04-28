@@ -9,7 +9,7 @@ import {
 } from '@aws-sdk/lib-dynamodb'
 import { inject, injectable } from 'inversify'
 
-import { uuidV4 } from '@/common/utils/uuid-generator'
+import { uuidV4 } from '@/common/utils/uuid'
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
 import { Mapper } from '@/infrastructure/adapaters/model/mapper'

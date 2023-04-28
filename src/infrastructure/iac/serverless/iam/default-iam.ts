@@ -1,8 +1,7 @@
-import { AWS } from '@serverless/typescript'
-
 import { todosTable, userPool } from '@/infrastructure/iac/serverless/ressources'
+import { AWSIam } from '@/infrastructure/iac/serverless/types'
 
-export const defaultIam = (): AWS['provider']['iam'] => {
+export const defaultIam = (): AWSIam => {
   return {
     role: {
       statements: [
@@ -18,13 +17,13 @@ export const defaultIam = (): AWS['provider']['iam'] => {
             'dynamodb:UpdateItem',
             'dynamodb:DeleteItem'
           ],
-          Resource: [todosTable.TableArn]
+          Resource: [todosTable.vars.TableArn]
         },
         // cognito user pool
         {
           Effect: 'Allow',
           Action: ['cognito-idp:*'],
-          Resource: userPool.UserPoolArn
+          Resource: userPool.vars.UserPoolArn
         }
       ]
     }

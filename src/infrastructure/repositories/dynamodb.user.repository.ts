@@ -10,7 +10,7 @@ import {
 } from '@aws-sdk/lib-dynamodb'
 import { inject, injectable } from 'inversify'
 
-import { uuidV4 } from '@/common/utils/uuid-generator'
+import { uuidV4 } from '@/common/utils/uuid'
 import { User } from '@/domain/models/user'
 import { UserRepository } from '@/domain/repositories/user.repository'
 import { Mapper } from '@/infrastructure/adapaters/model/mapper'

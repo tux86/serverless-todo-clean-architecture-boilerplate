@@ -1,8 +1,8 @@
-import { AWS } from '@serverless/typescript'
+import { AWSResourceSet } from '@/infrastructure/iac/serverless/types'
 
 import { generatePrefixedResourceName, varToString } from '../../utils/common.util'
 
-export const dynamodbTodosTable = (): any => {
+export const dynamodbTodosTable = (): AWSResourceSet => {
   const TableName = generatePrefixedResourceName('todos')
   const TodosTable = {
     Type: 'AWS::DynamoDB::Table',
@@ -30,8 +30,10 @@ export const dynamodbTodosTable = (): any => {
   return {
     resources: {
       TodosTable
-    } as AWS['resources'],
-    TableName,
-    TableArn: { 'Fn::GetAtt': [varToString({ TodosTable }), 'Arn'] }
+    },
+    vars: {
+      TableName,
+      TableArn: { 'Fn::GetAtt': [varToString({ TodosTable }), 'Arn'] }
+    }
   }
 }

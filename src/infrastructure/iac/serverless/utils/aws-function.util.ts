@@ -1,4 +1,4 @@
-import { LambdaHTTPAPIPath } from '@/infrastructure/iac/serverless/types'
+import { AWSHttpApiPath } from '@/infrastructure/iac/serverless/types'
 
 export const getHandlerPath = (handler: string) => {
   return `src/infrastructure/handlers/${handler}`
@@ -6,7 +6,7 @@ export const getHandlerPath = (handler: string) => {
 
 export const httpApiEvent = (
   method: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options',
-  path: LambdaHTTPAPIPath
+  path: AWSHttpApiPath
 ): any => ({
   httpApi: {
     method,
