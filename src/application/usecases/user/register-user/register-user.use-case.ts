@@ -5,7 +5,7 @@ import { RegisterUserInput } from '@/application/usecases/user/register-user/reg
 import { UserValidator } from '@/application/validators/user.validator'
 import { User } from '@/domain/models/user'
 import { AuthService } from '@/domain/services/auth-service'
-import { AuthServiceImpl } from '@/infrastructure/aws/services/auth-service.impl'
+import { AuthServiceImpl } from '@/infrastructure/services/auth-service.impl'
 
 @injectable()
 export class RegisterUserUseCase implements UseCase<RegisterUserInput, User> {

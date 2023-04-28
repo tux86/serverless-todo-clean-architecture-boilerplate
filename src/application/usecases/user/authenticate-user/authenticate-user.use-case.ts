@@ -6,7 +6,7 @@ import { AuthSuccessResult } from '@/application/usecases/user/authenticate-user
 import { AuthUserInput } from '@/application/usecases/user/authenticate-user/auth-user.input'
 import { UserValidator } from '@/application/validators/user.validator'
 import { AuthService } from '@/domain/services/auth-service'
-import { AuthServiceImpl } from '@/infrastructure/aws/services/auth-service.impl'
+import { AuthServiceImpl } from '@/infrastructure/services/auth-service.impl'
 
 @injectable()
 export class AuthenticateUserUseCase implements UseCase<AuthUserInput, AuthSuccessResult | never> {

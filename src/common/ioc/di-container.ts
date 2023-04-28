@@ -21,11 +21,11 @@ import { RegisterUserUseCase } from '@/application/usecases/user/register-user/r
 import { TodoValidator } from '@/application/validators/todo.validator'
 import { UserValidator } from '@/application/validators/user.validator'
 import { logDependencyMiddleware } from '@/common/ioc/log-dependency-middleware'
-import { DynamodbClientProvider } from '@/infrastructure/aws/providers/dynamodb.provider'
-import { DynamodbTodoRepository } from '@/infrastructure/aws/repositories/dynamodb.todo.repository'
-import { DynamodbUserRepository } from '@/infrastructure/aws/repositories/dynamodb.user.repository'
-import { AuthServiceImpl } from '@/infrastructure/aws/services/auth-service.impl'
-import { CognitoUserService } from '@/infrastructure/aws/services/cognito.user.service'
+import { DynamodbClientProvider } from '@/infrastructure/providers/dynamodb.provider'
+import { DynamodbTodoRepository } from '@/infrastructure/repositories/dynamodb.todo.repository'
+import { DynamodbUserRepository } from '@/infrastructure/repositories/dynamodb.user.repository'
+import { AuthServiceImpl } from '@/infrastructure/services/auth-service.impl'
+import { CognitoUserService } from '@/infrastructure/services/cognito.user.service'
 
 export class DIContainer extends Container {
   private static instance: DIContainer | null = null
