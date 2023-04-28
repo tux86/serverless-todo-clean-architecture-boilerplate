@@ -15,7 +15,7 @@ const environment: AwsLambdaEnvironment = {
   USERS_TABLE: usersTable.TableName
 }
 
-const moduleName = 'src/infrastructure/aws/lambda/user'
+const moduleName = 'src/infrastructure/aws/handlers/user'
 
 export const userFunctions = (): AWS['functions'] => {
   return {

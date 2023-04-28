@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify'
 
-import { ListTodos } from '@/application/usecases/todo/list-todos'
-import { TYPES } from '@/common/ioc/types'
+import { ListTodosUseCase } from '@/application/usecases/todo/list-todos/list-todos.use-case'
 import { Todo } from '@/domain/models/todo'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
@@ -10,7 +9,7 @@ import { IHttpResponse, SuccessHttpResponse } from '@/presentation/protocols/htt
 
 @injectable()
 export class ListTodosController implements Controller<Todo[] | never> {
-  constructor(@inject(TYPES.ListTodos) readonly listTodos: ListTodos) {}
+  constructor(@inject(ListTodosUseCase) readonly listTodos: ListTodosUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(): Promise<IHttpResponse<Todo[]>> {

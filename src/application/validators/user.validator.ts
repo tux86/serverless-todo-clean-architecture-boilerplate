@@ -2,9 +2,9 @@ import { plainToClass } from 'class-transformer'
 import { validate, ValidationError } from 'class-validator'
 import { injectable } from 'inversify'
 
-import { AuthUserInput } from '@/application/dtos/user/auth-user-input'
-import { RegisterUserInput } from '@/application/dtos/user/register-user-input'
 import { InvalidInputError } from '@/application/errors'
+import { AuthUserInput } from '@/application/usecases/user/authenticate-user/auth-user.input'
+import { RegisterUserInput } from '@/application/usecases/user/register-user/register-user.input'
 import { formatValidationErrors } from '@/application/utlis/format-validation-errors'
 
 @injectable()

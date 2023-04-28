@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify'
 
-import { GetUser } from '@/application/usecases/user/get-user'
-import { TYPES } from '@/common/ioc/types'
+import { GetUserUseCase } from '@/application/usecases/user/get-user/get-user.use-case'
 import { User } from '@/domain/models/user'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
@@ -11,7 +10,7 @@ import { IHttpResponse, SuccessHttpResponse } from '@/presentation/protocols/htt
 
 @injectable()
 export class GetUserController implements Controller<User | never> {
-  constructor(@inject(TYPES.GetUser) readonly getUser: GetUser) {}
+  constructor(@inject(GetUserUseCase) readonly getUser: GetUserUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<{ userId: string }>): Promise<IHttpResponse<User>> {

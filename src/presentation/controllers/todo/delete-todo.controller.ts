@@ -1,22 +1,16 @@
 import { inject, injectable } from 'inversify'
 
-import { DeleteTodo } from '@/application/usecases/todo/delete-todo'
-import { TYPES } from '@/common/ioc/types'
+import { DeleteTodoUseCase } from '@/application/usecases/todo/delete-todo/delete-todo.use-case'
 import { Todo } from '@/domain/models/todo'
-import { Logger } from '@/infrastructure/utils/Logger'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
 import { Controller } from '@/presentation/interfaces/controller'
 import { IHttpRequest } from '@/presentation/protocols/http-request'
 import { DeletedHttpResponse, IHttpResponse } from '@/presentation/protocols/http-response'
 
-const logger = Logger.getInstance()
-
 @injectable()
 export class DeleteTodoController implements Controller<Todo | never> {
-  constructor(@inject(TYPES.DeleteTodo) readonly deleteTodo: DeleteTodo) {
-    logger.debug(`------------------- initializing ${this.constructor.name} -------------------`)
-  }
+  constructor(@inject(DeleteTodoUseCase) readonly deleteTodo: DeleteTodoUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<{ todoId: string }>): Promise<IHttpResponse<Todo>> {

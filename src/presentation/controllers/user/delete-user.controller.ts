@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify'
 
-import { DeleteUser } from '@/application/usecases/user/delete-user'
-import { TYPES } from '@/common/ioc/types'
+import { DeleteUserUseCase } from '@/application/usecases/user/delete-user/delete-user.use-case'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
 import { Controller } from '@/presentation/interfaces/controller'
@@ -10,7 +9,7 @@ import { DeletedHttpResponse, IHttpResponse } from '@/presentation/protocols/htt
 
 @injectable()
 export class DeleteUserController implements Controller<void | never> {
-  constructor(@inject(TYPES.DeleteUser) readonly deleteUser: DeleteUser) {}
+  constructor(@inject(DeleteUserUseCase) readonly deleteUser: DeleteUserUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<{ userId: string }>): Promise<IHttpResponse<void>> {

@@ -7,7 +7,7 @@ const environment: AwsLambdaEnvironment = {
   TODOS_TABLE: todosTable.TableName
 }
 
-const moduleName = 'src/infrastructure/aws/lambda/todo'
+const moduleName = 'src/infrastructure/aws/handlers/todo'
 
 export const todoFunctions = (): AWS['functions'] => {
   return {

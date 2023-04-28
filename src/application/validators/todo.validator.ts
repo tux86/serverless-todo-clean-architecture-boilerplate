@@ -2,9 +2,9 @@ import { plainToClass } from 'class-transformer'
 import { validate, ValidationError } from 'class-validator'
 import { injectable } from 'inversify'
 
-import { CreateTodoInput } from '@/application/dtos/todo/create-todo.input'
-import { UpdateTodoInput } from '@/application/dtos/todo/update-todo-input'
 import { InvalidInputError } from '@/application/errors'
+import { CreateTodoInput } from '@/application/usecases/todo/create-todo/create-todo.input'
+import { UpdateTodoInput } from '@/application/usecases/todo/update-todo/update-todo-input'
 import { formatValidationErrors } from '@/application/utlis/format-validation-errors'
 
 @injectable()

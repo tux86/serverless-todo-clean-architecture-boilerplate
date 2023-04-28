@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify'
 
-import { GetTodo } from '@/application/usecases/todo/get-todo'
-import { TYPES } from '@/common/ioc/types'
+import { GetTodoUseCase } from '@/application/usecases/todo/get-todo/get-todo.use-case.'
 import { Todo } from '@/domain/models/todo'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
@@ -11,7 +10,7 @@ import { IHttpResponse, SuccessHttpResponse } from '@/presentation/protocols/htt
 
 @injectable()
 export class GetTodoController implements Controller<Todo | never> {
-  constructor(@inject(TYPES.GetTodo) readonly getTodo: GetTodo) {}
+  constructor(@inject(GetTodoUseCase) readonly getTodo: GetTodoUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<{ todoId: string }>): Promise<IHttpResponse<Todo>> {

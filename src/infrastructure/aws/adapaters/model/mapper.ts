@@ -1,5 +1,6 @@
 export interface IMapper<TSource, TDestination> {
   toDomainEntity(source: TSource): TDestination
+
   toPersistenceModel(destination: TDestination): TSource
 }
 

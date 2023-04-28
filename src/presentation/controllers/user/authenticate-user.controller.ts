@@ -1,23 +1,17 @@
 import { inject, injectable } from 'inversify'
 
-import { AuthSuccessResult } from '@/application/dtos/user/auth-success-result'
-import { AuthUserInput } from '@/application/dtos/user/auth-user-input'
-import { AuthenticateUser } from '@/application/usecases/user/authenticate-user'
-import { TYPES } from '@/common/ioc/types'
-import { Logger } from '@/infrastructure/utils/Logger'
+import { AuthSuccessResult } from '@/application/usecases/user/authenticate-user/auth-success.result'
+import { AuthUserInput } from '@/application/usecases/user/authenticate-user/auth-user.input'
+import { AuthenticateUserUseCase } from '@/application/usecases/user/authenticate-user/authenticate-user.use-case'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
 import { Controller } from '@/presentation/interfaces/controller'
 import { IHttpRequest } from '@/presentation/protocols/http-request'
 import { IHttpResponse, SuccessHttpResponse } from '@/presentation/protocols/http-response'
 
-const logger = Logger.getInstance()
-
 @injectable()
 export class AuthenticateUserController implements Controller<AuthSuccessResult | never> {
-  constructor(@inject(TYPES.AuthenticateUser) readonly authenticateUser: AuthenticateUser) {
-    logger.info('----------------------- initializing AuthenticateUserController -------------------')
-  }
+  constructor(@inject(AuthenticateUserUseCase) readonly authenticateUser: AuthenticateUserUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<AuthUserInput>): Promise<IHttpResponse<AuthSuccessResult>> {

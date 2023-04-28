@@ -1,8 +1,7 @@
 import { inject, injectable } from 'inversify'
 
-import { UpdateTodoInput } from '@/application/dtos/todo/update-todo-input'
-import { UpdateTodo } from '@/application/usecases/todo/update-todo'
-import { TYPES } from '@/common/ioc/types'
+import { UpdateTodoInput } from '@/application/usecases/todo/update-todo/update-todo-input'
+import { UpdateTodoUseCase } from '@/application/usecases/todo/update-todo/update-todo.use-case'
 import { Todo } from '@/domain/models/todo'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
@@ -12,7 +11,7 @@ import { IHttpResponse, UpdatedHttpResponse } from '@/presentation/protocols/htt
 
 @injectable()
 export class UpdateTodoController implements Controller<Todo | never> {
-  constructor(@inject(TYPES.UpdateTodo) readonly updateTodo: UpdateTodo) {}
+  constructor(@inject(UpdateTodoUseCase) readonly updateTodo: UpdateTodoUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<UpdateTodoInput, { todoId: string }>): Promise<IHttpResponse<Todo>> {

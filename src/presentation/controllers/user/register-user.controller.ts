@@ -1,8 +1,7 @@
 import { inject, injectable } from 'inversify'
 
-import { RegisterUserInput } from '@/application/dtos/user/register-user-input'
-import { RegisterUser } from '@/application/usecases/user/register-user'
-import { TYPES } from '@/common/ioc/types'
+import { RegisterUserInput } from '@/application/usecases/user/register-user/register-user.input'
+import { RegisterUserUseCase } from '@/application/usecases/user/register-user/register-user.use-case'
 import { User } from '@/domain/models/user'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
@@ -12,7 +11,7 @@ import { CreatedHttpResponse, IHttpResponse } from '@/presentation/protocols/htt
 
 @injectable()
 export class RegisterUserController implements Controller<User | never> {
-  constructor(@inject(TYPES.RegisterUser) readonly registerUser: RegisterUser) {}
+  constructor(@inject(RegisterUserUseCase) readonly registerUser: RegisterUserUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<RegisterUserInput>): Promise<IHttpResponse<User>> {

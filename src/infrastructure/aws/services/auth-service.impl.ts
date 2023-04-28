@@ -1,24 +1,18 @@
 import { inject, injectable } from 'inversify'
 
-import { AuthSuccessResult } from '@/application/dtos/user/auth-success-result'
-import { TYPES } from '@/common/ioc/types'
+import { AuthSuccessResult } from '@/application/usecases/user/authenticate-user/auth-success.result'
 import { User } from '@/domain/models/user'
 import { AuthService } from '@/domain/services/auth-service'
-import { UserDynamodbRepository } from '@/infrastructure/aws/repositories/user.dynamodb.repository'
-import { UserCognitoService } from '@/infrastructure/aws/services/user.cognito.service'
-import { Logger } from '@/infrastructure/utils/Logger'
-
-const logger = Logger.getInstance()
+import { DynamodbUserRepository } from '@/infrastructure/aws/repositories/dynamodb.user.repository'
+import { CognitoUserService } from '@/infrastructure/aws/services/cognito.user.service'
 
 @injectable()
 export class AuthServiceImpl implements AuthService {
   constructor(
-    @inject(TYPES.UserCognitoService) readonly userCognitoService: UserCognitoService,
-    @inject(TYPES.UserDynamodbRepository)
-    readonly userRepository: UserDynamodbRepository
-  ) {
-    logger.info('----------------------- initializing AuthServiceImpl -------------------')
-  }
+    @inject(CognitoUserService) readonly userCognitoService: CognitoUserService,
+    @inject(DynamodbUserRepository)
+    readonly userRepository: DynamodbUserRepository
+  ) {}
 
   async registerUser(user: User, password: string): Promise<User> {
     // TODO: should be safe using a transaction

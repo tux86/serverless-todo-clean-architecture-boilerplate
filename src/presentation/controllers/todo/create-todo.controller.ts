@@ -1,24 +1,18 @@
 import { inject, injectable } from 'inversify'
 
-import { CreateTodoInput } from '@/application/dtos/todo/create-todo.input'
-import { CreateTodo } from '@/application/usecases/todo/create-todo'
-import { TYPES } from '@/common/ioc/types'
+import { CreateTodoInput } from '@/application/usecases/todo/create-todo/create-todo.input'
+import { CreateTodoUseCase } from '@/application/usecases/todo/create-todo/create-todo.use-case'
 import { Todo } from '@/domain/models/todo'
 import { uuidV4 } from '@/domain/utils/uuid-generator'
-import { Logger } from '@/infrastructure/utils/Logger'
 import { WithInterceptor } from '@/presentation/decorators/interceptor.decorator'
 import { ErrorInterceptor } from '@/presentation/interceptors/error.interceptor'
 import { Controller } from '@/presentation/interfaces/controller'
 import { IHttpRequest } from '@/presentation/protocols/http-request'
 import { CreatedHttpResponse, IHttpResponse } from '@/presentation/protocols/http-response'
 
-const logger = Logger.getInstance()
-
 @injectable()
 export class CreateTodoController implements Controller<Todo | never> {
-  constructor(@inject(TYPES.CreateTodo) readonly createTodo: CreateTodo) {
-    logger.debug(`------------------- initializing ${this.constructor.name} -------------------`)
-  }
+  constructor(@inject(CreateTodoUseCase) readonly createTodo: CreateTodoUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<CreateTodoInput>): Promise<IHttpResponse<Todo>> {

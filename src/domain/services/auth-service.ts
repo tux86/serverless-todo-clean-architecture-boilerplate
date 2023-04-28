@@ -1,4 +1,4 @@
-import { AuthSuccessResult } from '@/application/dtos/user/auth-success-result'
+import { AuthSuccessResult } from '@/application/usecases/user/authenticate-user/auth-success.result'
 
 import { User } from '../models/user'
 

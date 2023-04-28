@@ -4,8 +4,6 @@ import { mapDomainErrorToHttpError } from '@/presentation/mappers/domain-to-http
 import { IHttpRequest } from '@/presentation/protocols/http-request'
 import { HttpResponse, IHttpResponse } from '@/presentation/protocols/http-response'
 
-const logger = Logger.getInstance()
-
 export class ErrorInterceptor implements Interceptor<IHttpRequest, IHttpResponse> {
   onRequest(request: IHttpRequest): IHttpRequest {
     return request
@@ -17,7 +15,7 @@ export class ErrorInterceptor implements Interceptor<IHttpRequest, IHttpResponse
 
   onError(error: Error): IHttpResponse {
     // log error to console
-    logger.error(error.message, error)
+    Logger.getInstance().error(error.message, error)
 
     const { statusCode, message } = mapDomainErrorToHttpError(error)
 
