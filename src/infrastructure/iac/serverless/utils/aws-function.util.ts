@@ -1,17 +1,8 @@
 import { LambdaHTTPAPIPath } from '@/infrastructure/iac/serverless/types'
 
-// export const awsFunction = (
-//   functionName: string,
-//   handler: string,
-//   params: Omit<LambdaFunction, 'handler'>
-// ): AWS['functions'] => {
-//   return {
-//     [functionName]: {
-//       handler,
-//       ...params
-//     }
-//   }
-// }
+export const getHandlerPath = (handler: string) => {
+  return `src/infrastructure/handlers/${handler}`
+}
 
 export const httpApiEvent = (
   method: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options',
