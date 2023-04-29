@@ -12,7 +12,7 @@ export class GetUserUseCase implements UseCase<GetUserInput, User> {
     this.validator.validateAndThrow(GetUserInput, input)
     const user = await this.userRepository.findById(input.userId)
     if (!user) {
-      throw new EntityNotFound(User.name, input.userId)
+      throw new EntityNotFound('User', input.userId)
     }
     return user
   }

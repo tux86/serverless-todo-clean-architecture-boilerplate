@@ -11,29 +11,29 @@ const environment: AwsLambdaEnvironment = {
 export const todoFunctions = (): AWSFunctions => {
   return {
     createTodo: {
-      handler: getHandlerPath('todo/create-todo.handler'),
+      handler: getHandlerPath('todo-api-index.createTodoHandler'),
       environment,
       events: [httpApiEvent('post', '/todos')]
     },
-    getTodo: {
-      handler: getHandlerPath('todo/get-todo.handler'),
-      environment,
-      events: [httpApiEvent('get', '/todos/{todoId}')]
-    },
-    listTodos: {
-      handler: getHandlerPath('todo/list-todos.handler'),
-      environment,
-      events: [httpApiEvent('get', '/todos')]
-    },
     updateTodo: {
-      handler: getHandlerPath('todo/update-todo.handler'),
+      handler: getHandlerPath('todo-api-index.updateTodoHandler'),
       environment,
       events: [httpApiEvent('put', '/todos/{todoId}')]
     },
     deleteTodo: {
-      handler: getHandlerPath('todo/delete-todo.handler'),
+      handler: getHandlerPath('todo-api-index.deleteTodoHandler'),
       environment,
       events: [httpApiEvent('delete', '/todos/{todoId}')]
+    },
+    getTodo: {
+      handler: getHandlerPath('todo-api-index.getTodoHandler'),
+      environment,
+      events: [httpApiEvent('get', '/todos/{todoId}')]
+    },
+    listTodos: {
+      handler: getHandlerPath('todo-api-index.listTodosHandler'),
+      environment,
+      events: [httpApiEvent('get', '/todos')]
     }
   }
 }

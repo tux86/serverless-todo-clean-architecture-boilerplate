@@ -10,13 +10,12 @@ export class RegisterUserUseCase implements UseCase<RegisterUserInput, User> {
 
   async execute(input: RegisterUserInput): Promise<User> {
     this.validator.validateAndThrow(RegisterUserInput, input)
-    const user = new User({
+    const user: User = {
       userId: uuidV4(),
       firstName: input.firstName,
       lastName: input.lastName,
       email: input.email
-    })
-
+    }
     return await this.authService.registerUser(user, input.password)
   }
 }

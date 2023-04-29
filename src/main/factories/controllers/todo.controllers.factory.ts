@@ -12,6 +12,7 @@ import { ListTodosController } from '@/presentation/controllers/todo/list-todos.
 import { UpdateTodoController } from '@/presentation/controllers/todo/update-todo.controller'
 
 export const createCreateTodoController = () => {
+  console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& createCreateTodoController')
   const createTodoUseCase = new CreateTodoUseCase(createTodoRepository(), new TodoValidator())
   return new CreateTodoController(createTodoUseCase)
 }

@@ -1,3 +1,5 @@
+import * as console from 'console'
+
 import { WithInterceptor } from '@/application/decorators/interceptor.decorator'
 import { CreateTodoInput } from '@/application/dtos/todo/create-todo.input'
 import { Controller } from '@/application/ports/controller'
@@ -16,6 +18,8 @@ export class CreateTodoController implements Controller<Todo | never> {
   async handleRequest(request: IHttpRequest<CreateTodoInput>): Promise<IHttpResponse<Todo>> {
     const userId = uuidV4() // TODO should be retrieved from token
     const input = new CreateTodoInput({ userId, ...request.body })
+
+    console.log(input)
     const todo = await this.createTodo.execute(input)
     return new CreatedHttpResponse(todo)
   }

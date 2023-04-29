@@ -2,7 +2,6 @@ import { DeleteUserInput } from '@/application/dtos/user/delete-user.input'
 import { EntityNotFound } from '@/application/errors'
 import { UseCase } from '@/application/usecases/use-case'
 import { UserValidator } from '@/application/validators/user.validator'
-import { User } from '@/domain/models/user'
 import { UserRepository } from '@/domain/repositories/user.repository'
 
 export class DeleteUserUseCase implements UseCase<DeleteUserInput, void> {
@@ -12,7 +11,7 @@ export class DeleteUserUseCase implements UseCase<DeleteUserInput, void> {
     this.validator.validateAndThrow(DeleteUserInput, input)
     const user = await this.userRepository.findById(input.userId)
     if (!user) {
-      throw new EntityNotFound(User.name, input.userId)
+      throw new EntityNotFound('User', input.userId)
     }
     await this.userRepository.delete(input.userId)
   }

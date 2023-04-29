@@ -1,4 +1,4 @@
-export interface Todo {
+export class Todo {
   todoId: string
 
   title: string

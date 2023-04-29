@@ -13,31 +13,31 @@ const environment: AwsLambdaEnvironment = {
 export const userFunctions = (): AWSFunctions => {
   return {
     registerUser: {
-      handler: getHandlerPath('user/register-user.handler'),
+      handler: getHandlerPath('user-api-index.registerUserHandler'),
       environment,
       events: [httpApiEvent('post', '/users/register')]
     },
     authenticateUser: {
-      handler: getHandlerPath('user/authenticate-user.handler'),
+      handler: getHandlerPath('user-api-index.authenticateUserHandler'),
       environment,
       events: [httpApiEvent('post', '/users/auth')]
     },
     getUser: {
-      handler: getHandlerPath('user/get-user.handler'),
+      handler: getHandlerPath('user-api-index.getUserHandler'),
       environment,
       events: [httpApiEvent('get', '/users/{userId}')]
     },
     deleteUser: {
-      handler: getHandlerPath('user/delete-user.handler'),
+      handler: getHandlerPath('user-api-index.deleteUserHandler'),
       environment,
       events: [httpApiEvent('delete', '/users/{userId}')]
     },
     preSignUp: {
-      handler: getHandlerPath('user/pre-signup.handler'),
+      handler: getHandlerPath('user-cognito-triggers-index.preSignUpHandler'),
       events: [cognitoUserPoolEvent(userPool.vars.UserPoolName, 'PreSignUp', true)]
     },
     userDynamodbStreamHandler: {
-      handler: getHandlerPath('user/user-dynamodb-stream.handler'),
+      handler: getHandlerPath('user-dynamodb-stream-index.dynamoDBStreamHandler'),
       environment,
       events: [dynamodbStreamEvent(usersTable.vars.StreamArn)]
     }
