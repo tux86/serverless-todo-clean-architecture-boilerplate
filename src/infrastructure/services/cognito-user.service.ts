@@ -9,7 +9,7 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider'
 import { injectable } from 'inversify'
 
-import { AuthSuccessResult } from '@/application/usecases/user/authenticate-user/auth-success.result'
+import { AuthSuccessResult } from '@/application/dtos/user/auth-success.result'
 import { AuthUser } from '@/domain/models/auth-user'
 import { AWS_CONFIG } from '@/infrastructure/config'
 import { COGNITO_CONFIG } from '@/infrastructure/config/cognito.config'

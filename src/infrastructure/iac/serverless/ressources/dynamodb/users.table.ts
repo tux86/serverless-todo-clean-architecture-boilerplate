@@ -1,6 +1,6 @@
 import { AWSResourceSet } from '@/infrastructure/iac/serverless/types'
 
-import { generatePrefixedResourceName, varToString } from '../../utils/common.util'
+import { generatePrefixedResourceName, varToString } from '../../utils'
 
 export const dynamodbUsersTable = (): AWSResourceSet => {
   const TableName = generatePrefixedResourceName('users')

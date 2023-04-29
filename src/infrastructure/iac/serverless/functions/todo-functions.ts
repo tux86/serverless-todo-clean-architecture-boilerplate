@@ -2,7 +2,7 @@ import { AwsLambdaEnvironment } from '@serverless/typescript'
 
 import { todosTable } from '@/infrastructure/iac/serverless/ressources'
 import { AWSFunctions } from '@/infrastructure/iac/serverless/types'
-import { getHandlerPath, httpApiEvent } from '@/infrastructure/iac/serverless/utils/aws-function.util'
+import { getHandlerPath, httpApiEvent } from '@/infrastructure/iac/serverless/utils'
 
 const environment: AwsLambdaEnvironment = {
   TODOS_TABLE: todosTable.vars.TableName
@@ -18,7 +18,7 @@ export const todoFunctions = (): AWSFunctions => {
     getTodo: {
       handler: getHandlerPath('todo/get-todo.handler'),
       environment,
-      events: [httpApiEvent('get', '/todos/{id}')]
+      events: [httpApiEvent('get', '/todos/{todoId}')]
     },
     listTodos: {
       handler: getHandlerPath('todo/list-todos.handler'),

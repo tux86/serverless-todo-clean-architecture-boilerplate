@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 
-import { AuthSuccessResult } from '@/application/usecases/user/authenticate-user/auth-success.result'
+import { AuthSuccessResult } from '@/application/dtos/user/auth-success.result'
 import { User } from '@/domain/models/user'
 import { AuthService } from '@/domain/services/auth.service'
 import { DynamodbUserRepository } from '@/infrastructure/repositories/dynamodb.user.repository'

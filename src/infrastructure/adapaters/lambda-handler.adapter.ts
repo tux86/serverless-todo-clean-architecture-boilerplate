@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 
-import { Controller } from '@/api/interfaces/controller'
-import { IHttpRequest } from '@/api/protocols/http-request'
+import { Controller } from '@/application/ports/controller'
+import { IHttpRequest } from '@/application/ports/http-request'
 import { parseApiGwRequestBody, toApiGwResponse } from '@/infrastructure/helpers/api-gateway'
 
 export const lambdaHandlerAdapter = <T>(
