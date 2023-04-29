@@ -2,22 +2,22 @@ import { IsOptional, IsString, IsUUID, MaxLength } from 'class-validator'
 
 export class UpdateTodoInput {
   @IsUUID()
-  todoId: string
+  readonly todoId: string
 
   @IsOptional()
   @IsString()
   @MaxLength(20)
-  title?: string
+  readonly title?: string
 
   @IsOptional()
   @IsString()
   @MaxLength(500)
-  description?: string
+  readonly description?: string
 
   @IsOptional()
   @IsString()
   @MaxLength(20)
-  status?: string
+  readonly status?: string
 
   constructor(props: UpdateTodoInput) {
     this.todoId = props.todoId

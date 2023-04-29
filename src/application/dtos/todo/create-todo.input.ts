@@ -4,21 +4,21 @@ export class CreateTodoInput {
   @IsNotEmpty()
   @IsString()
   @MaxLength(100)
-  title: string
+  readonly title: string
 
   @IsNotEmpty()
   @IsString()
   @MaxLength(500)
-  description: string
+  readonly description: string
 
   @IsNotEmpty()
   @IsUUID()
-  userId: string
+  readonly userId: string
 
   @IsOptional()
   @IsString()
   @MaxLength(20)
-  status?: string
+  readonly status?: string
 
   constructor(props: CreateTodoInput) {
     this.title = props.title

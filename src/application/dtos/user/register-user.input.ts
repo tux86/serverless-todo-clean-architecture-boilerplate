@@ -5,26 +5,26 @@ export class RegisterUserInput {
   @IsString()
   @MinLength(1)
   @MaxLength(50)
-  firstName: string
+  readonly firstName: string
 
   @IsNotEmpty()
   @IsString()
   @MinLength(1)
   @MaxLength(50)
-  lastName: string
+  readonly lastName: string
 
   @IsNotEmpty()
   @IsEmail()
-  email: string
+  readonly email: string
 
   @IsNotEmpty()
   @MinLength(8)
   @MaxLength(50)
-  password: string
+  readonly password: string
 
   constructor(props: RegisterUserInput) {
-    this.firstName = props.firstName
-    this.lastName = props.lastName
+    this.firstName = props.firstName.trim()
+    this.lastName = props.lastName.trim()
     this.email = this.canonicalizeEmail(props.email)
     this.password = props.password
   }

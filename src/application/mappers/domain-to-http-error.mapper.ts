@@ -2,6 +2,7 @@ import {
   ApplicationError,
   AuthFailedError,
   BadRequestError,
+  ConflictError,
   EntityNotFound,
   HttpError,
   InputValidationError,
@@ -18,11 +19,11 @@ interface ErrorMapping {
 
 // Create an error mapping object, which maps the domain error names to their corresponding HTTP error constructors.
 const errorMappings: ErrorMapping = {
+  [ApplicationError.name]: BadRequestError,
   [EntityNotFound.name]: NotFoundError,
   [InputValidationError.name]: BadRequestError,
-  [ApplicationError.name]: BadRequestError,
   [AuthFailedError.name]: UnauthorizedError,
-  [UserAccountAlreadyExists.name]: BadRequestError
+  [UserAccountAlreadyExists.name]: ConflictError
 }
 
 // The mapDomainErrorToHttpError function takes a domain error and returns an instance of the corresponding HTTP error.

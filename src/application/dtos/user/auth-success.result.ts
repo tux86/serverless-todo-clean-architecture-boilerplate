@@ -1,5 +1,5 @@
 export class AuthSuccessResult {
-  token: string
+  readonly token: string
 
   constructor(token: string) {
     this.token = token

@@ -2,10 +2,10 @@ import { IsEmail, IsNotEmpty } from 'class-validator'
 
 export class AuthUserInput {
   @IsEmail()
-  email: string
+  readonly email: string
 
   @IsNotEmpty()
-  password: string
+  readonly password: string
 
   constructor(props: AuthUserInput) {
     this.email = props.email
