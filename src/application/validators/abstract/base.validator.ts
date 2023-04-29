@@ -3,7 +3,7 @@ import { validateSync, ValidatorOptions } from 'class-validator'
 
 import { InputValidationError } from '@/application/errors'
 import { validationErrorsToString } from '@/application/utlis/validation/validation-errors-to-string'
-import { Constructor } from '@/common/types'
+import { Constructor } from '@/shared/types'
 
 export class BaseValidator {
   validateAndThrow<T extends object>(cls: Constructor<T>, object: T, validatorOptions?: ValidatorOptions): void {

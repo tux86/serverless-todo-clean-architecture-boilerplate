@@ -8,7 +8,6 @@ import {
   UpdateCommand
 } from '@aws-sdk/lib-dynamodb'
 
-import { uuidV4 } from '@/common/helpers/uuid'
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
 import { Mapper } from '@/infrastructure/adapaters/model/mapper'
@@ -16,6 +15,7 @@ import { TodoAdapter } from '@/infrastructure/adapaters/model/todo.adapter'
 import { AWS_CONFIG } from '@/infrastructure/config'
 import { TodoEntity } from '@/infrastructure/entities/todo.entity'
 import { DynamodbClientProvider } from '@/infrastructure/providers/dynamodb.provider'
+import { uuidV4 } from '@/shared/helpers/uuid'
 
 export class DynamodbTodoRepository implements Repository<Todo> {
   private readonly tableName: string

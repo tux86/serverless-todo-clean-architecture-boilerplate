@@ -9,7 +9,6 @@ import {
   UpdateCommand
 } from '@aws-sdk/lib-dynamodb'
 
-import { uuidV4 } from '@/common/helpers/uuid'
 import { User } from '@/domain/models/user'
 import { UserRepository } from '@/domain/repositories/user.repository'
 import { Mapper } from '@/infrastructure/adapaters/model/mapper'
@@ -17,6 +16,7 @@ import { UserAdapter } from '@/infrastructure/adapaters/model/user.adapter'
 import { AWS_CONFIG } from '@/infrastructure/config'
 import { UserEntity } from '@/infrastructure/entities/user.entity'
 import { DynamodbClientProvider } from '@/infrastructure/providers/dynamodb.provider'
+import { uuidV4 } from '@/shared/helpers/uuid'
 
 export class DynamodbUserRepository implements UserRepository {
   private readonly tableName: string

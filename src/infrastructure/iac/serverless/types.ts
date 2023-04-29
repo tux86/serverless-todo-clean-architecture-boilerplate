@@ -1,6 +1,6 @@
 import { AWS } from '@serverless/typescript'
 
-import { Dictionary } from '@/common/types'
+import { Dictionary } from '@/shared/types'
 
 // aws types
 export type AWSFunction = Exclude<AWS['functions'], undefined>[string]
