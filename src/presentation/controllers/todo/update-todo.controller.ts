@@ -13,7 +13,7 @@ export class UpdateTodoController implements Controller<Todo | never> {
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<UpdateTodoInput, { todoId: string }>): Promise<IHttpResponse<Todo>> {
-    const { todoId } = request.query
+    const { todoId } = request.params
     const input = new UpdateTodoInput({ todoId, ...request.body })
     const todo = await this.updateTodo.execute(input)
     return new UpdatedHttpResponse(todo)

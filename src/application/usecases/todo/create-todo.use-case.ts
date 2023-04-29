@@ -16,7 +16,8 @@ export class CreateTodoUseCase implements UseCase<CreateTodoInput, Todo> {
       userId: input.userId,
       title: input.title,
       description: input.description,
-      status: undefined
+      status: undefined,
+      createdAt: new Date()
     }
 
     return this.todoRepository.create(todo)

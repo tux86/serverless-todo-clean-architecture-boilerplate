@@ -9,7 +9,12 @@ export class UpdateTodoUseCase implements UseCase<UpdateTodoInput, Todo> {
 
   async execute(input: UpdateTodoInput): Promise<Todo> {
     this.validator.validateAndThrow(UpdateTodoInput, input)
-    const todo = input as Todo
+
+    const todo: Partial<Todo> = {
+      ...input,
+      updatedAt: new Date()
+    }
+
     return this.todoRepository.update(todo)
   }
 }

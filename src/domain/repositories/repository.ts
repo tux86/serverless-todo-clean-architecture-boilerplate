@@ -5,7 +5,7 @@ export interface Repository<T> {
 
   findAll(): Promise<T[]>
 
-  update(item: T): Promise<T>
+  update(item: Partial<T>): Promise<T>
 
   delete(id: string): Promise<void>
 }

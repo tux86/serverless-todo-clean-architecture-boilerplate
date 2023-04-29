@@ -1,4 +1,4 @@
-export class Todo {
+export interface Todo {
   todoId: string
 
   title: string
@@ -8,4 +8,7 @@ export class Todo {
   userId: string
 
   status?: string
+
+  createdAt: Date
+  updatedAt?: Date
 }
