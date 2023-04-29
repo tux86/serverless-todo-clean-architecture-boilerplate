@@ -2,7 +2,7 @@ import { plainToInstance } from 'class-transformer'
 import { validateSync, ValidatorOptions } from 'class-validator'
 import { injectable } from 'inversify'
 
-import { InputValidationError } from '@/application/errors/validation.error'
+import { InputValidationError } from '@/application/errors'
 import { validationErrorsToString } from '@/application/utlis/validation/validation-errors-to-string'
 import { Constructor } from '@/common/types'
 

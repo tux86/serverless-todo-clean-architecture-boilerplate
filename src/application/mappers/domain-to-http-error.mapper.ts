@@ -1,16 +1,14 @@
 import {
+  ApplicationError,
+  AuthFailedError,
   BadRequestError,
+  EntityNotFound,
   HttpError,
+  InputValidationError,
   InternalServerError,
   NotFoundError,
   UnauthorizedError
-} from '@/application/errors/http.error'
-import {
-  ApplicationError,
-  AuthFailedError,
-  EntityNotFound,
-  InputValidationError
-} from '@/application/errors/validation.error'
+} from '@/application/errors'
 
 // Define an interface for the error mapping object.
 interface ErrorMapping {

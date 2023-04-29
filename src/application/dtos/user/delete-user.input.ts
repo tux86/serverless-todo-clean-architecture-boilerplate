@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsUUID } from 'class-validator'
 
-export class ListTodoInput {
+export class DeleteUserInput {
   @IsNotEmpty()
   @IsUUID()
   userId: string
 
-  constructor(props: ListTodoInput) {
+  constructor(props: DeleteUserInput) {
     this.userId = props.userId
   }
 }

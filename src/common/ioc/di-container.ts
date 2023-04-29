@@ -1,5 +1,6 @@
 import { Container } from 'inversify'
 
+import { Controller } from '@/application/ports/controller'
 import { CreateTodoUseCase } from '@/application/usecases/todo/create-todo.use-case'
 import { DeleteTodoUseCase } from '@/application/usecases/todo/delete-todo.use-case'
 import { GetTodoUseCase } from '@/application/usecases/todo/get-todo.use-case.'
@@ -13,6 +14,7 @@ import { BaseValidator } from '@/application/validators/abstract/base.validator'
 import { TodoValidator } from '@/application/validators/todo.validator'
 import { UserValidator } from '@/application/validators/user.validator'
 import { logDependencyMiddleware } from '@/common/ioc/log-dependency-middleware'
+import { TYPES } from '@/common/ioc/types'
 import { DynamodbClientProvider } from '@/infrastructure/providers/dynamodb.provider'
 import { DynamodbTodoRepository } from '@/infrastructure/repositories/dynamodb.todo.repository'
 import { DynamodbUserRepository } from '@/infrastructure/repositories/dynamodb.user.repository'
@@ -46,41 +48,42 @@ export class DIContainer extends Container {
 
   private bindDependencies(): void {
     // Controllers
-    this.bind(CreateTodoController).to(CreateTodoController)
-    this.bind(DeleteTodoController).to(DeleteTodoController)
-    this.bind(GetTodoController).to(GetTodoController)
-    this.bind(ListTodosController).to(ListTodosController)
-    this.bind(UpdateTodoController).to(UpdateTodoController)
-    this.bind(AuthenticateUserController).to(AuthenticateUserController)
-    this.bind(DeleteUserController).to(DeleteUserController)
-    this.bind(GetUserController).to(GetUserController)
-    this.bind(RegisterUserController).to(RegisterUserController)
+    this.bind<Controller>(TYPES.CreateTodoController).to(CreateTodoController)
+    this.bind<Controller>(TYPES.DeleteTodoController).to(DeleteTodoController)
+    this.bind<Controller>(TYPES.GetTodoController).to(GetTodoController)
+    this.bind<Controller>(TYPES.ListTodosController).to(ListTodosController)
+    this.bind<Controller>(TYPES.UpdateTodoController).to(UpdateTodoController)
+    this.bind<Controller>(TYPES.AuthenticateUserController).to(AuthenticateUserController)
+    this.bind<Controller>(TYPES.DeleteUserController).to(DeleteUserController)
+    this.bind<Controller>(TYPES.GetUserController).to(GetUserController)
+    this.bind<Controller>(TYPES.RegisterUserController).to(RegisterUserController)
 
     // Use-cases
-    this.bind(CreateTodoUseCase).to(CreateTodoUseCase)
-    this.bind(DeleteTodoUseCase).to(DeleteTodoUseCase)
-    this.bind(GetTodoUseCase).to(GetTodoUseCase)
-    this.bind(ListTodosUseCase).to(ListTodosUseCase)
-    this.bind(UpdateTodoUseCase).to(UpdateTodoUseCase)
-    this.bind(AuthenticateUserUseCase).to(AuthenticateUserUseCase)
-    this.bind(DeleteUserUseCase).to(DeleteUserUseCase)
-    this.bind(GetUserUseCase).to(GetUserUseCase)
-    this.bind(RegisterUserUseCase).to(RegisterUserUseCase)
+    this.bind(TYPES.CreateTodoUseCase).to(CreateTodoUseCase)
+    this.bind(TYPES.DeleteTodoUseCase).to(DeleteTodoUseCase)
+    this.bind(TYPES.GetTodoUseCase).to(GetTodoUseCase)
+    this.bind(TYPES.ListTodosUseCase).to(ListTodosUseCase)
+    this.bind(TYPES.UpdateTodoUseCase).to(UpdateTodoUseCase)
+    this.bind(TYPES.AuthenticateUserUseCase).to(AuthenticateUserUseCase)
+    this.bind(TYPES.DeleteUserUseCase).to(DeleteUserUseCase)
+    this.bind(TYPES.GetUserUseCase).to(GetUserUseCase)
+    this.bind(TYPES.RegisterUserUseCase).to(RegisterUserUseCase)
 
     // Validators
-    this.bind(BaseValidator).to(BaseValidator)
-    this.bind(TodoValidator).to(TodoValidator)
-    this.bind(UserValidator).to(UserValidator)
+    this.bind(TYPES.BaseValidator).to(BaseValidator)
+    this.bind(TYPES.TodoValidator).to(TodoValidator)
+    this.bind(TYPES.UserValidator).to(UserValidator)
 
     // Services
-    this.bind(AuthServiceImpl).to(AuthServiceImpl)
-    this.bind(CognitoUserService).to(CognitoUserService)
+    this.bind(TYPES.AuthService).to(AuthServiceImpl)
+    this.bind(TYPES.UserService).to(CognitoUserService)
+    this.bind(TYPES.CognitoUserService).to(CognitoUserService)
 
     // Repositories
-    this.bind(DynamodbTodoRepository).to(DynamodbTodoRepository)
-    this.bind(DynamodbUserRepository).to(DynamodbUserRepository)
+    this.bind(TYPES.TodoRepository).to(DynamodbTodoRepository)
+    this.bind(TYPES.UserRepository).to(DynamodbUserRepository)
 
-    // providers
-    this.bind(DynamodbClientProvider).to(DynamodbClientProvider)
+    // Providers
+    this.bind(TYPES.DynamodbClientProvider).to(DynamodbClientProvider)
   }
 }

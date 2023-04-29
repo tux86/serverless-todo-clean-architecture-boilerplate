@@ -6,4 +6,9 @@ export class AuthUserInput {
 
   @IsNotEmpty()
   password: string
+
+  constructor(props: AuthUserInput) {
+    this.email = props.email
+    this.password = props.password
+  }
 }

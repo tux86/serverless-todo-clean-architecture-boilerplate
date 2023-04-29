@@ -19,4 +19,11 @@ export class CreateTodoInput {
   @IsString()
   @MaxLength(20)
   status?: string
+
+  constructor(props: CreateTodoInput) {
+    this.title = props.title
+    this.description = props.description
+    this.userId = props.userId
+    this.status = props.status
+  }
 }

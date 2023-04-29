@@ -1,7 +1,7 @@
 import 'reflect-metadata'
-import { DIContainer } from '@/common/ioc/di-container'
+import { Controller } from '@/application/ports/controller'
+import { DIContainer, TYPES } from '@/common/ioc'
 import { lambdaHandlerAdapter } from '@/infrastructure/adapaters/lambda-handler.adapter'
-import { RegisterUserController } from '@/presentation/controllers/user/register-user.controller'
 
-const registerUserController = DIContainer.getInstance().get(RegisterUserController)
+const registerUserController = DIContainer.getInstance().get<Controller>(TYPES.RegisterUserController)
 export const handler = lambdaHandlerAdapter(registerUserController)

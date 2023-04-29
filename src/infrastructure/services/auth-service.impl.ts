@@ -1,6 +1,7 @@
 import { inject, injectable } from 'inversify'
 
 import { AuthSuccessResult } from '@/application/dtos/user/auth-success.result'
+import { TYPES } from '@/common/ioc'
 import { User } from '@/domain/models/user'
 import { AuthService } from '@/domain/services/auth.service'
 import { DynamodbUserRepository } from '@/infrastructure/repositories/dynamodb.user.repository'
@@ -9,8 +10,8 @@ import { CognitoUserService } from '@/infrastructure/services/cognito-user.servi
 @injectable()
 export class AuthServiceImpl implements AuthService {
   constructor(
-    @inject(CognitoUserService) readonly userCognitoService: CognitoUserService,
-    @inject(DynamodbUserRepository)
+    @inject(TYPES.UserService) readonly userCognitoService: CognitoUserService,
+    @inject(TYPES.UserRepository)
     readonly userRepository: DynamodbUserRepository
   ) {}
 

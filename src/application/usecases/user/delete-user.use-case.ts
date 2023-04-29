@@ -1,20 +1,26 @@
 import { inject, injectable } from 'inversify'
 
-import { EntityNotFound } from '@/application/errors/validation.error'
+import { DeleteUserInput } from '@/application/dtos/user/delete-user.input'
+import { EntityNotFound } from '@/application/errors'
 import { UseCase } from '@/application/usecases/use-case'
+import { UserValidator } from '@/application/validators/user.validator'
+import { TYPES } from '@/common/ioc'
 import { User } from '@/domain/models/user'
 import { UserRepository } from '@/domain/repositories/user.repository'
-import { DynamodbUserRepository } from '@/infrastructure/repositories/dynamodb.user.repository'
 
 @injectable()
-export class DeleteUserUseCase implements UseCase<string, void> {
-  constructor(@inject(DynamodbUserRepository) private readonly userRepository: UserRepository) {}
+export class DeleteUserUseCase implements UseCase<DeleteUserInput, void> {
+  constructor(
+    @inject(TYPES.UserRepository) private readonly userRepository: UserRepository,
+    @inject(TYPES.UserValidator) private readonly validator: UserValidator
+  ) {}
 
-  async execute(userId: string): Promise<void | never> {
-    const user = await this.userRepository.findById(userId)
+  async execute(input: DeleteUserInput): Promise<void | never> {
+    this.validator.validateAndThrow(DeleteUserInput, input)
+    const user = await this.userRepository.findById(input.userId)
     if (!user) {
-      throw new EntityNotFound(User.name, userId)
+      throw new EntityNotFound(User.name, input.userId)
     }
-    await this.userRepository.delete(userId)
+    await this.userRepository.delete(input.userId)
   }
 }

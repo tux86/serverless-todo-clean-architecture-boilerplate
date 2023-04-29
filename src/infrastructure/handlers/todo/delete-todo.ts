@@ -1,7 +1,7 @@
 import 'reflect-metadata'
-import { DIContainer } from '@/common/ioc/di-container'
+import { Controller } from '@/application/ports/controller'
+import { DIContainer, TYPES } from '@/common/ioc'
 import { lambdaHandlerAdapter } from '@/infrastructure/adapaters/lambda-handler.adapter'
-import { DeleteTodoController } from '@/presentation/controllers/todo/delete-todo.controller'
 
-const deleteTodoController = DIContainer.getInstance().get(DeleteTodoController)
+const deleteTodoController = DIContainer.getInstance().get<Controller>(TYPES.DeleteTodoController)
 export const handler = lambdaHandlerAdapter(deleteTodoController)

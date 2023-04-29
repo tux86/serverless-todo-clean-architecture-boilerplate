@@ -3,15 +3,15 @@ import { inject, injectable } from 'inversify'
 import { UpdateTodoInput } from '@/application/dtos/todo/update-todo-input'
 import { UseCase } from '@/application/usecases/use-case'
 import { TodoValidator } from '@/application/validators/todo.validator'
+import { TYPES } from '@/common/ioc'
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
-import { DynamodbTodoRepository } from '@/infrastructure/repositories/dynamodb.todo.repository'
 
 @injectable()
 export class UpdateTodoUseCase implements UseCase<UpdateTodoInput, Todo> {
   constructor(
-    @inject(DynamodbTodoRepository) private readonly todoRepository: Repository<Todo>,
-    @inject(TodoValidator)
+    @inject(TYPES.TodoRepository) private readonly todoRepository: Repository<Todo>,
+    @inject(TYPES.TodoValidator)
     private readonly validator: TodoValidator
   ) {}
 

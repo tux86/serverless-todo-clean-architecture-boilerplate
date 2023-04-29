@@ -10,7 +10,8 @@ import {
 } from '@aws-sdk/lib-dynamodb'
 import { inject, injectable } from 'inversify'
 
-import { uuidV4 } from '@/common/utils/uuid'
+import { uuidV4 } from '@/common/helpers/uuid'
+import { TYPES } from '@/common/ioc'
 import { User } from '@/domain/models/user'
 import { UserRepository } from '@/domain/repositories/user.repository'
 import { Mapper } from '@/infrastructure/adapaters/model/mapper'
@@ -25,7 +26,7 @@ export class DynamodbUserRepository implements UserRepository {
 
   private readonly docClient: DynamoDBDocumentClient
 
-  constructor(@inject(DynamodbClientProvider) readonly dynamodbClientProvider: DynamodbClientProvider) {
+  constructor(@inject(TYPES.DynamodbClientProvider) readonly dynamodbClientProvider: DynamodbClientProvider) {
     this.tableName = AWS_CONFIG.dynamodb.usersTable.name
     this.docClient = dynamodbClientProvider.documentClient
   }
