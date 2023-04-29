@@ -4,9 +4,10 @@ export class User {
   public lastName: string
   public email: string
 
-  constructor(firstName: string, lastName: string, email: string) {
-    this.firstName = firstName
-    this.lastName = lastName
-    this.email = email
+  constructor(props: User) {
+    this.userId = props.userId
+    this.firstName = props.firstName
+    this.lastName = props.lastName
+    this.email = props.email
   }
 }

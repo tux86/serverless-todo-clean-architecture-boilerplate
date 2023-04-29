@@ -14,6 +14,7 @@ export class RegisterUserController implements Controller<User | never> {
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<RegisterUserInput>): Promise<IHttpResponse<User>> {
     const input = new RegisterUserInput(request.body)
+
     const user = await this.registerUser.execute(input)
     return new CreatedHttpResponse(user)
   }

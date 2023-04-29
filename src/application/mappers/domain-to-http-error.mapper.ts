@@ -7,7 +7,8 @@ import {
   InputValidationError,
   InternalServerError,
   NotFoundError,
-  UnauthorizedError
+  UnauthorizedError,
+  UserAccountAlreadyExists
 } from '@/application/errors'
 
 // Define an interface for the error mapping object.
@@ -20,7 +21,8 @@ const errorMappings: ErrorMapping = {
   [EntityNotFound.name]: NotFoundError,
   [InputValidationError.name]: BadRequestError,
   [ApplicationError.name]: BadRequestError,
-  [AuthFailedError.name]: UnauthorizedError
+  [AuthFailedError.name]: UnauthorizedError,
+  [UserAccountAlreadyExists.name]: BadRequestError
 }
 
 // The mapDomainErrorToHttpError function takes a domain error and returns an instance of the corresponding HTTP error.
