@@ -1,7 +1,5 @@
-import 'reflect-metadata'
-import { Controller } from '@/application/ports/controller'
-import { DIContainer, TYPES } from '@/common/ioc'
 import { lambdaHandlerAdapter } from '@/infrastructure/adapaters/lambda-handler.adapter'
+import { UpdateTodoControllerFactory } from '@/main/factories/controllers/todo/update-todo-controller.factory'
 
-const updateTodoController = DIContainer.getInstance().get<Controller>(TYPES.UpdateTodoController)
+const updateTodoController = UpdateTodoControllerFactory.getInstance()
 export const handler = lambdaHandlerAdapter(updateTodoController)

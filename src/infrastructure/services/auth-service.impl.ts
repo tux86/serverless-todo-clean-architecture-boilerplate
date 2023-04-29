@@ -1,31 +1,23 @@
-import { inject, injectable } from 'inversify'
-
 import { AuthSuccessResult } from '@/application/dtos/user/auth-success.result'
-import { TYPES } from '@/common/ioc'
 import { User } from '@/domain/models/user'
 import { AuthService } from '@/domain/services/auth.service'
 import { DynamodbUserRepository } from '@/infrastructure/repositories/dynamodb.user.repository'
 import { CognitoUserService } from '@/infrastructure/services/cognito-user.service'
 
-@injectable()
 export class AuthServiceImpl implements AuthService {
-  constructor(
-    @inject(TYPES.UserService) readonly userCognitoService: CognitoUserService,
-    @inject(TYPES.UserRepository)
-    readonly userRepository: DynamodbUserRepository
-  ) {}
+  constructor(readonly cognitoUserService: CognitoUserService, readonly userRepository: DynamodbUserRepository) {}
 
   async registerUser(user: User, password: string): Promise<User> {
     // TODO: should be safe using a transaction
     // Store user in Cognito
-    await this.userCognitoService.createUser(user.email)
+    await this.cognitoUserService.createUser(user.email)
     // Set permanent password for the user
-    await this.userCognitoService.setUserPassword(user.email, password)
+    await this.cognitoUserService.setUserPassword(user.email, password)
     // Store user in Dynamodb
     return await this.userRepository.create(user)
   }
 
   async authenticateUser(email: string, password: string): Promise<AuthSuccessResult> {
-    return this.userCognitoService.authenticateUser(email, password)
+    return this.cognitoUserService.authenticateUser(email, password)
   }
 }

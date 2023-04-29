@@ -6,8 +6,7 @@
       "ESNext"
     ],
     "types": [
-      "node",
-      "reflect-metadata"
+      "node"
     ],
     "moduleResolution": "node",
     "noUnusedLocals": true,

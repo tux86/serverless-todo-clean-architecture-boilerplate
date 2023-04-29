@@ -1,8 +1,6 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
-import { injectable } from 'inversify'
 
-@injectable()
 export class DynamodbClientProvider {
   readonly documentClient: DynamoDBDocumentClient
 

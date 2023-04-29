@@ -1,18 +1,11 @@
-import { inject, injectable } from 'inversify'
-
 import { CreateTodoInput } from '@/application/dtos/todo/create-todo.input'
 import { UseCase } from '@/application/usecases/use-case'
 import { BaseValidator } from '@/application/validators/abstract/base.validator'
-import { TYPES } from '@/common/ioc'
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
 
-@injectable()
 export class CreateTodoUseCase implements UseCase<CreateTodoInput, Todo> {
-  constructor(
-    @inject(TYPES.TodoRepository) private readonly todoRepository: Repository<Todo>,
-    @inject(TYPES.TodoValidator) private readonly validator: BaseValidator
-  ) {}
+  constructor(private readonly todoRepository: Repository<Todo>, private readonly validator: BaseValidator) {}
 
   async execute(input: CreateTodoInput): Promise<Todo> {
     this.validator.validateAndThrow(CreateTodoInput, input)

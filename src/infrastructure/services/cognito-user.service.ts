@@ -7,23 +7,17 @@ import {
   CognitoIdentityProvider,
   ListUsersCommand
 } from '@aws-sdk/client-cognito-identity-provider'
-import { injectable } from 'inversify'
 
 import { AuthSuccessResult } from '@/application/dtos/user/auth-success.result'
 import { AuthUser } from '@/domain/models/auth-user'
 import { AWS_CONFIG } from '@/infrastructure/config'
 import { COGNITO_CONFIG } from '@/infrastructure/config/cognito.config'
 
-@injectable()
 export class CognitoUserService {
-  private readonly cognitoIdentityProvider: CognitoIdentityProvider
-
   private readonly userPoolId: string = AWS_CONFIG.cognito.userPoolId
   private readonly clientId: string = AWS_CONFIG.cognito.clientId
 
-  constructor() {
-    this.cognitoIdentityProvider = new CognitoIdentityProvider({ region: AWS_CONFIG.region })
-  }
+  constructor(private readonly cognitoIdentityProvider: CognitoIdentityProvider) {}
 
   async createUser(email: string): Promise<void> {
     const command = new AdminCreateUserCommand({

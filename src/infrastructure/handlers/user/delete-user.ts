@@ -1,7 +1,5 @@
-import 'reflect-metadata'
-import { Controller } from '@/application/ports/controller'
-import { DIContainer, TYPES } from '@/common/ioc'
 import { lambdaHandlerAdapter } from '@/infrastructure/adapaters/lambda-handler.adapter'
+import { DeleteUserControllerFactory } from '@/main/factories/controllers/user/delete-user-controller.factory'
 
-const deleteUserController = DIContainer.getInstance().get<Controller>(TYPES.DeleteUserController)
+const deleteUserController = DeleteUserControllerFactory.getInstance()
 export const handler = lambdaHandlerAdapter(deleteUserController)

@@ -7,10 +7,8 @@ import {
   ScanCommand,
   UpdateCommand
 } from '@aws-sdk/lib-dynamodb'
-import { inject, injectable } from 'inversify'
 
 import { uuidV4 } from '@/common/helpers/uuid'
-import { TYPES } from '@/common/ioc'
 import { Todo } from '@/domain/models/todo'
 import { Repository } from '@/domain/repositories/repository'
 import { Mapper } from '@/infrastructure/adapaters/model/mapper'
@@ -19,12 +17,11 @@ import { AWS_CONFIG } from '@/infrastructure/config'
 import { TodoEntity } from '@/infrastructure/entities/todo.entity'
 import { DynamodbClientProvider } from '@/infrastructure/providers/dynamodb.provider'
 
-@injectable()
 export class DynamodbTodoRepository implements Repository<Todo> {
   private readonly tableName: string
   private readonly docClient: DynamoDBDocumentClient
 
-  constructor(@inject(TYPES.DynamodbClientProvider) readonly dynamodbClientProvider: DynamodbClientProvider) {
+  constructor(readonly dynamodbClientProvider: DynamodbClientProvider) {
     this.tableName = AWS_CONFIG.dynamodb.todosTable.name
     this.docClient = dynamodbClientProvider.documentClient
   }

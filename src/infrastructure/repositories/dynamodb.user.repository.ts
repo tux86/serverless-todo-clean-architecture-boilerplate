@@ -8,10 +8,8 @@ import {
   ScanCommand,
   UpdateCommand
 } from '@aws-sdk/lib-dynamodb'
-import { inject, injectable } from 'inversify'
 
 import { uuidV4 } from '@/common/helpers/uuid'
-import { TYPES } from '@/common/ioc'
 import { User } from '@/domain/models/user'
 import { UserRepository } from '@/domain/repositories/user.repository'
 import { Mapper } from '@/infrastructure/adapaters/model/mapper'
@@ -20,13 +18,12 @@ import { AWS_CONFIG } from '@/infrastructure/config'
 import { UserEntity } from '@/infrastructure/entities/user.entity'
 import { DynamodbClientProvider } from '@/infrastructure/providers/dynamodb.provider'
 
-@injectable()
 export class DynamodbUserRepository implements UserRepository {
   private readonly tableName: string
 
   private readonly docClient: DynamoDBDocumentClient
 
-  constructor(@inject(TYPES.DynamodbClientProvider) readonly dynamodbClientProvider: DynamodbClientProvider) {
+  constructor(readonly dynamodbClientProvider: DynamodbClientProvider) {
     this.tableName = AWS_CONFIG.dynamodb.usersTable.name
     this.docClient = dynamodbClientProvider.documentClient
   }

@@ -1,4 +1,3 @@
-import 'reflect-metadata'
 import { PreSignUpTriggerEvent } from 'aws-lambda'
 
 export const handler = async (event: PreSignUpTriggerEvent): Promise<PreSignUpTriggerEvent> => {
