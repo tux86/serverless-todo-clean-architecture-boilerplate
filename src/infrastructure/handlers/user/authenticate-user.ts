@@ -1,5 +1,4 @@
 import { lambdaHandlerAdapter } from '@/infrastructure/adapaters/lambda-handler.adapter'
-import { AuthenticateUserControllerFactory } from '@/main/factories/controllers/user/authenticate-user-controller.factory'
+import { createAuthenticateUserController } from '@/main/factories/controllers/user.controllers.factory'
 
-const authenticateUserController = AuthenticateUserControllerFactory.getInstance()
-export const handler = lambdaHandlerAdapter(authenticateUserController)
+export const handler = lambdaHandlerAdapter(createAuthenticateUserController())

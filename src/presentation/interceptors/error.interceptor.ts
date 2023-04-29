@@ -2,7 +2,7 @@ import { mapDomainErrorToHttpError } from '@/application/mappers/domain-to-http-
 import { IHttpRequest } from '@/application/ports/http-request'
 import { IHttpResponse } from '@/application/ports/http-response'
 import { Interceptor } from '@/application/ports/interceptor'
-import { Logger } from '@/infrastructure/utils/Logger'
+import { Logger } from '@/application/utlis/Logger'
 import { HttpResponse } from '@/presentation/responses/http-response'
 
 export class ErrorInterceptor implements Interceptor<IHttpRequest, IHttpResponse> {

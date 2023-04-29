@@ -1,6 +1,4 @@
 import { lambdaHandlerAdapter } from '@/infrastructure/adapaters/lambda-handler.adapter'
-import { ListTodosControllerFactory } from '@/main/factories/controllers/todo/list-todos-controller.factory'
+import { createListTodosController } from '@/main/factories/controllers/todo.controllers.factory'
 
-const listTodosController = ListTodosControllerFactory.getInstance()
-
-export const handler = lambdaHandlerAdapter(listTodosController)
+export const handler = lambdaHandlerAdapter(createListTodosController())

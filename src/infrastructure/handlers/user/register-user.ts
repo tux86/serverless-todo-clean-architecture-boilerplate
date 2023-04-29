@@ -1,5 +1,4 @@
 import { lambdaHandlerAdapter } from '@/infrastructure/adapaters/lambda-handler.adapter'
-import { RegisterUserControllerFactory } from '@/main/factories/controllers/user/register-user-controller.factory'
+import { createRegisterUserController } from '@/main/factories/controllers/user.controllers.factory'
 
-const registerUserController = RegisterUserControllerFactory.getInstance()
-export const handler = lambdaHandlerAdapter(registerUserController)
+export const handler = lambdaHandlerAdapter(createRegisterUserController())

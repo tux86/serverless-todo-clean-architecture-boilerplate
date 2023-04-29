@@ -1,5 +1,4 @@
 import { lambdaHandlerAdapter } from '@/infrastructure/adapaters/lambda-handler.adapter'
-import { DeleteUserControllerFactory } from '@/main/factories/controllers/user/delete-user-controller.factory'
+import { createDeleteTodoController } from '@/main/factories/controllers/todo.controllers.factory'
 
-const deleteUserController = DeleteUserControllerFactory.getInstance()
-export const handler = lambdaHandlerAdapter(deleteUserController)
+export const handler = lambdaHandlerAdapter(createDeleteTodoController())
