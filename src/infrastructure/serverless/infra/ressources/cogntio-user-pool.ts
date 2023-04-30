@@ -1,9 +1,9 @@
-import { AWSResource, AWSResourceSet } from '@/infrastructure/iac/serverless/types'
 import {
   generatePrefixedResourceName,
   generatePrefixedSsmParameterName,
   varToString
-} from '@/infrastructure/iac/serverless/utils'
+} from '@/infrastructure/serverless/utils'
+import { AWSResource, AWSResourceSet } from '@/infrastructure/serverless/utils/types'
 
 export const cognitoUserPool = (): AWSResourceSet => {
   const UserPoolName = generatePrefixedResourceName('user-pool')
@@ -76,24 +76,30 @@ export const cognitoUserPool = (): AWSResourceSet => {
       UserPoolClient
     },
     outputs: {
-      UserPoolId: {
-        Value: { Ref: varToString({ UserPool }) },
+      userPoolName: {
+        Value: UserPoolName,
         Export: {
-          Name: `${UserPoolName}-UserPoolId`
+          Name: `${UserPoolName}-userPoolName`
         }
       },
-      UserPoolClientId: {
+      userPoolId: {
+        Value: { Ref: varToString({ UserPool }) },
+        Export: {
+          Name: `${UserPoolName}-userPoolId`
+        }
+      },
+      userPoolArn: {
+        Value: { 'Fn::GetAtt': [varToString({ UserPool }), 'Arn'] },
+        Export: {
+          Name: `${UserPoolName}-userPoolArn`
+        }
+      },
+      appClientId: {
         Value: { Ref: varToString({ UserPoolClient }) },
         Export: {
-          Name: `${UserPoolName}-UserPoolClientId`
+          Name: `${UserPoolName}-appClientId`
         }
       }
-    },
-    vars: {
-      UserPoolName,
-      UserPoolId: { Ref: varToString({ UserPool }) },
-      UserPoolArn: { 'Fn::GetAtt': [varToString({ UserPool }), 'Arn'] },
-      UserPoolClientId: { Ref: varToString({ UserPoolClient }) }
     }
   }
 }

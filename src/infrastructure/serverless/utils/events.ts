@@ -1,12 +1,15 @@
-import { AWSHttpApiPath } from '@/infrastructure/iac/serverless/types'
+import { AWSFunctionEvent, AWSHttpApiPath } from '@/infrastructure/serverless/utils/types'
 
 export const httpApiEvent = (
   method: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options',
   path: AWSHttpApiPath
-): any => ({
+): AWSFunctionEvent => ({
   httpApi: {
     method,
-    path
+    path,
+    authorizer: {
+      name: 'jwtAuthorizer'
+    }
   }
 })
 export const dynamodbStreamEvent = (arn: string): any => ({

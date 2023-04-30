@@ -24,7 +24,6 @@ export class CognitoUserService {
       UserPoolId: COGNITO_CONFIG.userPoolId,
       Username: email,
       MessageAction: 'SUPPRESS', // Prevents sending a welcome email
-      // TemporaryPassword: password,
       UserAttributes: [
         {
           Name: 'email',

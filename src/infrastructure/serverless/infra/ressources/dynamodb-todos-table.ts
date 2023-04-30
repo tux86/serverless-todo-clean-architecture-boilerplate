@@ -1,4 +1,4 @@
-import { AWSResourceSet } from '@/infrastructure/iac/serverless/types'
+import { AWSResourceSet } from '@/infrastructure/serverless/utils/types'
 
 import { generatePrefixedResourceName, varToString } from '../../utils'
 
@@ -31,9 +31,19 @@ export const dynamodbTodosTable = (): AWSResourceSet => {
     resources: {
       TodosTable
     },
-    vars: {
-      TableName,
-      TableArn: { 'Fn::GetAtt': [varToString({ TodosTable }), 'Arn'] }
+    outputs: {
+      todosTableName: {
+        Value: TableName,
+        Export: {
+          Name: `${TableName}-tableName`
+        }
+      },
+      todosTableArn: {
+        Value: { 'Fn::GetAtt': [varToString({ TodosTable }), 'Arn'] },
+        Export: {
+          Name: `${TableName}-tableArn`
+        }
+      }
     }
   }
 }

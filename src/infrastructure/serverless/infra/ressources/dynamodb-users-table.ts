@@ -1,4 +1,4 @@
-import { AWSResourceSet } from '@/infrastructure/iac/serverless/types'
+import { AWSResourceSet } from '@/infrastructure/serverless/utils/types'
 
 import { generatePrefixedResourceName, varToString } from '../../utils'
 
@@ -56,10 +56,25 @@ export const dynamodbUsersTable = (): AWSResourceSet => {
     resources: {
       UsersTable
     },
-    vars: {
-      TableName,
-      TableArn: { 'Fn::GetAtt': [varToString({ UsersTable }), 'Arn'] },
-      StreamArn: { 'Fn::GetAtt': [varToString({ UsersTable }), 'StreamArn'] }
+    outputs: {
+      usersTableName: {
+        Value: TableName,
+        Export: {
+          Name: `${TableName}-tableName`
+        }
+      },
+      usersTableArn: {
+        Value: { 'Fn::GetAtt': [varToString({ UsersTable }), 'Arn'] },
+        Export: {
+          Name: `${TableName}-tableArn`
+        }
+      },
+      usersTableStreamArn: {
+        Value: { 'Fn::GetAtt': [varToString({ UsersTable }), 'StreamArn'] },
+        Export: {
+          Name: `${TableName}-streamArn`
+        }
+      }
     }
   }
 }

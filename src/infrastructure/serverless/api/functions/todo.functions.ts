@@ -1,11 +1,10 @@
 import { AwsLambdaEnvironment } from '@serverless/typescript'
 
-import { todosTable } from '@/infrastructure/iac/serverless/ressources'
-import { AWSFunctions } from '@/infrastructure/iac/serverless/types'
-import { getHandlerPath, httpApiEvent } from '@/infrastructure/iac/serverless/utils'
+import { getHandlerPath, httpApiEvent } from '@/infrastructure/serverless/utils'
+import { AWSFunctions } from '@/infrastructure/serverless/utils/types'
 
 const environment: AwsLambdaEnvironment = {
-  TODOS_TABLE: todosTable.vars.TableName
+  TODOS_TABLE: '${param:todosTableName}'
 }
 
 export const todoFunctions = (): AWSFunctions => {

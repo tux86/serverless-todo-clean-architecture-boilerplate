@@ -20,15 +20,15 @@
     "experimentalDecorators": true
   },
   "include": [
-    "src/**/*.ts",
-    "serverless.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "node_modules/**/*",
     ".serverless/**/*",
     ".webpack/**/*",
     "_warmup/**/*",
-    ".vscode/**/*"
+    ".vscode/**/*",
+    ".esbuild/**/*"
   ],
   "ts-node": {
     "require": [

@@ -14,7 +14,8 @@ export class RegisterUserUseCase implements UseCase<RegisterUserInput, User> {
       userId: uuidV4(),
       firstName: input.firstName,
       lastName: input.lastName,
-      email: input.email
+      email: input.email,
+      createdAt: new Date()
     }
     return await this.authService.registerUser(user, input.password)
   }

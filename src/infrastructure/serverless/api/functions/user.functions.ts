@@ -1,14 +1,13 @@
 import { AwsLambdaEnvironment } from '@serverless/typescript'
 
-import { userPool, usersTable } from '@/infrastructure/iac/serverless/ressources'
-import { AWSFunctions } from '@/infrastructure/iac/serverless/types'
-import { getHandlerPath, ssmParameter } from '@/infrastructure/iac/serverless/utils'
-import { cognitoUserPoolEvent, dynamodbStreamEvent, httpApiEvent } from '@/infrastructure/iac/serverless/utils/events'
+import { getHandlerPath } from '@/infrastructure/serverless/utils'
+import { cognitoUserPoolEvent, dynamodbStreamEvent, httpApiEvent } from '@/infrastructure/serverless/utils/events'
+import { AWSFunctions } from '@/infrastructure/serverless/utils/types'
 
 const environment: AwsLambdaEnvironment = {
-  COGNITO_USER_POOL_ID: ssmParameter('cognito/userPoolId'),
-  COGNITO_APP_CLIENT_ID: ssmParameter('cognito/userPoolClientId'),
-  USERS_TABLE: usersTable.vars.TableName
+  COGNITO_USER_POOL_ID: '${param:userPoolId}',
+  COGNITO_APP_CLIENT_ID: '${param:appClientId}',
+  USERS_TABLE: '${param:usersTableName}'
 }
 export const userFunctions = (): AWSFunctions => {
   return {
@@ -22,6 +21,11 @@ export const userFunctions = (): AWSFunctions => {
       environment,
       events: [httpApiEvent('post', '/users/auth')]
     },
+    // getCurrentUser: {
+    //   handler: getHandlerPath('user-api-index.getCurrentUserHandler'),
+    //   environment,
+    //   events: [httpApiEvent('get', '/users/current')]
+    // },
     getUser: {
       handler: getHandlerPath('user-api-index.getUserHandler'),
       environment,
@@ -34,12 +38,12 @@ export const userFunctions = (): AWSFunctions => {
     },
     preSignUp: {
       handler: getHandlerPath('user-cognito-triggers-index.preSignUpHandler'),
-      events: [cognitoUserPoolEvent(userPool.vars.UserPoolName, 'PreSignUp', true)]
+      events: [cognitoUserPoolEvent('${param:userPoolName}', 'PreSignUp', true)]
     },
     userDynamodbStreamHandler: {
       handler: getHandlerPath('user-dynamodb-stream-index.dynamoDBStreamHandler'),
       environment,
-      events: [dynamodbStreamEvent(usersTable.vars.StreamArn)]
+      events: [dynamodbStreamEvent('${param:usersTableStreamArn}')]
     }
   }
 }

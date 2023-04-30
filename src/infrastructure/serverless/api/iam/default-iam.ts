@@ -1,5 +1,4 @@
-import { todosTable, userPool } from '@/infrastructure/iac/serverless/ressources'
-import { AWSIam } from '@/infrastructure/iac/serverless/types'
+import { AWSIam } from '@/infrastructure/serverless/utils/types'
 
 export const defaultIam = (): AWSIam => {
   return {
@@ -17,13 +16,13 @@ export const defaultIam = (): AWSIam => {
             'dynamodb:UpdateItem',
             'dynamodb:DeleteItem'
           ],
-          Resource: [todosTable.vars.TableArn]
+          Resource: ['${param:todosTableArn}', '${param:usersTableArn}']
         },
         // cognito user pool
         {
           Effect: 'Allow',
           Action: ['cognito-idp:*'],
-          Resource: userPool.vars.UserPoolArn
+          Resource: '${param:userPoolArn}'
         }
       ]
     }

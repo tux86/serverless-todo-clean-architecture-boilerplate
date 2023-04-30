@@ -1,0 +1,23 @@
+services:
+
+  infra:
+    path: src/infrastructure/serverless/infra
+    params:
+      region: eu-west-1
+  api:
+    dependsOn:
+      - infra
+    path: src/infrastructure/serverless/api
+    params:
+      region: eu-west-1
+      # cognito
+      userPoolName: ${infra.userPoolName}
+      userPoolId: ${infra.userPoolId}
+      userPoolArn: ${infra.userPoolArn}
+      appClientId: ${infra.appClientId}
+      # dynamodb
+      todosTableName: ${infra.todosTableName}
+      todosTableArn: ${infra.todosTableArn}
+      usersTableName: ${infra.usersTableName}
+      usersTableArn: ${infra.usersTableArn}
+      usersTableStreamArn: ${infra.usersTableStreamArn}
