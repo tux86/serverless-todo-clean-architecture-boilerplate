@@ -16,7 +16,7 @@
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    // "skipLibCheck" :  see bug https://github.com/serverless/typescript/issues/27,
+    // "skipLibCheck" :  bug https://github.com/serverless/typescript/issues/27,
     "skipLibCheck": true
   },
   "exclude": [

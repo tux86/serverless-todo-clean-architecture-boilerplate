@@ -1,8 +1,9 @@
 import type { AWS } from '@serverless/typescript'
-
-import { resources } from './ressources'
-import { stackTags, tags } from '../api/src/infrastructure/iac/serverless/provider/tags'
+import { stackTags, tags } from '../api/src/infrastructure/iac/provider/tags'
 import { AWSRegion } from '../common/src/aws/types'
+import { UserPool, UserPoolClient, UserPoolOutputs } from './resources/cogntio-user-pool'
+import { UsersTable, UsersTableOutputs } from './resources/dynamodb-users-table'
+import { TodosTable, TodosTableOutputs } from './resources/dynamodb-todos-table'
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-infra',
@@ -18,13 +19,26 @@ export const serverlessConfiguration: AWS = {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true
     },
-    stackTags: stackTags(),
-    tags: tags()
+    stackTags,
+    tags
   },
-  // Custom settings and configurations specific to the application or plugins
-  custom: {},
-  // Resources to be created within the stack, like DynamoDB tables, S3 buckets, etc.
-  resources: resources()
+  resources: {
+    Resources: {
+      // cognito
+      UserPool,
+      UserPoolClient,
+      // dynamodb
+      UsersTable,
+      TodosTable
+    },
+    Outputs: {
+      // cognito
+      ...UserPoolOutputs,
+      // dynamodb
+      ...UsersTableOutputs,
+      ...TodosTableOutputs
+    }
+  }
 }
 
 module.exports = serverlessConfiguration

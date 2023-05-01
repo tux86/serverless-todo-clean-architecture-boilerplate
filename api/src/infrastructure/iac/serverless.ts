@@ -1,7 +1,9 @@
 import { AWSRegion } from '@/common/aws/types'
 import type { AWS } from '@serverless/typescript'
 
-import { functions } from './functions'
+import { todoFunctions } from '@/api/infrastructure/iac/functions/todo.functions'
+import { userFunctions } from '@/api/infrastructure/iac/functions/user.functions'
+
 import { defaultIam } from './iam/default-iam'
 import { stackTags, tags } from './provider/tags'
 
@@ -43,9 +45,9 @@ export const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
       STAGE: '${sls:stage}'
     },
-    iam: defaultIam(),
-    stackTags: stackTags(),
-    tags: tags()
+    iam: defaultIam,
+    stackTags,
+    tags
   },
   // Custom settings and configurations specific to the application or plugins
   custom: {
@@ -68,6 +70,9 @@ export const serverlessConfiguration: AWS = {
       ignoreJWTSignature: true
     }
   },
-  // Define the lambda functions
-  functions: functions()
+  // lambda functions
+  functions: {
+    ...userFunctions,
+    ...todoFunctions
+  }
 }
