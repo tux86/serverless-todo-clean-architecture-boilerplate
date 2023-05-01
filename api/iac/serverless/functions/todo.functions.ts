@@ -1,7 +1,7 @@
-import { getHandler, httpApiEvent } from '@/common/aws/helpers'
-import { AWSFunctions } from '@/common/aws/types'
 import { AwsLambdaEnvironment } from '@serverless/typescript'
 
+import { getHandler, httpApiEvent } from '../../../../common/src/aws/helpers'
+import { AWSFunctions } from '../../../../common/src/aws/types'
 import { jwtAuthorizer } from '../helpers'
 
 const environment: AwsLambdaEnvironment = {

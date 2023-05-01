@@ -1,5 +1,5 @@
-import { generatePrefixedResourceName, varToString } from '../../common/src/aws/helpers'
-import { AWSOutputs, AWSResource } from '../../common/src/aws/types'
+import { generatePrefixedResourceName, varToString } from '../../../../common/src/aws/helpers'
+import { AWSOutputs, AWSResource } from '../../../../common/src/aws/types'
 
 export const userPoolName = generatePrefixedResourceName('user-pool')
 export const UserPool: AWSResource = {

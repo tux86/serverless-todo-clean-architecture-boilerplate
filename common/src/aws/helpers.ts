@@ -15,7 +15,6 @@ export const getHandler = (handler: string): string => {
   return `./src/infrastructure/handlers/${handler}`
 }
 
-
 export const httpApiEvent = (
   method: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options',
   path: AWSHttpApiPath,

@@ -18,7 +18,7 @@
     "../common/src/**/*.ts"
   ],
   "exclude": [
-    "infrastructure/iac/**",
+    "iac/serverless/**",
     "node_modules/**/*",
     ".serverless/**/*",
     ".webpack/**/*",
