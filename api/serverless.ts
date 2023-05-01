@@ -1,3 +1,3 @@
-import { serverlessConfiguration } from './src/infrastructure/serverless/serverless'
+import { serverlessConfiguration } from './src/infrastructure/iac/serverless/serverless'
 
 module.exports = serverlessConfiguration

@@ -1,8 +1,8 @@
 import type { AWS } from '@serverless/typescript'
 
 import { resources } from './ressources'
-import { stackTags, tags } from '../api/src/infrastructure/serverless/provider/tags'
-import { AWSRegion } from '../common/serverless/types'
+import { stackTags, tags } from '../api/src/infrastructure/iac/serverless/provider/tags'
+import { AWSRegion } from '../common/src/serverless/types'
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-infra',

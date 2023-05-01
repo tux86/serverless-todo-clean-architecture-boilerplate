@@ -1,9 +1,9 @@
+import { AWSRegion } from '@/common/serverless/types'
 import type { AWS } from '@serverless/typescript'
 
 import { functions } from './functions'
 import { defaultIam } from './iam/default-iam'
 import { stackTags, tags } from './provider/tags'
-import { AWSRegion } from '../../../../common/serverless/types'
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-api',

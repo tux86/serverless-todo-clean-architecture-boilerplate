@@ -2,15 +2,34 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": ".dist",
-    "baseUrl": ".",
-    "rootDir": "src",
+    "baseUrl": "./",
+    //  "rootDir": "src",
     "paths": {
       "@/api/*": [
         "src/*"
+      ],
+      "@/common/*": [
+        "../common/src/*"
       ]
     }
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "../common/src/**/*.ts"
+  ],
+  "exclude": [
+    "infrastructure/iac/**",
+    "node_modules/**/*",
+    ".serverless/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".vscode/**/*",
+    ".esbuild/**/*",
+    ".dist/**/*"
   ]
+  //  "references": [
+  //    {
+  //      "path": "../common"
+  //    }
+  //  ]
 }

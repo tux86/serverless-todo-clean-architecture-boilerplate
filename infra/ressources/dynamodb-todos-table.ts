@@ -1,5 +1,5 @@
-import { generatePrefixedResourceName, varToString } from '../../common/serverless'
-import { AWSResourceSet } from '../../common/serverless/types'
+import { generatePrefixedResourceName, varToString } from '../../common/src/serverless'
+import { AWSResourceSet } from '../../common/src/serverless/types'
 
 export const dynamodbTodosTable = (): AWSResourceSet => {
   const TableName = generatePrefixedResourceName('todos')

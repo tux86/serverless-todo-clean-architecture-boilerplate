@@ -15,7 +15,9 @@
     "target": "ES2020",
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    // "skipLibCheck" :  see bug https://github.com/serverless/typescript/issues/27,
+    "skipLibCheck": true
   },
   "exclude": [
     "node_modules/**/*",
@@ -24,8 +26,7 @@
     "_warmup/**/*",
     ".vscode/**/*",
     ".esbuild/**/*",
-    ".dist/**/*",
-    "**/serverless/**"
+    ".dist/**/*"
   ],
   "ts-node": {
     "require": [
