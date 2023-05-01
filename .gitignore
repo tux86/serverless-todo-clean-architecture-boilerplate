@@ -39,6 +39,8 @@ lerna-debug.log*
 .DS_Store
 Thumbs.db
 
+.dist
+
 # esbuild directories
 .esbuild
 *.tsbuildinfo

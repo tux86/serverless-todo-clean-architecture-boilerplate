@@ -1,0 +1,14 @@
+{
+  "name": "@todo/infra",
+  "private": true,
+  "version": "0.0.0",
+  "main": "serverless.ts",
+  "description": "Infra",
+  "author": "Walid Karray",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+  }
+}
