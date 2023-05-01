@@ -1,5 +1,5 @@
-import { getHandlerPath, httpApiEvent } from '@/common/serverless'
-import { AWSFunctions } from '@/common/serverless/types'
+import { getHandlerPath, httpApiEvent } from '@/common/aws'
+import { AWSFunctions } from '@/common/aws/types'
 import { AwsLambdaEnvironment } from '@serverless/typescript'
 
 import { jwtAuthorizer } from '../helpers'

@@ -1,6 +1,7 @@
+import { uuidV4 } from '@/common/uuid'
+
 import { Todo } from '@/api/domain/models/todo'
 import { Repository } from '@/api/domain/repositories/repository'
-import { uuidV4 } from '@/api/shared/helpers/uuid'
 
 import { CreateTodoInput } from '../../dtos/todo/create-todo.input'
 import { BaseValidator } from '../../validators/abstract/base.validator'

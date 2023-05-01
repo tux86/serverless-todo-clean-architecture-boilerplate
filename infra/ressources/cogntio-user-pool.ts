@@ -1,9 +1,5 @@
-import {
-  generatePrefixedResourceName,
-  generatePrefixedSsmParameterName,
-  varToString
-} from '../../common/src/serverless'
-import { AWSResource, AWSResourceSet } from '../../common/src/serverless/types'
+import { generatePrefixedResourceName, generatePrefixedSsmParameterName, varToString } from '../../common/src/aws'
+import { AWSResource, AWSResourceSet } from '../../common/src/aws/types'
 
 export const cognitoUserPool = (): AWSResourceSet => {
   const UserPoolName = generatePrefixedResourceName('user-pool')

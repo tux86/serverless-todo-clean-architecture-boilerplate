@@ -7,7 +7,6 @@ services:
       region: eu-west-1
   api:
     path: api
-    config: serverless.ts
     dependsOn:
       - infra
     params:

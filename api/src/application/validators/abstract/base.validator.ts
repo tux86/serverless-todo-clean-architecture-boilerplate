@@ -1,7 +1,6 @@
+import { Constructor } from '@/common/types'
 import { plainToInstance } from 'class-transformer'
 import { validateSync, ValidatorOptions } from 'class-validator'
-
-import { Constructor } from '@/api/shared/types'
 
 import { InputValidationError } from '../../errors'
 import { validationErrorsToString } from '../../utlis/validation/validation-errors-to-string'

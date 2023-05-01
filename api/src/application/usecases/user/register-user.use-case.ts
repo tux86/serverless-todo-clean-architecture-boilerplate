@@ -1,6 +1,7 @@
+import { uuidV4 } from '@/common/uuid'
+
 import { User } from '@/api/domain/models/user'
 import { AuthService } from '@/api/domain/services/auth.service'
-import { uuidV4 } from '@/api/shared/helpers/uuid'
 
 import { RegisterUserInput } from '../../dtos/user/register-user.input'
 import { UserValidator } from '../../validators/user.validator'

@@ -1,3 +1,5 @@
+import { uuidV4 } from '@/common/uuid'
+
 import { WithInterceptor } from '@/api/application/decorators/interceptor.decorator'
 import { CreateTodoInput } from '@/api/application/dtos/todo/create-todo.input'
 import { Controller } from '@/api/application/ports/controller'
@@ -5,7 +7,6 @@ import { IHttpRequest } from '@/api/application/ports/http-request'
 import { IHttpResponse } from '@/api/application/ports/http-response'
 import { CreateTodoUseCase } from '@/api/application/usecases/todo/create-todo.use-case'
 import { Todo } from '@/api/domain/models/todo'
-import { uuidV4 } from '@/api/shared/helpers/uuid'
 
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { CreatedHttpResponse } from '../../responses/http-response'

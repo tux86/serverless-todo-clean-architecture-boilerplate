@@ -1,4 +1,4 @@
-import { AWSRegion } from '@/common/serverless/types'
+import { AWSRegion } from '@/common/aws/types'
 import type { AWS } from '@serverless/typescript'
 
 import { functions } from './functions'
@@ -68,6 +68,6 @@ export const serverlessConfiguration: AWS = {
       ignoreJWTSignature: true
     }
   },
-  // Define the serverless functions
+  // Define the lambda functions
   functions: functions()
 }

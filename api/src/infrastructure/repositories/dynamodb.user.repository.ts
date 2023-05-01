@@ -1,3 +1,4 @@
+import { uuidV4 } from '@/common/uuid'
 import {
   DeleteCommand,
   DynamoDBDocumentClient,
@@ -11,7 +12,6 @@ import {
 
 import { User } from '@/api/domain/models/user'
 import { UserRepository } from '@/api/domain/repositories/user.repository'
-import { uuidV4 } from '@/api/shared/helpers/uuid'
 
 import { AWS_CONFIG } from '../config'
 import { UserEntity } from '../entities/user.entity'
