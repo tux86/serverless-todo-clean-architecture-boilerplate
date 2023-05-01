@@ -9,7 +9,8 @@ export const lambdaHandlerAdapter = <T>(
 ): ((event: APIGatewayProxyEventV2) => Promise<APIGatewayProxyResultV2>) => {
   return async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
     let { body } = event
-    console.log('===== event', event)
+    console.log('===== event2444')
+
     if (event.headers['content-type'] === 'application/json' && body) {
       body = parseJsonRequestBody(event.body)
     }

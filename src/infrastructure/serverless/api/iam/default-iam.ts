@@ -1,4 +1,4 @@
-import { AWSIam } from '@/infrastructure/serverless/utils/types'
+import { AWSIam } from '@/infrastructure/serverless/common/types'
 
 export const defaultIam = (): AWSIam => {
   return {

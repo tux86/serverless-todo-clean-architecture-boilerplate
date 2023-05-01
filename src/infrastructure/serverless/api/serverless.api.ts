@@ -3,7 +3,7 @@ import type { AWS } from '@serverless/typescript'
 import { functions } from '@/infrastructure/serverless/api/functions'
 import { defaultIam } from '@/infrastructure/serverless/api/iam/default-iam'
 import { stackTags, tags } from '@/infrastructure/serverless/api/provider/tags'
-import { AWSRegion } from '@/infrastructure/serverless/utils/types'
+import { AWSRegion } from '@/infrastructure/serverless/common/types'
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-api',
@@ -11,7 +11,9 @@ export const serverlessConfiguration: AWS = {
   useDotenv: true,
   configValidationMode: 'error',
   plugins: ['serverless-esbuild', 'serverless-offline'],
-  package: { individually: true },
+  package: {
+    individually: true
+  },
   // Define the cloud service provider for the application
   provider: {
     name: 'aws',
@@ -34,10 +36,6 @@ export const serverlessConfiguration: AWS = {
           issuerUrl: 'https://cognito-idp.${self:provider.region}.amazonaws.com/${param:userPoolId}',
           audience: ['${param:appClientId}']
         }
-        // customAuthorizer: {
-        //   type: 'request',
-        //   functionName: 'customAuthorizer'
-        // }
       }
     },
     environment: {

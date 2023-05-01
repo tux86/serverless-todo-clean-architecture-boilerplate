@@ -1,8 +1,9 @@
 import { AwsLambdaEnvironment } from '@serverless/typescript'
 
-import { getHandlerPath } from '@/infrastructure/serverless/utils'
-import { cognitoUserPoolEvent, dynamodbStreamEvent, httpApiEvent } from '@/infrastructure/serverless/utils/events'
-import { AWSFunctions } from '@/infrastructure/serverless/utils/types'
+import { jwtAuthorizer } from '@/infrastructure/serverless/api/helpers'
+import { getHandlerPath } from '@/infrastructure/serverless/common'
+import { cognitoUserPoolEvent, dynamodbStreamEvent, httpApiEvent } from '@/infrastructure/serverless/common/events'
+import { AWSFunctions } from '@/infrastructure/serverless/common/types'
 
 const environment: AwsLambdaEnvironment = {
   COGNITO_USER_POOL_ID: '${param:userPoolId}',
@@ -29,12 +30,12 @@ export const userFunctions = (): AWSFunctions => {
     getUser: {
       handler: getHandlerPath('user-api-index.getUserHandler'),
       environment,
-      events: [httpApiEvent('get', '/users/{userId}')]
+      events: [httpApiEvent('get', '/users/{userId}', jwtAuthorizer())]
     },
     deleteUser: {
       handler: getHandlerPath('user-api-index.deleteUserHandler'),
       environment,
-      events: [httpApiEvent('delete', '/users/{userId}')]
+      events: [httpApiEvent('delete', '/users/{userId}', jwtAuthorizer())]
     },
     preSignUp: {
       handler: getHandlerPath('user-cognito-triggers-index.preSignUpHandler'),
