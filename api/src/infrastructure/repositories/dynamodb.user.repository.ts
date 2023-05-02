@@ -1,13 +1,17 @@
-import { uuidV4 } from '@/common/uuid'
 import {
   DeleteCommand,
+  DeleteCommandInput,
   DynamoDBDocumentClient,
   GetCommand,
+  GetCommandInput,
   PutCommand,
   PutCommandInput,
   QueryCommand,
+  QueryCommandInput,
   ScanCommand,
-  UpdateCommand
+  ScanCommandInput,
+  UpdateCommand,
+  UpdateCommandInput
 } from '@aws-sdk/lib-dynamodb'
 
 import { User } from '@/api/domain/models/user'
@@ -30,10 +34,10 @@ export class DynamodbUserRepository implements UserRepository {
 
   async create(user: User): Promise<User> {
     const userEntity = this.mapper.toPersistenceEntity(user)
-    userEntity.userId = uuidV4()
     const params: PutCommandInput = {
       TableName: this.tableName,
-      Item: userEntity
+      Item: userEntity,
+      ConditionExpression: 'attribute_not_exists(email)'
     }
 
     await this.docClient.send(new PutCommand(params))
@@ -42,7 +46,7 @@ export class DynamodbUserRepository implements UserRepository {
   }
 
   async findById(userId: string): Promise<User | null> {
-    const params = {
+    const params: GetCommandInput = {
       TableName: this.tableName,
       Key: { userId }
     }
@@ -52,16 +56,15 @@ export class DynamodbUserRepository implements UserRepository {
   }
 
   async findAll(): Promise<User[]> {
-    const params = {
+    const params: ScanCommandInput = {
       TableName: this.tableName
     }
-
     const result = await this.docClient.send(new ScanCommand(params))
     return ((result.Items as UserEntity[]) || []).map(this.mapper.toDomainModel)
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const params = {
+    const params: QueryCommandInput = {
       TableName: this.tableName,
       IndexName: 'EmailIndex',
       KeyConditionExpression: 'email = :email',
@@ -76,7 +79,7 @@ export class DynamodbUserRepository implements UserRepository {
 
   async update(user: Partial<User>): Promise<User> {
     const userEntity = this.mapper.toPersistenceEntity(user)
-    const params = {
+    const params: UpdateCommandInput = {
       TableName: this.tableName,
       Key: { userId: userEntity.userId },
       UpdateExpression: 'set firstName = :firstName, lastName = :lastName, email = :email',
@@ -94,7 +97,7 @@ export class DynamodbUserRepository implements UserRepository {
   }
 
   async delete(userId: string): Promise<void> {
-    const params = {
+    const params: DeleteCommandInput = {
       TableName: this.tableName,
       Key: { userId }
     }

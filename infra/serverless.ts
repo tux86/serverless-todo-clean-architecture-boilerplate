@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript'
 import { AWSRegion } from '../common/src/iac/serverless/types'
-import { UserPool, UserPoolClient, UserPoolOutputs } from './resources/cogntio-user-pool'
+import { AppClient, UserPool, UserPoolOutputs } from './resources/cogntio-user-pool'
 import { UsersTable, UsersTableOutputs } from './resources/dynamodb-users-table'
 import { TodosTable, TodosTableOutputs } from './resources/dynamodb-todos-table'
 import { stackTags } from './provider/tags'
@@ -28,7 +28,7 @@ export const serverlessConfiguration: AWS = {
     Resources: {
       // cognito
       UserPool,
-      UserPoolClient,
+      AppClient,
       // dynamodb
       UsersTable,
       TodosTable

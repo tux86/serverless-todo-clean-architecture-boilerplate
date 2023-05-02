@@ -1,11 +1,12 @@
 import {
   AdminCreateUserCommand,
   AdminDeleteUserCommand,
+  AdminGetUserCommand,
   AdminInitiateAuthCommand,
   AdminSetUserPasswordCommand,
+  AdminUpdateUserAttributesCommand,
   AuthFlowType,
-  CognitoIdentityProvider,
-  ListUsersCommand
+  CognitoIdentityProvider
 } from '@aws-sdk/client-cognito-identity-provider'
 
 import { AuthSuccessResult } from '@/api/application/dtos/user/auth-success.result'
@@ -27,12 +28,12 @@ export class CognitoUserService {
       MessageAction: 'SUPPRESS', // Prevents sending a welcome email
       UserAttributes: [
         {
-          Name: 'email',
-          Value: email
-        },
-        {
           Name: 'email_verified',
           Value: 'true'
+        },
+        {
+          Name: 'email',
+          Value: email
         }
       ]
     })
@@ -50,18 +51,27 @@ export class CognitoUserService {
     await this.cognitoIdentityProvider.send(command)
   }
 
-  async findUserByEmail(email: string): Promise<AuthUser | null> {
-    const command = new ListUsersCommand({
-      UserPoolId: this.userPoolId,
-      Filter: `email = "${email}"`
-    })
+  async getUserByEmail(email: string): Promise<AuthUser | null> {
+    try {
+      const command = new AdminGetUserCommand({
+        UserPoolId: this.userPoolId,
+        Username: email
+      })
 
-    const response = await this.cognitoIdentityProvider.send(command)
-    const user = response.Users?.[0]
+      const response = await this.cognitoIdentityProvider.send(command)
+      const userIdAttribute = response.UserAttributes?.find((attr) => attr.Name === 'sub')
 
-    if (!user) return null
+      if (!userIdAttribute) {
+        return null
+      }
 
-    return new AuthUser(user.Username, user.Attributes?.find((attr) => attr.Name === 'email')?.Value || '')
+      return new AuthUser(email, userIdAttribute.Value || '')
+    } catch (error) {
+      if (error.code === 'UserNotFoundException') {
+        return null
+      }
+      throw error
+    }
   }
 
   async authenticateUser(email: string, password: string): Promise<AuthSuccessResult> {
@@ -84,6 +94,25 @@ export class CognitoUserService {
     }
 
     return new AuthSuccessResult(response.AuthenticationResult?.AccessToken || '')
+  }
+
+  async updateUserEmail(oldEmail: string, newEmail: string): Promise<void> {
+    const command = new AdminUpdateUserAttributesCommand({
+      UserPoolId: this.userPoolId,
+      Username: oldEmail,
+      UserAttributes: [
+        {
+          Name: 'email',
+          Value: newEmail
+        },
+        {
+          Name: 'email_verified',
+          Value: 'true'
+        }
+      ]
+    })
+
+    await this.cognitoIdentityProvider.send(command)
   }
 
   async delete(email: string): Promise<void> {

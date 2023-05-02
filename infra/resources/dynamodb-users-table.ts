@@ -1,8 +1,8 @@
 import { generatePrefixedResourceName, varToString } from '../../common/src/iac/serverless/helpers'
-import { AWSOutputs } from '../../common/src/iac/serverless/types'
+import { AWSOutputs, AWSResource } from '../../common/src/iac/serverless/types'
 
 export const tableName = generatePrefixedResourceName('users')
-export const UsersTable = {
+export const UsersTable: AWSResource = {
   Type: 'AWS::DynamoDB::Table',
   Properties: {
     TableName: tableName,

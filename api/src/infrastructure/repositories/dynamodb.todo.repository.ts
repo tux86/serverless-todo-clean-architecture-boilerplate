@@ -1,11 +1,15 @@
 import {
   DeleteCommand,
+  DeleteCommandInput,
   DynamoDBDocumentClient,
   GetCommand,
+  GetCommandInput,
   PutCommand,
   PutCommandInput,
   ScanCommand,
-  UpdateCommand
+  ScanCommandInput,
+  UpdateCommand,
+  UpdateCommandInput
 } from '@aws-sdk/lib-dynamodb'
 
 import { Todo } from '@/api/domain/models/todo'
@@ -36,7 +40,7 @@ export class DynamodbTodoRepository implements Repository<Todo> {
   }
 
   async findById(todoId: string): Promise<Todo | null> {
-    const params = {
+    const params: GetCommandInput = {
       TableName: this.tableName,
       Key: { todoId }
     }
@@ -46,7 +50,7 @@ export class DynamodbTodoRepository implements Repository<Todo> {
   }
 
   async findAll(): Promise<Todo[]> {
-    const params = {
+    const params: ScanCommandInput = {
       TableName: this.tableName
     }
 
@@ -87,7 +91,7 @@ export class DynamodbTodoRepository implements Repository<Todo> {
 
     const updateExpression = 'set ' + updateExpressionParts.join(', ')
 
-    const params: any = {
+    const params: UpdateCommandInput = {
       TableName: this.tableName,
       Key: { todoId: todoEntity.todoId },
       UpdateExpression: updateExpression,
@@ -105,7 +109,7 @@ export class DynamodbTodoRepository implements Repository<Todo> {
   }
 
   async delete(todoId: string): Promise<void> {
-    const params = {
+    const params: DeleteCommandInput = {
       TableName: this.tableName,
       Key: { todoId }
     }

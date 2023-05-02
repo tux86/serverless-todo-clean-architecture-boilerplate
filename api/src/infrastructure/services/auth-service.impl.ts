@@ -13,13 +13,15 @@ export class AuthServiceImpl implements AuthService {
 
   async registerUser(user: User, password: string): Promise<User> {
     try {
+      // Store user in Dynamodb
+      const dbUser = await this.userRepository.create(user)
       // TODO: should be safe using a transaction
       // Store user in Cognito
-      await this.cognitoUserService.createUser(user.email)
+      await this.cognitoUserService.createUser(dbUser.email)
       // Set permanent password for the user
-      await this.cognitoUserService.setUserPassword(user.email, password)
-      // Store user in Dynamodb
-      return await this.userRepository.create(user)
+      await this.cognitoUserService.setUserPassword(dbUser.email, password)
+
+      return dbUser
     } catch (error) {
       if (error instanceof UsernameExistsException) {
         throw new UserAccountAlreadyExists()
@@ -28,7 +30,7 @@ export class AuthServiceImpl implements AuthService {
     }
   }
 
-  async authenticateUser(email: string, password: string): Promise<AuthSuccessResult> {
-    return this.cognitoUserService.authenticateUser(email, password)
+  async authenticateUser(userId: string, password: string): Promise<AuthSuccessResult> {
+    return this.cognitoUserService.authenticateUser(userId, password)
   }
 }

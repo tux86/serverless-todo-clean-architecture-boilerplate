@@ -6,6 +6,9 @@ export const UserPool: AWSResource = {
   Type: 'AWS::Cognito::UserPool',
   Properties: {
     UserPoolName: userPoolName,
+    AdminCreateUserConfig: {
+      AllowAdminCreateUserOnly: true
+    },
     Schema: [
       {
         Name: 'email',
@@ -14,6 +17,7 @@ export const UserPool: AWSResource = {
       }
     ],
     AutoVerifiedAttributes: ['email'],
+    UsernameAttributes: ['email'],
     Policies: {
       PasswordPolicy: {
         MinimumLength: 8,
@@ -27,11 +31,14 @@ export const UserPool: AWSResource = {
   }
 }
 
-export const UserPoolClient: AWSResource = {
+
+export const AppClient: AWSResource = {
   Type: 'AWS::Cognito::UserPoolClient',
   Properties: {
     ClientName: generatePrefixedResourceName('api-client'),
     UserPoolId: { Ref: varToString({ UserPool }) },
+    ReadAttributes: ['email'],
+    // WriteAttributes: ['email'],
     ExplicitAuthFlows: ['ALLOW_ADMIN_USER_PASSWORD_AUTH', 'ALLOW_USER_PASSWORD_AUTH', 'ALLOW_REFRESH_TOKEN_AUTH'],
     GenerateSecret: false,
     TokenValidityUnits: {
@@ -66,7 +73,7 @@ export const UserPoolOutputs: AWSOutputs = {
     }
   },
   appClientId: {
-    Value: { Ref: varToString({ UserPoolClient }) },
+    Value: { Ref: varToString({ AppClient }) },
     Export: {
       Name: `${userPoolName}-appClientId`
     }

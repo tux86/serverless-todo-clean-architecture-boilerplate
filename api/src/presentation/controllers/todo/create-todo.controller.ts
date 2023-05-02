@@ -1,5 +1,3 @@
-import { uuidV4 } from '@/common/uuid'
-
 import { WithInterceptor } from '@/api/application/decorators/interceptor.decorator'
 import { CreateTodoInput } from '@/api/application/dtos/todo/create-todo.input'
 import { Controller } from '@/api/application/ports/controller'
@@ -16,7 +14,7 @@ export class CreateTodoController implements Controller<Todo | never> {
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<CreateTodoInput>): Promise<IHttpResponse<Todo>> {
-    const userId = uuidV4() // TODO should be retrieved from token
+    const userId = request.attributes.email
     const input = new CreateTodoInput({ userId, ...request.body })
 
     const todo = await this.createTodo.execute(input)

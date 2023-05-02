@@ -1,4 +1,4 @@
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda'
+import { APIGatewayProxyEventV2, APIGatewayProxyEventV2WithJWTAuthorizer, APIGatewayProxyResultV2 } from 'aws-lambda'
 
 import {
   createAuthenticateUserController,
@@ -19,12 +19,16 @@ export const authenticateUserHandler = async (event: APIGatewayProxyEventV2): Pr
   return await handler(event)
 }
 
-export const getUserHandler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
+export const getUserHandler = async (
+  event: APIGatewayProxyEventV2WithJWTAuthorizer
+): Promise<APIGatewayProxyResultV2> => {
   const handler = lambdaHandlerAdapter(createGetUserController())
   return await handler(event)
 }
 
-export const deleteUserHandler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
+export const deleteUserHandler = async (
+  event: APIGatewayProxyEventV2WithJWTAuthorizer
+): Promise<APIGatewayProxyResultV2> => {
   const handler = lambdaHandlerAdapter(createDeleteUserController())
   return await handler(event)
 }

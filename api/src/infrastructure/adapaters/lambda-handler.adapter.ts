@@ -1,15 +1,32 @@
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda'
+import { Dictionary } from '@/common/types'
+import { APIGatewayProxyEventV2, APIGatewayProxyEventV2WithJWTAuthorizer, APIGatewayProxyResultV2 } from 'aws-lambda'
 
 import { Controller } from '@/api/application/ports/controller'
-import { IHttpRequest } from '@/api/application/ports/http-request'
+import { HttpRequestAttributes, IHttpRequest } from '@/api/application/ports/http-request'
 
 import { parseJsonRequestBody, toApiGwResponse } from '../helpers/api-gateway'
 
+const mapClaimsToRequestAttributes = (claims: Dictionary<any>): HttpRequestAttributes | undefined => {
+  if (!claims) {
+    return undefined
+  }
+  return {
+    clientId: String(claims.client_id),
+    email: String(claims.username),
+    tokenExp: new Date(Number(claims.exp) * 1000),
+    tokenIat: new Date(Number(claims.iat) * 1000)
+  }
+}
+
 export const lambdaHandlerAdapter = <T>(
   controller: Controller<T>
-): ((event: APIGatewayProxyEventV2) => Promise<APIGatewayProxyResultV2>) => {
-  return async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
+): ((event: APIGatewayProxyEventV2 | APIGatewayProxyEventV2WithJWTAuthorizer) => Promise<APIGatewayProxyResultV2>) => {
+  return async (event) => {
     let { body } = event
+
+    // Verify the event has JWT Authorizer information and populate custom attributes using its claims.
+    const claims = 'authorizer' in event.requestContext ? event.requestContext?.authorizer.jwt?.claims : undefined
+    const attributes = mapClaimsToRequestAttributes(claims)
 
     if (event.headers['content-type'] === 'application/json' && body) {
       body = parseJsonRequestBody(event.body)
@@ -19,7 +36,8 @@ export const lambdaHandlerAdapter = <T>(
       body,
       params: event.pathParameters || {},
       query: event.queryStringParameters || {},
-      headers: event.headers || {}
+      headers: event.headers || {},
+      attributes
     }
 
     const response = await controller.handleRequest(request)
