@@ -93,7 +93,7 @@ export class CognitoUserService {
       throw new Error('AccessToken is missing from the AuthenticationResult.')
     }
 
-    return new AuthSuccessResult(response.AuthenticationResult?.AccessToken || '')
+    return new AuthSuccessResult(response.AuthenticationResult?.IdToken || '')
   }
 
   async updateUserEmail(oldEmail: string, newEmail: string): Promise<void> {

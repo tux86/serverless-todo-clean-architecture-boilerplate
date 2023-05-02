@@ -44,7 +44,14 @@ export const userFunctions: AWSFunctions = {
     handler: getHandler('user-cognito-triggers-index.preSignUpHandler'),
     events: [cognitoUserPoolEvent('${param:userPoolName}', 'PreSignUp', true)]
   },
-  userDynamodbStreamHandler: {
+  preTokenGeneration: {
+    handler: getHandler('user-cognito-triggers-index.preTokenGenerationHandler'),
+    environment: {
+      USERS_TABLE: '${param:usersTableName}'
+    },
+    events: [cognitoUserPoolEvent('${param:userPoolName}', 'PreTokenGeneration', true)]
+  },
+  userDynamodbStream: {
     handler: getHandler('user-dynamodb-stream-index.dynamoDBStreamHandler'),
     environment,
     events: [dynamodbStreamEvent('${param:usersTableStreamArn}')]

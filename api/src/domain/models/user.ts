@@ -3,6 +3,7 @@ export interface User {
   firstName: string
   lastName: string
   email: string
+  lastLoggedAt?: Date
   createdAt: Date
   updatedAt?: Date
 }

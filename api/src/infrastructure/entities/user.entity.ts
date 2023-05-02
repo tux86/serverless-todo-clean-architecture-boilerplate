@@ -3,6 +3,7 @@ export class UserEntity {
   public firstName: string
   public lastName: string
   public email: string
-  createdAt: string
-  updatedAt?: string
+  public lastLoggedAt?: string
+  public createdAt: string
+  public updatedAt?: string
 }

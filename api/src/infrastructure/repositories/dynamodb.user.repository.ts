@@ -14,6 +14,7 @@ import {
   UpdateCommandInput
 } from '@aws-sdk/lib-dynamodb'
 
+import { UserAccountAlreadyExists } from '@/api/application/errors'
 import { User } from '@/api/domain/models/user'
 import { UserRepository } from '@/api/domain/repositories/user.repository'
 
@@ -33,11 +34,16 @@ export class DynamodbUserRepository implements UserRepository {
   }
 
   async create(user: User): Promise<User> {
+    // TODO optimize this (only update instruction)
+    const existingUser = await this.findByEmail(user.email)
+    if (existingUser) {
+      throw new UserAccountAlreadyExists()
+    }
+
     const userEntity = this.mapper.toPersistenceEntity(user)
     const params: PutCommandInput = {
       TableName: this.tableName,
-      Item: userEntity,
-      ConditionExpression: 'attribute_not_exists(email)'
+      Item: userEntity
     }
 
     await this.docClient.send(new PutCommand(params))
@@ -79,15 +85,37 @@ export class DynamodbUserRepository implements UserRepository {
 
   async update(user: Partial<User>): Promise<User> {
     const userEntity = this.mapper.toPersistenceEntity(user)
+
+    const updateExpressionParts: string[] = []
+    const expressionAttributeValues: { [key: string]: any } = {}
+
+    if (userEntity.firstName) {
+      updateExpressionParts.push('firstName = :firstName')
+      expressionAttributeValues[':firstName'] = userEntity.firstName
+    }
+
+    if (userEntity.lastName) {
+      updateExpressionParts.push('lastName = :lastName')
+      expressionAttributeValues[':lastName'] = userEntity.lastName
+    }
+
+    if (userEntity.email) {
+      updateExpressionParts.push('email = :email')
+      expressionAttributeValues[':email'] = userEntity.email
+    }
+
+    if (userEntity.lastLoggedAt) {
+      updateExpressionParts.push('lastLoggedAt = :lastLoggedAt')
+      expressionAttributeValues[':lastLoggedAt'] = userEntity.lastLoggedAt
+    }
+
+    const updateExpression = 'set ' + updateExpressionParts.join(', ')
+
     const params: UpdateCommandInput = {
       TableName: this.tableName,
       Key: { userId: userEntity.userId },
-      UpdateExpression: 'set firstName = :firstName, lastName = :lastName, email = :email',
-      ExpressionAttributeValues: {
-        ':firstName': userEntity.firstName,
-        ':lastName': userEntity.lastName,
-        ':email': userEntity.email
-      },
+      UpdateExpression: updateExpression,
+      ExpressionAttributeValues: expressionAttributeValues,
       ReturnValues: 'ALL_NEW'
     }
 

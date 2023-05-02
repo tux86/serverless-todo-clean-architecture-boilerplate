@@ -1,10 +1,14 @@
-import { Dictionary } from '@/common/types'
+import { Dictionary, StringMap } from '@/common/types'
+
+import { Claims } from '@/api/application/ports/claims'
+
+export type HttpRequestAttributes = {} & Claims & Dictionary<string | any>
 
 export interface IHttpRequest<
   Body = any,
-  Params = Dictionary<string | any>,
+  Params = StringMap,
   Query = Body,
-  Headers = Dictionary<string | any>,
+  Headers = StringMap,
   Attributes = HttpRequestAttributes
 > {
   body?: Body
@@ -15,10 +19,3 @@ export interface IHttpRequest<
   // Custom parameters
   attributes?: Attributes
 }
-
-export type HttpRequestAttributes = {
-  clientId: string
-  email: string
-  tokenExp: Date
-  tokenIat: Date
-} & Dictionary<string | any>

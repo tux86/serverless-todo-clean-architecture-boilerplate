@@ -4,7 +4,7 @@ import { DynamodbClientProvider } from '../../infrastructure/providers/dynamodb.
 import { DynamodbTodoRepository } from '../../infrastructure/repositories/dynamodb.todo.repository'
 import { DynamodbUserRepository } from '../../infrastructure/repositories/dynamodb.user.repository'
 
-export const createUserRepository = () =>
+export const createUserRepository = (): DynamodbUserRepository =>
   new DynamodbUserRepository(new DynamodbClientProvider(), new UserEntityMapper())
-export const createTodoRepository = () =>
+export const createTodoRepository = (): DynamodbTodoRepository =>
   new DynamodbTodoRepository(new DynamodbClientProvider(), new TodoEntityMapper())

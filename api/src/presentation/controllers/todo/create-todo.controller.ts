@@ -14,7 +14,7 @@ export class CreateTodoController implements Controller<Todo | never> {
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<CreateTodoInput>): Promise<IHttpResponse<Todo>> {
-    const userId = request.attributes.email
+    const { userId } = request.attributes
     const input = new CreateTodoInput({ userId, ...request.body })
 
     const todo = await this.createTodo.execute(input)

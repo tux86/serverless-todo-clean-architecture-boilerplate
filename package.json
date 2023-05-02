@@ -5,7 +5,7 @@
   "description": "A Todo App using Serverless Framework, TypeScript, and Clean Architecture",
   "scripts": {
     "deploy": "sls deploy",
-    "delete": "sls remove",
+    "remove": "sls remove",
     "start": "sls api:offline start --reloadHandler"
   },
   "keywords": [

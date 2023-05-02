@@ -18,13 +18,14 @@ export class UserEntityMapper implements IMapper<Partial<UserEntity>, User> {
   }
 
   toPersistenceEntity(user: Partial<User>): Partial<UserEntity> {
-    const { userId, firstName, lastName, email, createdAt, updatedAt } = user
+    const { userId, firstName, lastName, email, lastLoggedAt, createdAt, updatedAt } = user
 
     return {
       userId,
       firstName,
       lastName,
       email,
+      lastLoggedAt: lastLoggedAt?.toISOString(),
       createdAt: createdAt?.toISOString(),
       updatedAt: updatedAt?.toISOString()
     }

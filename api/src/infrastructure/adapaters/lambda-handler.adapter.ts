@@ -1,6 +1,7 @@
 import { Dictionary } from '@/common/types'
 import { APIGatewayProxyEventV2, APIGatewayProxyEventV2WithJWTAuthorizer, APIGatewayProxyResultV2 } from 'aws-lambda'
 
+import { Claims } from '@/api/application/ports/claims'
 import { Controller } from '@/api/application/ports/controller'
 import { HttpRequestAttributes, IHttpRequest } from '@/api/application/ports/http-request'
 
@@ -11,11 +12,11 @@ const mapClaimsToRequestAttributes = (claims: Dictionary<any>): HttpRequestAttri
     return undefined
   }
   return {
-    clientId: String(claims.client_id),
-    email: String(claims.username),
-    tokenExp: new Date(Number(claims.exp) * 1000),
-    tokenIat: new Date(Number(claims.iat) * 1000)
-  }
+    userId: String(claims.userId),
+    email: String(claims.email),
+    exp: String(claims.exp),
+    iat: String(claims.iat)
+  } as Claims
 }
 
 export const lambdaHandlerAdapter = <T>(

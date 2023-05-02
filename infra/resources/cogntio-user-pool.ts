@@ -38,8 +38,7 @@ export const AppClient: AWSResource = {
     ClientName: generatePrefixedResourceName('api-client'),
     UserPoolId: { Ref: varToString({ UserPool }) },
     ReadAttributes: ['email'],
-    // WriteAttributes: ['email'],
-    ExplicitAuthFlows: ['ALLOW_ADMIN_USER_PASSWORD_AUTH', 'ALLOW_USER_PASSWORD_AUTH', 'ALLOW_REFRESH_TOKEN_AUTH'],
+    ExplicitAuthFlows: ['ALLOW_ADMIN_USER_PASSWORD_AUTH', 'ALLOW_CUSTOM_AUTH', 'ALLOW_REFRESH_TOKEN_AUTH'],
     GenerateSecret: false,
     TokenValidityUnits: {
       AccessToken: 'hours',
