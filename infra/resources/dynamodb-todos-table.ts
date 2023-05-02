@@ -1,5 +1,5 @@
-import { generatePrefixedResourceName, varToString } from '../../../../common/src/aws/helpers'
-import { AWSOutputs, AWSResource } from '../../../../common/src/aws/types'
+import { generatePrefixedResourceName, varToString } from '../../common/src/iac/serverless/helpers'
+import { AWSOutputs, AWSResource } from '../../common/src/iac/serverless/types'
 
 const tableName = generatePrefixedResourceName('todos')
 export const TodosTable: AWSResource = {

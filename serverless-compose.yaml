@@ -3,13 +3,13 @@ services:
   infra:
     path: infra
     params:
-      region: eu-west-1
+      region: ${env:AWS_REGION, 'eu-west-1'}
   api:
     path: api
     dependsOn:
       - infra
     params:
-      region: eu-west-1
+      region: ${env:AWS_REGION, 'eu-west-1'}
       # cognito
       userPoolName: ${infra.userPoolName}
       userPoolId: ${infra.userPoolId}

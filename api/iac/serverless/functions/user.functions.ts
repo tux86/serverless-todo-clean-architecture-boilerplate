@@ -1,7 +1,12 @@
 import { AwsLambdaEnvironment } from '@serverless/typescript'
 
-import { cognitoUserPoolEvent, dynamodbStreamEvent, getHandler, httpApiEvent } from '../../../../common/src/aws/helpers'
-import { AWSFunctions } from '../../../../common/src/aws/types'
+import {
+  cognitoUserPoolEvent,
+  dynamodbStreamEvent,
+  getHandler,
+  httpApiEvent
+} from '../../../../common/src/iac/serverless/helpers'
+import { AWSFunctions } from '../../../../common/src/iac/serverless/types'
 import { jwtAuthorizer } from '../helpers'
 
 const environment: AwsLambdaEnvironment = {

@@ -1,4 +1,4 @@
-import { AWSIam } from '../../../../common/src/aws/types'
+import { AWSIam } from '../../../../common/src/iac/serverless/types'
 
 export const defaultIam: AWSIam = {
   role: {

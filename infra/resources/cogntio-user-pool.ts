@@ -1,5 +1,5 @@
-import { generatePrefixedResourceName, varToString } from '../../../../common/src/aws/helpers'
-import { AWSOutputs, AWSResource } from '../../../../common/src/aws/types'
+import { generatePrefixedResourceName, varToString } from '../../common/src/iac/serverless/helpers'
+import { AWSOutputs, AWSResource } from '../../common/src/iac/serverless/types'
 
 export const userPoolName = generatePrefixedResourceName('user-pool')
 export const UserPool: AWSResource = {
@@ -39,15 +39,14 @@ export const UserPoolClient: AWSResource = {
       IdToken: 'hours',
       RefreshToken: 'hours'
     },
-    AccessTokenValidity: 24,
-    IdTokenValidity: 24,
-    RefreshTokenValidity: 72
+    AccessTokenValidity: '${env:ACCESS_TOKEN_VALIDITY}',
+    IdTokenValidity: '${env:ID_TOKEN_VALIDITY}',
+    RefreshTokenValidity: '${env:REFRESH_TOKEN_VALIDITY}'
   }
 }
 
 
 export const UserPoolOutputs: AWSOutputs = {
-
   userPoolName: {
     Value: userPoolName,
     Export: {
@@ -72,6 +71,5 @@ export const UserPoolOutputs: AWSOutputs = {
       Name: `${userPoolName}-appClientId`
     }
   }
-
 }
 

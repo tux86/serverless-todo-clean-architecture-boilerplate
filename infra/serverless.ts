@@ -1,9 +1,9 @@
 import type { AWS } from '@serverless/typescript'
-import { stackTags, tags } from '../api/iac/serverless/provider/tags'
-import { AWSRegion } from '../common/src/aws/types'
-import { UserPool, UserPoolClient, UserPoolOutputs } from './iac/serverless/resources/cogntio-user-pool'
-import { UsersTable, UsersTableOutputs } from './iac/serverless/resources/dynamodb-users-table'
-import { TodosTable, TodosTableOutputs } from './iac/serverless/resources/dynamodb-todos-table'
+import { AWSRegion } from '../common/src/iac/serverless/types'
+import { UserPool, UserPoolClient, UserPoolOutputs } from './resources/cogntio-user-pool'
+import { UsersTable, UsersTableOutputs } from './resources/dynamodb-users-table'
+import { TodosTable, TodosTableOutputs } from './resources/dynamodb-todos-table'
+import { stackTags } from './provider/tags'
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-infra',
@@ -20,7 +20,9 @@ export const serverlessConfiguration: AWS = {
       shouldStartNameWithService: true
     },
     stackTags,
-    tags
+    tags: {
+      ...stackTags
+    }
   },
   resources: {
     Resources: {

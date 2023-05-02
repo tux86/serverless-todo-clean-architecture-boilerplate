@@ -26,7 +26,7 @@ lerna-debug.log*
 # Development environment
 *.env
 *.env.*
-!*.env.example
+!infra/.env.example
 
 # IDEs
 .vscode/

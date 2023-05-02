@@ -3,8 +3,8 @@ import type { AWS } from '@serverless/typescript'
 import { todoFunctions } from './iac/serverless/functions/todo.functions'
 import { userFunctions } from './iac/serverless/functions/user.functions'
 import { defaultIam } from './iac/serverless/iam/default-iam'
-import { stackTags, tags } from './iac/serverless/provider/tags'
-import { AWSRegion } from '../common/src/aws/types'
+import { stackTags } from './iac/serverless/provider/tags'
+import { AWSRegion } from '../common/src/iac/serverless/types'
 
 export const serverlessConfiguration: AWS = {
   service: 'todo-api',
@@ -46,7 +46,9 @@ export const serverlessConfiguration: AWS = {
     },
     iam: defaultIam,
     stackTags,
-    tags
+    tags: {
+      ...stackTags
+    }
   },
   // Custom settings and configurations specific to the application or plugins
   custom: {
