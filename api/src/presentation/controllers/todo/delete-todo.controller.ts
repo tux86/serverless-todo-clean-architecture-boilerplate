@@ -8,12 +8,12 @@ import { DeleteTodoUseCase } from '@/api/application/usecases/todo/delete-todo.u
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { DeletedHttpResponse } from '../../responses/http-response'
 
-export class DeleteTodoController implements Controller<undefined, DeleteTodoInput, void> {
+export class DeleteTodoController implements Controller<void> {
   constructor(readonly deleteTodo: DeleteTodoUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<undefined, DeleteTodoInput>): Promise<IHttpResponse<void>> {
     await this.deleteTodo.execute(new DeleteTodoInput(request.params))
-    return new DeletedHttpResponse<void>()
+    return new DeletedHttpResponse()
   }
 }

@@ -8,7 +8,7 @@ import { DeleteUserUseCase } from '@/api/application/usecases/user/delete-user.u
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { DeletedHttpResponse } from '../../responses/http-response'
 
-export class DeleteUserController implements Controller<undefined, DeleteUserInput, void> {
+export class DeleteUserController implements Controller<void> {
   constructor(readonly deleteUser: DeleteUserUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())

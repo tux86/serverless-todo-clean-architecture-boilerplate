@@ -23,7 +23,7 @@ export class UpdatedHttpResponse<T = unknown> extends HttpResponse<T> {
   }
 }
 
-export class DeletedHttpResponse<T = unknown> extends HttpResponse<T> {
+export class DeletedHttpResponse<T = void> extends HttpResponse<T> {
   constructor(body: T = null, headers?: { [key: string]: string }) {
     super(HttpStatus.NO_CONTENT, body, headers)
   }
