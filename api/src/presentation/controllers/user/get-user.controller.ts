@@ -9,7 +9,7 @@ import { User } from '@/api/domain/models/user'
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { SuccessHttpResponse } from '../../responses/http-response'
 
-export class GetUserController implements Controller<User | never> {
+export class GetUserController implements Controller<undefined, GetUserInput, User> {
   constructor(readonly getUser: GetUserUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())

@@ -7,7 +7,7 @@ import { Todo } from '@/api/domain/models/todo'
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { SuccessHttpResponse } from '../../responses/http-response'
 
-export class ListTodosController implements Controller<Todo[] | never> {
+export class ListTodosController implements Controller<undefined, undefined, Todo[]> {
   constructor(readonly listTodos: ListTodosUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())

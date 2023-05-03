@@ -5,9 +5,9 @@ import { Claims } from '@/api/application/ports/claims'
 export type HttpRequestAttributes = {} & Claims & Dictionary<string | any>
 
 export interface IHttpRequest<
-  Body = any,
+  Body = unknown,
   Params = StringMap,
-  Query = Body,
+  Query = StringMap,
   Headers = StringMap,
   Attributes = HttpRequestAttributes
 > {
@@ -15,7 +15,6 @@ export interface IHttpRequest<
   params?: Params
   query?: Query
   headers?: Headers
-
   // Custom parameters
   attributes?: Attributes
 }

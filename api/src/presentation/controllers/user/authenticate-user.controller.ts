@@ -9,7 +9,7 @@ import { AuthenticateUserUseCase } from '@/api/application/usecases/user/authent
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { SuccessHttpResponse } from '../../responses/http-response'
 
-export class AuthenticateUserController implements Controller<AuthSuccessResult | never> {
+export class AuthenticateUserController implements Controller<AuthUserInput, undefined, AuthSuccessResult> {
   constructor(readonly authenticateUser: AuthenticateUserUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())

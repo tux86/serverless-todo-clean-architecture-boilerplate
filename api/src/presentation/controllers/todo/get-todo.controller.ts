@@ -9,7 +9,7 @@ import { Todo } from '@/api/domain/models/todo'
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { SuccessHttpResponse } from '../../responses/http-response'
 
-export class GetTodoController implements Controller<Todo | never> {
+export class GetTodoController implements Controller<undefined, GetTodoInput, Todo> {
   constructor(readonly getTodo: GetTodoUseCase) {}
 
   @WithInterceptor(new ErrorInterceptor())
