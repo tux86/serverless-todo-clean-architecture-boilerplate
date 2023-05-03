@@ -88,24 +88,35 @@ export class DynamodbUserRepository implements UserRepository {
 
     const updateExpressionParts: string[] = []
     const expressionAttributeValues: { [key: string]: any } = {}
+    const expressionAttributeNames: { [key: string]: string } = {}
 
     if (userEntity.firstName) {
-      updateExpressionParts.push('firstName = :firstName')
+      updateExpressionParts.push('#firstName = :firstName')
+      expressionAttributeNames['#firstName'] = 'firstName'
       expressionAttributeValues[':firstName'] = userEntity.firstName
     }
 
     if (userEntity.lastName) {
-      updateExpressionParts.push('lastName = :lastName')
+      updateExpressionParts.push('#lastName = :lastName')
+      expressionAttributeNames['#lastName'] = 'lastName'
       expressionAttributeValues[':lastName'] = userEntity.lastName
     }
 
     if (userEntity.email) {
-      updateExpressionParts.push('email = :email')
+      updateExpressionParts.push('#email = :email')
+      expressionAttributeNames['#email'] = 'email'
       expressionAttributeValues[':email'] = userEntity.email
     }
 
+    if (userEntity.role) {
+      updateExpressionParts.push('#role = :role')
+      expressionAttributeNames['#role'] = 'role'
+      expressionAttributeValues[':role'] = userEntity.role
+    }
+
     if (userEntity.lastLoggedAt) {
-      updateExpressionParts.push('lastLoggedAt = :lastLoggedAt')
+      updateExpressionParts.push('#lastLoggedAt = :lastLoggedAt')
+      expressionAttributeNames['#lastLoggedAt'] = 'lastLoggedAt'
       expressionAttributeValues[':lastLoggedAt'] = userEntity.lastLoggedAt
     }
 
@@ -115,6 +126,7 @@ export class DynamodbUserRepository implements UserRepository {
       TableName: this.tableName,
       Key: { userId: userEntity.userId },
       UpdateExpression: updateExpression,
+      ExpressionAttributeNames: expressionAttributeNames,
       ExpressionAttributeValues: expressionAttributeValues,
       ReturnValues: 'ALL_NEW'
     }

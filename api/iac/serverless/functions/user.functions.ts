@@ -15,6 +15,11 @@ const environment: AwsLambdaEnvironment = {
   USERS_TABLE: '${param:usersTableName}'
 }
 export const userFunctions: AWSFunctions = {
+  createAdminUser: {
+    handler: getHandler('user-api-index.createAdminUserHandler'),
+    environment,
+    events: [httpApiEvent('post', '/users/admin')]
+  },
   registerUser: {
     handler: getHandler('user-api-index.registerUserHandler'),
     environment,
@@ -34,6 +39,11 @@ export const userFunctions: AWSFunctions = {
     handler: getHandler('user-api-index.getUserHandler'),
     environment,
     events: [httpApiEvent('get', '/users/{userId}', jwtAuthorizer())]
+  },
+  listUsers: {
+    handler: getHandler('user-api-index.listUsersHandler'),
+    environment,
+    events: [httpApiEvent('get', '/users', jwtAuthorizer())]
   },
   deleteUser: {
     handler: getHandler('user-api-index.deleteUserHandler'),

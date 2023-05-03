@@ -1,13 +1,20 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyEventV2WithJWTAuthorizer, APIGatewayProxyResultV2 } from 'aws-lambda'
 
 import {
+  createAdminUserController,
   createAuthenticateUserController,
   createDeleteUserController,
   createGetUserController,
+  createListUsersController,
   createRegisterUserController
 } from '@/api/main/factories/controllers/user.controllers.factory'
 
 import { lambdaHandlerAdapter } from '../adapaters/lambda-handler.adapter'
+
+export const createAdminUserHandler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
+  const handler = lambdaHandlerAdapter(createAdminUserController())
+  return await handler(event)
+}
 
 export const registerUserHandler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
   const handler = lambdaHandlerAdapter(createRegisterUserController())
@@ -23,6 +30,13 @@ export const getUserHandler = async (
   event: APIGatewayProxyEventV2WithJWTAuthorizer
 ): Promise<APIGatewayProxyResultV2> => {
   const handler = lambdaHandlerAdapter(createGetUserController())
+  return await handler(event)
+}
+
+export const listUsersHandler = async (
+  event: APIGatewayProxyEventV2WithJWTAuthorizer
+): Promise<APIGatewayProxyResultV2> => {
+  const handler = lambdaHandlerAdapter(createListUsersController())
   return await handler(event)
 }
 

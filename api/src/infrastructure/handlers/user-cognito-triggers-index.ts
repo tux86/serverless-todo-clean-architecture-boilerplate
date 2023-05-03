@@ -40,7 +40,8 @@ export const preTokenGenerationHandler: PreTokenGenerationTriggerHandler = async
       event.response.claimsOverrideDetails = {
         claimsToAddOrOverride: {
           userId: dbUser.userId,
-          email: dbUser.email
+          email: dbUser.email,
+          role: dbUser.role
         },
         claimsToSuppress: []
       }

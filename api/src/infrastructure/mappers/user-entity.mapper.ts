@@ -5,26 +5,29 @@ import { UserEntity } from '../entities/user.entity'
 
 export class UserEntityMapper implements IMapper<Partial<UserEntity>, User> {
   toDomainModel(userEntity: UserEntity): User {
-    const { userId, firstName, lastName, email, createdAt, updatedAt } = userEntity
+    const { userId, firstName, lastName, email, role, lastLoggedAt, createdAt, updatedAt } = userEntity
 
     return {
       userId,
       firstName,
       lastName,
       email,
+      role,
+      lastLoggedAt: lastLoggedAt ? new Date(lastLoggedAt) : undefined,
       createdAt: createdAt ? new Date(createdAt) : undefined,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined
     }
   }
 
   toPersistenceEntity(user: Partial<User>): Partial<UserEntity> {
-    const { userId, firstName, lastName, email, lastLoggedAt, createdAt, updatedAt } = user
+    const { userId, firstName, lastName, email, role, lastLoggedAt, createdAt, updatedAt } = user
 
     return {
       userId,
       firstName,
       lastName,
       email,
+      role,
       lastLoggedAt: lastLoggedAt?.toISOString(),
       createdAt: createdAt?.toISOString(),
       updatedAt: updatedAt?.toISOString()

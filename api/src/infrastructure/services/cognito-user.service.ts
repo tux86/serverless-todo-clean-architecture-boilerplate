@@ -89,8 +89,8 @@ export class CognitoUserService {
 
     if (!response.AuthenticationResult) {
       throw new Error('AuthenticationResult is missing from the response.')
-    } else if (!response.AuthenticationResult.AccessToken) {
-      throw new Error('AccessToken is missing from the AuthenticationResult.')
+    } else if (!response.AuthenticationResult.IdToken) {
+      throw new Error('IdToken is missing from the AuthenticationResult.')
     }
 
     return new AuthSuccessResult(response.AuthenticationResult?.IdToken || '')

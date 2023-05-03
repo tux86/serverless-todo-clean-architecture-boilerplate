@@ -3,14 +3,14 @@ import { IsNotEmpty, IsUUID } from 'class-validator'
 export class DeleteTodoInput {
   @IsNotEmpty()
   @IsUUID()
-  readonly userId: string
+  readonly requestingUserId: string
 
   @IsNotEmpty()
   @IsUUID()
   readonly todoId: string
 
   constructor(props: DeleteTodoInput) {
-    this.userId = props.userId
+    this.requestingUserId = props.requestingUserId
     this.todoId = props.todoId
   }
 }

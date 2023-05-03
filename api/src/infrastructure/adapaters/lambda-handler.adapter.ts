@@ -14,8 +14,7 @@ const mapClaimsToRequestAttributes = (claims: Dictionary<any>): HttpRequestAttri
   return {
     userId: String(claims.userId),
     email: String(claims.email),
-    exp: String(claims.exp),
-    iat: String(claims.iat)
+    role: String(claims.role)
   } as Claims
 }
 

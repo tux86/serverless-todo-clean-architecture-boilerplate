@@ -17,7 +17,7 @@ export class DeleteTodoUseCase implements UseCase<DeleteTodoInput, void> {
       throw new EntityNotFound('Todo', input.todoId)
     }
 
-    if (todo.userId !== input.userId) {
+    if (todo.userId !== input.requestingUserId) {
       throw new UserNotAuthorizedError('User not authorized to delete this todo')
     }
 

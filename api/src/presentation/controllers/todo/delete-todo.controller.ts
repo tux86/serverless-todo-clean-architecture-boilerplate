@@ -15,7 +15,7 @@ export class DeleteTodoController implements Controller<void> {
   async handleRequest(request: IHttpRequest<undefined, DeleteTodoInput>): Promise<IHttpResponse<void>> {
     const { userId } = request.attributes
     const { todoId } = request.params
-    const input = new DeleteTodoInput({ userId, todoId })
+    const input = new DeleteTodoInput({ requestingUserId: userId, todoId })
     await this.deleteTodo.execute(input)
     return new DeletedHttpResponse()
   }
