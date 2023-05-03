@@ -27,3 +27,10 @@ export class AuthFailedError extends InputValidationError {
     this.name = 'AuthFailedError'
   }
 }
+
+export class UserNotAuthorizedError extends ApplicationError {
+  constructor(message?: string) {
+    super(message || 'User not authorized')
+    this.name = 'UserNotAuthorizedError'
+  }
+}

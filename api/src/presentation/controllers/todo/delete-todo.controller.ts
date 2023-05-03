@@ -13,7 +13,10 @@ export class DeleteTodoController implements Controller<void> {
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<undefined, DeleteTodoInput>): Promise<IHttpResponse<void>> {
-    await this.deleteTodo.execute(new DeleteTodoInput(request.params))
+    const { userId } = request.attributes
+    const { todoId } = request.params
+    const input = new DeleteTodoInput({ userId, todoId })
+    await this.deleteTodo.execute(input)
     return new DeletedHttpResponse()
   }
 }
