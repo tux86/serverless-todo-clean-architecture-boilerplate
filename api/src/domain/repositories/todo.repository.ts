@@ -10,5 +10,7 @@ export interface TodoRepository extends Repository<Todo> {
 
   findById(todoId: string): Promise<Todo | null>
 
+  findByUserId(userId: string): Promise<Todo[]>
+
   findAll(): Promise<Todo[]>
 }

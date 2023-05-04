@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { APIGatewayProxyEventV2WithJWTAuthorizer, APIGatewayProxyResultV2 } from 'aws-lambda'
 
 import {

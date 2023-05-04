@@ -1,26 +1,26 @@
 import { uuidV4 } from '@/common/uuid'
 
-import { Todo } from '@/api/domain/models/todo'
-import { Repository } from '@/api/domain/repositories/repository'
+import { Todo, TodoStatus } from '@/api/domain/models/todo'
+import { TodoRepository } from '@/api/domain/repositories/todo.repository'
 
 import { CreateTodoInput } from '../../dtos/todo/create-todo.input'
 import { BaseValidator } from '../../validators/abstract/base.validator'
 import { UseCase } from '../use-case'
 
 export class CreateTodoUseCase implements UseCase<CreateTodoInput, Todo> {
-  constructor(private readonly todoRepository: Repository<Todo>, private readonly validator: BaseValidator) {}
+  constructor(private readonly todoRepository: TodoRepository, private readonly validator: BaseValidator) {}
 
   async execute(input: CreateTodoInput): Promise<Todo> {
     this.validator.validateAndThrow(CreateTodoInput, input)
 
-    const todo: Todo = {
+    const todo = new Todo({
       todoId: uuidV4(),
       userId: input.userId,
       title: input.title,
       description: input.description,
-      status: undefined,
+      status: input.status ?? TodoStatus.Created,
       createdAt: new Date()
-    }
+    })
 
     return this.todoRepository.create(todo)
   }

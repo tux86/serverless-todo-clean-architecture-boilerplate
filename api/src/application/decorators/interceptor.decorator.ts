@@ -5,7 +5,7 @@ import { IHttpResponse } from '../ports/http-response'
 import { Interceptor } from '../ports/interceptor'
 
 export function WithInterceptor<T>(interceptor: Interceptor<IHttpRequest, IHttpResponse>) {
-  return function (_target: Controller, _propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (_target: Controller<T>, _propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value
 
     descriptor.value = async function (...args: any[]) {

@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { DynamoDBStreamEvent, DynamoDBStreamHandler } from 'aws-lambda'
 
 import { Logger } from '@/api/application/utlis/Logger'

@@ -3,7 +3,7 @@ import { CreateAdminUserInput } from '@/api/application/dtos/user/create-admin-u
 import { Controller } from '@/api/application/ports/controller'
 import { IHttpRequest } from '@/api/application/ports/http-request'
 import { IHttpResponse } from '@/api/application/ports/http-response'
-import { CreateAdminUserUseCase } from '@/api/application/usecases/user/create-admin-user.use-case'
+import { CreateAdminUserUseCase } from '@/api/application/use-cases/user/create-admin-user.use-case'
 import { User } from '@/api/domain/models/user'
 
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
@@ -14,8 +14,9 @@ export class CreateAdminUserController implements Controller<User> {
 
   @WithInterceptor(new ErrorInterceptor())
   async handleRequest(request: IHttpRequest<CreateAdminUserInput>): Promise<IHttpResponse<User>> {
-    const input = new CreateAdminUserInput(request.body)
-
+    const input: CreateAdminUserInput = {
+      ...request.body
+    }
     const user = await this.registerUser.execute(input)
     return new CreatedHttpResponse(user)
   }

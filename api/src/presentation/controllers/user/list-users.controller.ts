@@ -3,7 +3,7 @@ import { ListUsersInput } from '@/api/application/dtos/user/list-users.input'
 import { Controller } from '@/api/application/ports/controller'
 import { IHttpRequest } from '@/api/application/ports/http-request'
 import { IHttpResponse } from '@/api/application/ports/http-response'
-import { ListUsersUseCase } from '@/api/application/usecases/user/list-users.use-case'
+import { ListUsersUseCase } from '@/api/application/use-cases/user/list-users.use-case'
 import { User } from '@/api/domain/models/user'
 
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'

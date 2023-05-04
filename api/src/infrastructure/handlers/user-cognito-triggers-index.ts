@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import {
   PreSignUpTriggerEvent,
   PreSignUpTriggerHandler,
@@ -26,22 +27,24 @@ export const preTokenGenerationHandler: PreTokenGenerationTriggerHandler = async
   if (event.triggerSource === 'TokenGeneration_Authentication') {
     try {
       const { email } = event.request.userAttributes
-      const dbUser = await userRepository.findByEmail(email)
+      const user = await userRepository.findByEmail(email)
 
-      if (!dbUser) {
+      if (!user) {
         Logger.getInstance().error(`user with email "${email}" not found in database`)
         throw new EntityNotFound(UserEntity.name, email)
       }
 
-      // set lastLoggedAt in db
-      dbUser.lastLoggedAt = new Date()
-      await userRepository.update(dbUser)
+      await userRepository.update({
+        ...user,
+        // set lastLoggedAt
+        createdAt: new Date()
+      })
 
       event.response.claimsOverrideDetails = {
         claimsToAddOrOverride: {
-          userId: dbUser.userId,
-          email: dbUser.email,
-          role: dbUser.role
+          userId: user.userId,
+          email: user.email,
+          role: user.role
         },
         claimsToSuppress: []
       }

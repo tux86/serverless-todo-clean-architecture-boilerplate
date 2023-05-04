@@ -13,14 +13,14 @@ import {
 } from '@aws-sdk/lib-dynamodb'
 
 import { Todo } from '@/api/domain/models/todo'
-import { Repository } from '@/api/domain/repositories/repository'
+import { TodoRepository } from '@/api/domain/repositories/todo.repository'
 
 import { AWS_CONFIG } from '../config'
 import { TodoEntity } from '../entities/todo.entity'
 import { TodoEntityMapper } from '../mappers/todo-entity.mapper'
 import { DynamodbClientProvider } from '../providers/dynamodb.provider'
 
-export class DynamodbTodoRepository implements Repository<Todo> {
+export class DynamodbTodoRepository implements TodoRepository {
   private readonly tableName: string
   private readonly docClient: DynamoDBDocumentClient
 
@@ -31,6 +31,7 @@ export class DynamodbTodoRepository implements Repository<Todo> {
 
   async create(todo: Todo): Promise<Todo> {
     const todoEntity = this.mapper.toPersistenceEntity(todo)
+
     const params: PutCommandInput = {
       TableName: this.tableName,
       Item: todoEntity
@@ -46,7 +47,18 @@ export class DynamodbTodoRepository implements Repository<Todo> {
     }
 
     const result = await this.docClient.send(new GetCommand(params))
-    return (result.Item as Todo) || null
+    return result.Item ? this.mapper.toDomainModel(result.Item) : null
+  }
+
+  async findByUserId(userId: string): Promise<Todo[]> {
+    const params: ScanCommandInput = {
+      TableName: this.tableName,
+      FilterExpression: 'userId = :userId',
+      ExpressionAttributeValues: { ':userId': userId }
+    }
+
+    const result = await this.docClient.send(new ScanCommand(params))
+    return result.Items ? result.Items.map((item) => this.mapper.toDomainModel(item)) : []
   }
 
   async findAll(): Promise<Todo[]> {
@@ -55,7 +67,7 @@ export class DynamodbTodoRepository implements Repository<Todo> {
     }
 
     const result = await this.docClient.send(new ScanCommand(params))
-    return (result.Items as Todo[]) || []
+    return result.Items ? result.Items.map((item) => this.mapper.toDomainModel(item)) : []
   }
 
   async update(todo: Partial<Todo>): Promise<Todo> {

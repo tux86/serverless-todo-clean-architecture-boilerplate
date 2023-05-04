@@ -21,15 +21,10 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.1",
-    "@types/node": "^18.15.12",
     "@serverless/compose": "^1.3.0",
     "@serverless/typescript": "^3.29.0",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.8.4",
-    "serverless": "^3.30.0",
-    "prettier": "^2.8.8",
-    "tsconfig-paths": "^3.9.0",
+    "@types/node": "^18.15.12",
+    "@types/uuid": "^9.0.1",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard": "^17.0.0",
@@ -38,6 +33,12 @@
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.1.1"
+    "eslint-plugin-promise": "^6.1.1",
+    "prettier": "^2.8.8",
+    "reflect-metadata": "^0.1.13",
+    "serverless": "^3.30.0",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.8.4"
   }
 }

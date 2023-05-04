@@ -7,7 +7,7 @@ export class TodoEntityMapper implements IMapper<Partial<TodoEntity>, Todo> {
   public toDomainModel(todoEntity: Partial<TodoEntity>): Todo {
     const { todoId, userId, title, description, status, createdAt, updatedAt } = todoEntity
 
-    return {
+    return new Todo({
       todoId,
       userId,
       title,
@@ -15,13 +15,13 @@ export class TodoEntityMapper implements IMapper<Partial<TodoEntity>, Todo> {
       status,
       createdAt: createdAt ? new Date(createdAt) : undefined,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined
-    }
+    })
   }
 
   toPersistenceEntity(todo: Partial<Todo>): Partial<TodoEntity> {
     const { todoId, userId, title, description, status, createdAt, updatedAt } = todo
 
-    return {
+    return new TodoEntity({
       todoId,
       userId,
       title,
@@ -29,6 +29,6 @@ export class TodoEntityMapper implements IMapper<Partial<TodoEntity>, Todo> {
       status,
       createdAt: createdAt ? createdAt.toISOString() : undefined,
       updatedAt: updatedAt ? updatedAt.toISOString() : undefined
-    }
+    })
   }
 }

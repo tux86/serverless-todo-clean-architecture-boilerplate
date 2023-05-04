@@ -1,7 +1,3 @@
 import { AbstractCreateUserInput } from '@/api/application/dtos/user/abstract-create-user.input'
 
-export class CreateAdminUserInput extends AbstractCreateUserInput {
-  constructor(props: CreateAdminUserInput) {
-    super(props)
-  }
-}
+export class CreateAdminUserInput extends AbstractCreateUserInput {}

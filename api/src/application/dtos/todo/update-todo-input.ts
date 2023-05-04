@@ -1,28 +1,34 @@
-import { IsOptional, IsString, IsUUID, MaxLength } from 'class-validator'
+import { Type } from 'class-transformer'
+import { IsEnum, IsOptional, IsString, IsUUID, MaxLength, ValidateNested } from 'class-validator'
 
-export class UpdateTodoInput {
+import { RequesterInfo } from '@/api/application/dtos/requester-info.dto'
+import { TodoStatus } from '@/api/domain/models/todo'
+
+export class UpdateTodoPayload {
   @IsUUID()
-  readonly todoId: string
+  todoId: string
 
   @IsOptional()
   @IsString()
   @MaxLength(20)
-  readonly title?: string
+  title?: string
 
   @IsOptional()
   @IsString()
   @MaxLength(500)
-  readonly description?: string
+  description?: string
 
   @IsOptional()
-  @IsString()
-  @MaxLength(20)
-  readonly status?: string
+  @IsEnum(TodoStatus)
+  status: TodoStatus
+}
 
-  constructor(props: UpdateTodoInput) {
-    this.todoId = props.todoId
-    this.title = props.title
-    this.description = props.description
-    this.status = props.status
-  }
+export class UpdateTodoInput {
+  @ValidateNested()
+  @Type(() => RequesterInfo)
+  requesterInfo: RequesterInfo
+
+  @ValidateNested()
+  @Type(() => UpdateTodoPayload)
+  payload: UpdateTodoPayload
 }

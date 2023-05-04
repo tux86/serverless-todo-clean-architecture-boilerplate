@@ -1,29 +1,23 @@
-import { IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator'
+import { IsEnum, IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator'
+
+import { TodoStatus } from '@/api/domain/models/todo'
 
 export class CreateTodoInput {
   @IsNotEmpty()
   @IsString()
   @MaxLength(100)
-  readonly title: string
+  title: string
 
   @IsNotEmpty()
   @IsString()
   @MaxLength(500)
-  readonly description: string
+  description: string
 
   @IsNotEmpty()
   @IsUUID()
-  readonly userId: string
+  userId: string
 
   @IsOptional()
-  @IsString()
-  @MaxLength(20)
-  readonly status?: string
-
-  constructor(props: CreateTodoInput) {
-    this.title = props.title
-    this.description = props.description
-    this.userId = props.userId
-    this.status = props.status
-  }
+  @IsEnum(TodoStatus)
+  status: TodoStatus
 }

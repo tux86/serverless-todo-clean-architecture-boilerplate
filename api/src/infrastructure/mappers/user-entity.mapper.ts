@@ -7,7 +7,7 @@ export class UserEntityMapper implements IMapper<Partial<UserEntity>, User> {
   toDomainModel(userEntity: UserEntity): User {
     const { userId, firstName, lastName, email, role, lastLoggedAt, createdAt, updatedAt } = userEntity
 
-    return {
+    return new User({
       userId,
       firstName,
       lastName,
@@ -16,13 +16,13 @@ export class UserEntityMapper implements IMapper<Partial<UserEntity>, User> {
       lastLoggedAt: lastLoggedAt ? new Date(lastLoggedAt) : undefined,
       createdAt: createdAt ? new Date(createdAt) : undefined,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined
-    }
+    })
   }
 
   toPersistenceEntity(user: Partial<User>): Partial<UserEntity> {
     const { userId, firstName, lastName, email, role, lastLoggedAt, createdAt, updatedAt } = user
 
-    return {
+    return new UserEntity({
       userId,
       firstName,
       lastName,
@@ -31,6 +31,6 @@ export class UserEntityMapper implements IMapper<Partial<UserEntity>, User> {
       lastLoggedAt: lastLoggedAt?.toISOString(),
       createdAt: createdAt?.toISOString(),
       updatedAt: updatedAt?.toISOString()
-    }
+    })
   }
 }

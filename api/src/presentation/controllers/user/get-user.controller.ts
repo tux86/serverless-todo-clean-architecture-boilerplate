@@ -3,7 +3,7 @@ import { GetUserInput } from '@/api/application/dtos/user/get-user.input'
 import { Controller } from '@/api/application/ports/controller'
 import { IHttpRequest } from '@/api/application/ports/http-request'
 import { IHttpResponse } from '@/api/application/ports/http-response'
-import { GetUserUseCase } from '@/api/application/usecases/user/get-user.use-case'
+import { GetUserUseCase } from '@/api/application/use-cases/user/get-user.use-case'
 import { User } from '@/api/domain/models/user'
 
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'

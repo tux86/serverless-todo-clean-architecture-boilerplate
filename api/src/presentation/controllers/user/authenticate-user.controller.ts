@@ -4,7 +4,7 @@ import { AuthUserInput } from '@/api/application/dtos/user/auth-user.input'
 import { Controller } from '@/api/application/ports/controller'
 import { IHttpRequest } from '@/api/application/ports/http-request'
 import { IHttpResponse } from '@/api/application/ports/http-response'
-import { AuthenticateUserUseCase } from '@/api/application/usecases/user/authenticate-user.use-case'
+import { AuthenticateUserUseCase } from '@/api/application/use-cases/user/authenticate-user.use-case'
 
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { SuccessHttpResponse } from '../../responses/http-response'

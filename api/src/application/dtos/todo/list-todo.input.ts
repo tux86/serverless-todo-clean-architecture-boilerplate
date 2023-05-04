@@ -1,11 +1,10 @@
-import { IsNotEmpty, IsUUID } from 'class-validator'
+import { Type } from 'class-transformer'
+import { ValidateNested } from 'class-validator'
 
-export class ListTodoInput {
-  @IsNotEmpty()
-  @IsUUID()
-  readonly userId: string
+import { RequesterInfo } from '@/api/application/dtos/requester-info.dto'
 
-  constructor(props: ListTodoInput) {
-    this.userId = props.userId
-  }
+export class ListTodosInput {
+  @ValidateNested()
+  @Type(() => RequesterInfo)
+  requesterInfo: RequesterInfo
 }

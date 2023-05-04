@@ -3,7 +3,7 @@ import { DeleteUserInput } from '@/api/application/dtos/user/delete-user.input'
 import { Controller } from '@/api/application/ports/controller'
 import { IHttpRequest } from '@/api/application/ports/http-request'
 import { IHttpResponse } from '@/api/application/ports/http-response'
-import { DeleteUserUseCase } from '@/api/application/usecases/user/delete-user.use-case'
+import { DeleteUserUseCase } from '@/api/application/use-cases/user/delete-user.use-case'
 
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { DeletedHttpResponse } from '../../responses/http-response'
