@@ -12,6 +12,6 @@ export class ListTodosUseCase implements UseCase<ListTodosInput, Todo[]> {
       return this.todoRepository.findAll()
     }
 
-    return this.todoRepository.findByUserId(input.requesterInfo.userId)
+    return await this.todoRepository.findByUserId(input.requesterInfo.userId)
   }
 }

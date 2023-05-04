@@ -1,4 +1,4 @@
-import { EntityNotFound, UserNotAuthorizedError } from '@/api/application/errors'
+import { EntityNotFound, UserForbiddenError } from '@/api/application/errors'
 import { TodoRepository } from '@/api/domain/repositories/todo.repository'
 
 import { DeleteTodoInput } from '../../dtos/todo/delete-todo.input'
@@ -19,9 +19,9 @@ export class DeleteTodoUseCase implements UseCase<DeleteTodoInput, void> {
     }
 
     if (requesterInfo.role !== 'admin' && todo.userId !== requesterInfo.userId) {
-      throw new UserNotAuthorizedError('User not authorized to delete this todo')
+      throw new UserForbiddenError('User not authorized to delete this todo')
     }
 
-    return this.todoRepository.delete(input.todoId)
+    await this.todoRepository.delete(input.todoId)
   }
 }

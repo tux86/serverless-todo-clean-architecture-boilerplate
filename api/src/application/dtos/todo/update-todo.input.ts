@@ -20,7 +20,7 @@ export class UpdateTodoPayload {
 
   @IsOptional()
   @IsEnum(TodoStatus)
-  status: TodoStatus
+  status?: TodoStatus
 }
 
 export class UpdateTodoInput {

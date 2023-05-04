@@ -1,8 +1,8 @@
-import { EntityNotFound, UserNotAuthorizedError } from '@/api/application/errors'
+import { EntityNotFound, UserForbiddenError } from '@/api/application/errors'
 import { Todo } from '@/api/domain/models/todo'
 import { TodoRepository } from '@/api/domain/repositories/todo.repository'
 
-import { UpdateTodoInput } from '../../dtos/todo/update-todo-input'
+import { UpdateTodoInput } from '../../dtos/todo/update-todo.input'
 import { TodoValidator } from '../../validators/todo.validator'
 import { UseCase } from '../use-case'
 
@@ -21,7 +21,7 @@ export class UpdateTodoUseCase implements UseCase<UpdateTodoInput, Todo> {
     }
 
     if (requesterInfo.role !== 'admin' && existingTodo.userId !== requesterInfo.userId) {
-      throw new UserNotAuthorizedError('User not authorized to delete this todo')
+      throw new UserForbiddenError('User not authorized to update this todo')
     }
 
     const todo = new Todo({
@@ -30,6 +30,6 @@ export class UpdateTodoUseCase implements UseCase<UpdateTodoInput, Todo> {
       updatedAt: new Date()
     })
 
-    return this.todoRepository.update(todo)
+    return await this.todoRepository.update(todo)
   }
 }

@@ -1,5 +1,5 @@
 import { WithInterceptor } from '@/api/application/decorators/interceptor.decorator'
-import { UpdateTodoInput, UpdateTodoPayload } from '@/api/application/dtos/todo/update-todo-input'
+import { UpdateTodoInput, UpdateTodoPayload } from '@/api/application/dtos/todo/update-todo.input'
 import { Controller } from '@/api/application/ports/controller'
 import { IHttpRequest } from '@/api/application/ports/http-request'
 import { IHttpResponse } from '@/api/application/ports/http-response'

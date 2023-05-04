@@ -1,5 +1,5 @@
 import { ListUsersInput } from '@/api/application/dtos/user/list-users.input'
-import { UserNotAuthorizedError } from '@/api/application/errors'
+import { UserForbiddenError } from '@/api/application/errors'
 import { UserValidator } from '@/api/application/validators/user.validator'
 import { User } from '@/api/domain/models/user'
 import { UserRepository } from '@/api/domain/repositories/user.repository'
@@ -12,8 +12,8 @@ export class ListUsersUseCase implements UseCase<ListUsersInput, User[]> {
   async execute(input: ListUsersInput): Promise<User[]> {
     this.validator.validateAndThrow(ListUsersInput, input)
     if (input.requestingUserRole !== 'admin') {
-      throw new UserNotAuthorizedError()
+      throw new UserForbiddenError()
     }
-    return this.userRepository.findAll()
+    return await this.userRepository.findAll()
   }
 }

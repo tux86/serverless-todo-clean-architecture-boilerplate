@@ -28,6 +28,13 @@ export class AuthFailedError extends InputValidationError {
   }
 }
 
+export class UserForbiddenError extends ApplicationError {
+  constructor(message?: string) {
+    super(message || 'User forbidden error')
+    this.name = 'UserForbiddenError'
+  }
+}
+
 export class UserNotAuthorizedError extends ApplicationError {
   constructor(message?: string) {
     super(message || 'User not authorized')

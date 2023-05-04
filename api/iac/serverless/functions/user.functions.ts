@@ -30,6 +30,11 @@ export const userFunctions: AWSFunctions = {
     environment,
     events: [httpApiEvent('post', '/users/auth')]
   },
+  updateUser: {
+    handler: getHandler('user-api-index.updateUserHandler'),
+    environment,
+    events: [httpApiEvent('put', '/users/{userId}', jwtAuthorizer())]
+  },
   // getCurrentUser: {
   //   handler: getHandlerPath('user-api-index.getCurrentUserHandler'),
   //   environment,

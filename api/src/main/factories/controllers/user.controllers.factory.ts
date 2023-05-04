@@ -4,6 +4,7 @@ import { DeleteUserUseCase } from '@/api/application/use-cases/user/delete-user.
 import { GetUserUseCase } from '@/api/application/use-cases/user/get-user.use-case'
 import { ListUsersUseCase } from '@/api/application/use-cases/user/list-users.use-case'
 import { RegisterUserUseCase } from '@/api/application/use-cases/user/register-user.use-case'
+import { UpdateUserUseCase } from '@/api/application/use-cases/user/update-user.use-case'
 import { UserValidator } from '@/api/application/validators/user.validator'
 import { AuthenticateUserController } from '@/api/presentation/controllers/user/authenticate-user.controller'
 import { CreateAdminUserController } from '@/api/presentation/controllers/user/create-admin-user.controller'
@@ -11,6 +12,7 @@ import { DeleteUserController } from '@/api/presentation/controllers/user/delete
 import { GetUserController } from '@/api/presentation/controllers/user/get-user.controller'
 import { ListUsersController } from '@/api/presentation/controllers/user/list-users.controller'
 import { RegisterUserController } from '@/api/presentation/controllers/user/register-user.controller'
+import { UpdateUserController } from '@/api/presentation/controllers/user/update-user.controller'
 
 import { createUserRepository } from '../repositories.factory'
 import { createAuthServiceImpl } from '../user.services.factory'
@@ -28,6 +30,11 @@ export const createRegisterUserController = (): RegisterUserController => {
 export const createAuthenticateUserController = (): AuthenticateUserController => {
   const authenticateUserUseCase = new AuthenticateUserUseCase(createAuthServiceImpl(), new UserValidator())
   return new AuthenticateUserController(authenticateUserUseCase)
+}
+
+export const createUpdateUserController = (): UpdateUserController => {
+  const updateUserUseCase = new UpdateUserUseCase(createUserRepository(), new UserValidator())
+  return new UpdateUserController(updateUserUseCase)
 }
 
 export const createDeleteUserController = (): DeleteUserController => {

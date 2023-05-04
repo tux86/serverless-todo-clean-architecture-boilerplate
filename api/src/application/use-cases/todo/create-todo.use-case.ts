@@ -22,6 +22,6 @@ export class CreateTodoUseCase implements UseCase<CreateTodoInput, Todo> {
       createdAt: new Date()
     })
 
-    return this.todoRepository.create(todo)
+    return await this.todoRepository.create(todo)
   }
 }

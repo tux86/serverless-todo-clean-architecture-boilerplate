@@ -1,4 +1,4 @@
-import { EntityNotFound, UserNotAuthorizedError } from '@/api/application/errors'
+import { EntityNotFound, UserForbiddenError } from '@/api/application/errors'
 import { Todo } from '@/api/domain/models/todo'
 import { TodoRepository } from '@/api/domain/repositories/todo.repository'
 
@@ -19,7 +19,7 @@ export class GetTodoUseCase implements UseCase<GetTodoInput, Todo> {
     }
 
     if (input.requesterInfo.role !== 'admin' && todo.userId !== input.requesterInfo.userId) {
-      throw new UserNotAuthorizedError('User not authorized to access this todo')
+      throw new UserForbiddenError('User not authorized to access this todo')
     }
 
     return todo

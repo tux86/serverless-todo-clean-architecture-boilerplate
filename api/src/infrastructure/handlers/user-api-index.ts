@@ -7,7 +7,8 @@ import {
   createDeleteUserController,
   createGetUserController,
   createListUsersController,
-  createRegisterUserController
+  createRegisterUserController,
+  createUpdateUserController
 } from '@/api/main/factories/controllers/user.controllers.factory'
 
 import { lambdaHandlerAdapter } from '../adapaters/lambda-handler.adapter'
@@ -19,6 +20,11 @@ export const createAdminUserHandler = async (event: APIGatewayProxyEventV2): Pro
 
 export const registerUserHandler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
   const handler = lambdaHandlerAdapter(createRegisterUserController())
+  return await handler(event)
+}
+
+export const updateUserHandler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
+  const handler = lambdaHandlerAdapter(createUpdateUserController())
   return await handler(event)
 }
 
