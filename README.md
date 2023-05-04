@@ -1,4 +1,4 @@
-# Serverless Todo API (AWS, Clean Architecture, Monorepo)
+# ☁️ Serverless Todo API (AWS, Clean Architecture, Monorepo)
 
 This project is a serverless Todo API built on AWS using Clean Architecture principles and a monorepo structure. It
 leverages the Serverless Framework with TypeScript and esbuild for fast build times. Additionally, this project uses
