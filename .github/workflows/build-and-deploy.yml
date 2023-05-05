@@ -1,25 +1,26 @@
-name: Build and deploy
+name: Deploy main branch
+
 on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '**/*.md'
-env:
-  NODE_VERSION: 18.x
+
 jobs:
   build:
     name: build
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        node-version: [18.x]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ env.NODE_VERSION }}
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: ${{ matrix.node-version }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -34,59 +35,10 @@ jobs:
 
       - name: Install dependencies
         run: pnpm i
+
       - name: Deploy to AWS
-        run: pnpm run deploy --stage dev
+        run: pnpm run deploy
         env:
-          # AWS VARIABLES
           AWS_REGION: ${{ matrix.region }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          # APP VARIABLES
-          ACCESS_TOKEN_VALIDITY: 24
-          ID_TOKEN_VALIDITY: 24
-          REFRESH_TOKEN_VALIDITY: 72
-#
-#  deploy:
-#    name: deploy
-#    runs-on: ubuntu-latest
-#    timeout-minutes: 10
-#    needs: build
-#    strategy:
-#      matrix:
-#        stage: [dev]
-#        region: [eu-west-1]
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-#      - name: Use Node.js ${{ env.NODE_VERSION }}
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: ${{ env.NODE_VERSION }}
-#
-#      - name: Setup pnpm
-#        uses: pnpm/action-setup@v2
-#
-#      - name: Setup pnpm cache
-#        uses: actions/cache@v3
-#        with:
-#          path: ~/.pnpm-store
-#          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-#          restore-keys: |
-#            ${{ runner.os }}-pnpm-
-#
-#      - name: Install dependencies
-#        run: pnpm i
-#
-#      - name: Deploy to AWS
-#        run: pnpm run deploy --stage ${{ matrix.stage }}
-#        env:
-#          # AWS VARIABLES
-#          AWS_REGION: ${{ matrix.region }}
-#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          # APP VARIABLES
-#          ACCESS_TOKEN_VALIDITY: 24
-#          ID_TOKEN_VALIDITY: 24
-#          REFRESH_TOKEN_VALIDITY: 72
-
