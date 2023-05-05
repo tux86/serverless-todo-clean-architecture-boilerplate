@@ -64,6 +64,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
+      - name: Install dependencies
+        run: pnpm i
+
       - name: Deploy to AWS
         run: pnpm run deploy --stage ${{ matrix.stage }}
         env:
