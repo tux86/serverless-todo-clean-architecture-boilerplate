@@ -5,7 +5,7 @@ import { IHttpRequest } from '@/api/application/ports/http-request'
 import { IHttpResponse } from '@/api/application/ports/http-response'
 import { UpdateUserUseCase } from '@/api/application/use-cases/user/update-user.use-case'
 import { User } from '@/api/domain/models/user'
-import { mapHttpAttributesToRequesterInfo } from '@/api/mappers/map-http-attributes-to-requester-info'
+import { mapHttpAttributesToRequesterInfo } from '@/api/application/mappers/map-http-attributes-to-requester-info'
 
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { UpdatedHttpResponse } from '../../responses/http-response'

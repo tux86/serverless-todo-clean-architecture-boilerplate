@@ -4,7 +4,7 @@ import { Controller } from '@/api/application/ports/controller'
 import { IHttpRequest } from '@/api/application/ports/http-request'
 import { IHttpResponse } from '@/api/application/ports/http-response'
 import { DeleteTodoUseCase } from '@/api/application/use-cases/todo/delete-todo.use-case'
-import { mapHttpAttributesToRequesterInfo } from '@/api/mappers/map-http-attributes-to-requester-info'
+import { mapHttpAttributesToRequesterInfo } from '@/api/application/mappers/map-http-attributes-to-requester-info'
 
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { DeletedHttpResponse } from '../../responses/http-response'

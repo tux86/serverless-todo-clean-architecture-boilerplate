@@ -5,7 +5,7 @@ import { IHttpRequest } from '@/api/application/ports/http-request'
 import { IHttpResponse } from '@/api/application/ports/http-response'
 import { UpdateTodoUseCase } from '@/api/application/use-cases/todo/update-todo.use-case'
 import { Todo } from '@/api/domain/models/todo'
-import { mapHttpAttributesToRequesterInfo } from '@/api/mappers/map-http-attributes-to-requester-info'
+import { mapHttpAttributesToRequesterInfo } from '@/api/application/mappers/map-http-attributes-to-requester-info'
 
 import { ErrorInterceptor } from '../../interceptors/error.interceptor'
 import { UpdatedHttpResponse } from '../../responses/http-response'
