@@ -68,10 +68,10 @@ jobs:
         run: pnpm i
 
       - name: Deploy to AWS
-        run: pnpm run deploy --stage ${{ matrix.stage }}
+        run: pnpm run deploy
         env:
           # AWS VARIABLES
-          AWS_REGION: ${{ matrix.region }}
+          #AWS_REGION: ${{ matrix.region }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           # APP VARIABLES
