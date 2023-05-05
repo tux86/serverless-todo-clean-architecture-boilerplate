@@ -3,16 +3,15 @@ on:
   push:
     branches:
       - main
-
+    paths-ignore:
+      - '**/*.md'
+env:
+  NODE_VERSION: 18.x
 jobs:
   build:
     name: build
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        pnpm-version: [8.3.1]
-        node-version: [18.x]
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -20,12 +19,10 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION  }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
-        with:
-          version: ${{ matrix.pnpm-version }}
 
       - name: Setup pnpm cache
         uses: actions/cache@v3
@@ -41,13 +38,26 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: build
     strategy:
       matrix:
+        stage: [dev]
         region: [eu-west-1]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION  }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+
       - name: Deploy to AWS
-        run: pnpm run deploy
+        run: pnpm run deploy --stage ${{ matrix.stage }}
         env:
           # AWS VARIABLES
           AWS_REGION: ${{ matrix.region }}
