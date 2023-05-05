@@ -35,11 +35,11 @@ export const userFunctions: AWSFunctions = {
     environment,
     events: [httpApiEvent('put', '/users/{userId}', jwtAuthorizer())]
   },
-  // getCurrentUser: {
-  //   handler: getHandlerPath('user-api-index.getCurrentUserHandler'),
-  //   environment,
-  //   events: [httpApiEvent('get', '/users/current')]
-  // },
+  getMe: {
+    handler: getHandler('user-api-index.getMeHandler'),
+    environment,
+    events: [httpApiEvent('get', '/users/me', jwtAuthorizer())]
+  },
   getUser: {
     handler: getHandler('user-api-index.getUserHandler'),
     environment,

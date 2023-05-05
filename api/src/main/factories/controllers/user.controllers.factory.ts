@@ -9,6 +9,7 @@ import { UserValidator } from '@/api/application/validators/user.validator'
 import { AuthenticateUserController } from '@/api/presentation/controllers/user/authenticate-user.controller'
 import { CreateAdminUserController } from '@/api/presentation/controllers/user/create-admin-user.controller'
 import { DeleteUserController } from '@/api/presentation/controllers/user/delete-user.controller'
+import { GetMeController } from '@/api/presentation/controllers/user/get-me.controller'
 import { GetUserController } from '@/api/presentation/controllers/user/get-user.controller'
 import { ListUsersController } from '@/api/presentation/controllers/user/list-users.controller'
 import { RegisterUserController } from '@/api/presentation/controllers/user/register-user.controller'
@@ -45,6 +46,11 @@ export const createDeleteUserController = (): DeleteUserController => {
 export const createGetUserController = (): GetUserController => {
   const getUserUseCase = new GetUserUseCase(createUserRepository(), new UserValidator())
   return new GetUserController(getUserUseCase)
+}
+
+export const createGetMeController = (): GetMeController => {
+  const getUserUseCase = new GetUserUseCase(createUserRepository(), new UserValidator())
+  return new GetMeController(getUserUseCase)
 }
 
 export const createListUsersController = (): ListUsersController => {

@@ -5,6 +5,7 @@ import {
   createAdminUserController,
   createAuthenticateUserController,
   createDeleteUserController,
+  createGetMeController,
   createGetUserController,
   createListUsersController,
   createRegisterUserController,
@@ -37,6 +38,13 @@ export const getUserHandler = async (
   event: APIGatewayProxyEventV2WithJWTAuthorizer
 ): Promise<APIGatewayProxyResultV2> => {
   const handler = lambdaHandlerAdapter(createGetUserController())
+  return await handler(event)
+}
+
+export const getMeHandler = async (
+  event: APIGatewayProxyEventV2WithJWTAuthorizer
+): Promise<APIGatewayProxyResultV2> => {
+  const handler = lambdaHandlerAdapter(createGetMeController())
   return await handler(event)
 }
 
