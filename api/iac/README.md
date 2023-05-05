@@ -9,10 +9,10 @@ One of the advantages of managing stateless resources in this directory is that 
 The API/IaC Directory is organized into the following sub-folders:
 
 - `serverless`: Contains the serverless configuration files for various components, such as functions, IAM roles, and provider settings.
-- `functions`: Contains the configuration for AWS Lambda functions, including the API Gateway event triggers and associated handlers.
-- `helpers.ts`: Utility functions and shared code used across serverless configurations.
-- `iam`: Contains IAM role configurations for the API (backend).
-- `provider`: Contains provider-specific settings and configurations, such as tags.
+- `serverless/functions`: Contains the configuration for AWS Lambda functions, including the API Gateway event triggers and associated handlers.
+- `serverless/helpers.ts`: Utility functions and shared code used across serverless configurations.
+- `serverless/iam`: Contains IAM role configurations for the API (backend).
+- `serverless/provider`: Contains provider-specific settings and configurations, such as tags.
 
 ## Usage
 
