@@ -15,7 +15,7 @@ jobs:
       url: https://example.com/
     strategy:
       matrix:
-        node-version: [${{ env.NODE_VERSION }}]
+        node-version: [18.x]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
