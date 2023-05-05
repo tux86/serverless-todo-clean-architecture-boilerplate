@@ -19,6 +19,7 @@
     "cognito"
   ],
   "scripts": {
+    "build": "echo \"nothing to build\"",
     "deploy": "sls deploy",
     "remove": "sls remove",
     "start": "sls api:offline start --reloadHandler"
