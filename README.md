@@ -21,7 +21,8 @@ pnpm workspaces for efficient package management.
 This folder contains various directories related to the project. For more information about each directory, please refer to their respective README files:
 
 - [`/api`](./api/README.md): Contains the API (backend) implementation.
-      - [`/api/infra`](./api/iac/README.md): Contains the Infrastructure as Code (IaC) configuration for the API (only stateless resources).
+  - [`/api/infra`](./api/iac/README.md): Contains the Infrastructure as Code (IaC) configuration for the API (only stateless resources).
+  - [`/api/src`](./api/src/README.md): Contains the source code for the API implementation.
       - [`/api/src`](./api/src/README.md): Contains the source code for the API implementation.
         - [`/api/src/application`](./api/src/application/README.md): Contains the application layer of the API.
         - [`/api/src/domain`](./api/src/domain/README.md): Contains the domain layer of the API.
