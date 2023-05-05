@@ -38,6 +38,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: create .env.dev file
+        run: cp infra/.env.example infra/.env.dev
+
       - name: Deploy to AWS
         run: pnpm run deploy
         env:
