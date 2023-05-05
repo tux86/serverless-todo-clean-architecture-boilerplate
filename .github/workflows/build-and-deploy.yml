@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '**/*.md'
 
 jobs:
   build:
@@ -35,6 +37,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm i
+
+#      - name: Run lint
+#        run: pnpm run lint
+
+      - name: Run build
+        run: pnpm run build
 
   deploy:
     name: deploy
