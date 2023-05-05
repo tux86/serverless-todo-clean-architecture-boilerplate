@@ -6,10 +6,12 @@ on:
       - main
 
 jobs:
-  build:
-    name: build
+  deploy:
+    name: deploy
     runs-on: ubuntu-latest
-
+    environment:
+      name: Development
+      url: https://example.com/
     strategy:
       matrix:
         node-version: [18.x]
@@ -22,10 +24,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-
-      - name: Setup pnpm cache
+      - name: Cache pnpm modules
         uses: actions/cache@v3
         with:
           path: ~/.pnpm-store
@@ -33,15 +32,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm install
+
+      - name: create .env.dev file
+        run: cp infra/.env.example infra/.env.dev
 
       - name: Deploy to AWS
         run: pnpm run deploy
         env:
-          AWS_REGION: ${{ matrix.region }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          ACCESS_TOKEN_VALIDITY: 24
-          ID_TOKEN_VALIDITY: 24
-          REFRESH_TOKEN_VALIDITY: 72
