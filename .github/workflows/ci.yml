@@ -10,11 +10,12 @@ jobs:
     name: deploy
     runs-on: ubuntu-latest
     environment:
-      name: Development
+      NODE_VERSION: 18.x
+      PNPM_VERSION: 8.3.1
       url: https://example.com/
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [${{ env.NODE_VERSION }}]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -32,8 +33,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - name: Setup pnpm
+      - uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
 
       - name: Install dependencies
         run: pnpm install
