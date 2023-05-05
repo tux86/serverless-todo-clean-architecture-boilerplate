@@ -4,15 +4,13 @@ on:
   push:
     branches:
       - main
-
+env:
+  PNPM_VERSION: 8.3.1
 jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
-    environment:
-      NODE_VERSION: 18.x
-      PNPM_VERSION: 8.3.1
-      url: https://example.com/
+
     strategy:
       matrix:
         node-version: [18.x]
