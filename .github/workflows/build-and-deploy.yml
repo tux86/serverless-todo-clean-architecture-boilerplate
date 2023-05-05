@@ -1,4 +1,4 @@
-name: Deploy main branch
+name: Build and deploy
 
 on:
   push:
@@ -9,9 +9,7 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-latest
-    environment:
-      name: Development
-      url: https://example.com/
+    timeout-minutes: 10
     strategy:
       matrix:
         node-version: [18.x]
@@ -41,6 +39,7 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: build
     environment:
       name: Development
