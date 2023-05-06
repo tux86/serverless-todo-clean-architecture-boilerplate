@@ -51,7 +51,7 @@ jobs:
     needs: build
     environment:
       name: Development
-      #url: https://xxxxxxxx.execute-api.eu-west-1.amazonaws.com
+      url: ${{ steps.deploy.outputs.url }}
     outputs:
       url: ${{ steps.deploy.outputs.url }}
     env:
