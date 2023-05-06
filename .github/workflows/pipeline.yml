@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -88,5 +91,5 @@ jobs:
           # INFRA VARIABLES
           ACCESS_TOKEN_VALIDITY: 72
           ID_TOKEN_VALIDITY: 72
-          REFRESH_TOKEN_VALIDITY: 365
+          REFRESH_TOKEN_VALIDITY: 30
 
