@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Show variables
         run: |
-          echo "ACCESS_TOKEN_VALIDITY : ${{ vars.ACCESS_TOKEN_VALIDITY }}"
+          echo "ACCESS_TOKEN_VALIDITY : ${{ env.ACCESS_TOKEN_VALIDITY }}"
       - name: Checkout repository
         uses: actions/checkout@v3
 
