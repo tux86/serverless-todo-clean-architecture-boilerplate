@@ -9,7 +9,6 @@ on:
       - main
 env:
   NODE_VERSION: 18.x
-  AWS_REGION: eu-west-1
 
 jobs:
   build:
@@ -53,6 +52,19 @@ jobs:
     environment:
       name: Development
       url: https://xxxxxxxx.execute-api.eu-west-1.amazonaws.com
+    env:
+      # AWS CREDENTIALS VARIABLES
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # *********** INFRA VARIABLES ***********
+      AWS_REGION: eu-west-1
+      # Cognito User Pool token validity config
+      # ACCESS_TOKEN_VALIDITY in hours
+      ACCESS_TOKEN_VALIDITY: 24
+      # ID_TOKEN_VALIDITY in hours
+      ID_TOKEN_VALIDITY: 24
+      # REFRESH_TOKEN_VALIDITY in days
+      REFRESH_TOKEN_VALIDITY: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -78,29 +90,9 @@ jobs:
 
       - name: Deploy to AWS
         run: npx serverless deploy --verbose
-        env:
-          # AWS CREDENTIALS VARIABLES
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          # *********** INFRA VARIABLES ***********
-          # Cognito user pool token validity config
-          # ACCESS_TOKEN_VALIDITY in hours
-          ACCESS_TOKEN_VALIDITY: 24
-          # ID_TOKEN_VALIDITY in hours
-          ID_TOKEN_VALIDITY: 24
-          # REFRESH_TOKEN_VALIDITY in days
-          REFRESH_TOKEN_VALIDITY: 30
 
       - name: Display information about deployed services
         run: npx serverless info
-        env:
-          # AWS CREDENTIALS VARIABLES
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Display outputs of deployed services
         run: npx serverless outputs
-        env:
-          # AWS CREDENTIALS VARIABLES
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
