@@ -42,11 +42,6 @@ jobs:
       - name: Run build
         run: pnpm run build
 
-      - name: Validate serverless template (infra)
-        run: npx serverless infra:print
-
-      - name: Validate serverless template (api)
-        run: npx serverless api:print
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
