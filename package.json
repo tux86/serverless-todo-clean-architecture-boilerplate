@@ -22,7 +22,8 @@
     "build": "echo \"nothing to build\"",
     "deploy": "sls deploy",
     "remove": "sls remove",
-    "start": "sls api:offline start --reloadHandler"
+    "start": "sls api:offline start --reloadHandler",
+    "test": "echo \"Error: no test specified\""
   },
   "devDependencies": {
     "@serverless/compose": "^1.3.0",

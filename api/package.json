@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "main": "serverless.ts",
-  "description": "A Todo App using Serverless Framework, TypeScript, and Clean Architecture",
+  "description": "api (backend)",
   "scripts": {
     "build": "tsc --noEmit",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\"",
     "lint": "eslint 'src/**/*.{js,ts}'",
     "lint:fix": "eslint 'src/**/*.{js,ts}' --fix",
     "prettier": "prettier --write ."
