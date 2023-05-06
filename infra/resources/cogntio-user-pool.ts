@@ -43,7 +43,7 @@ export const AppClient: AWSResource = {
     TokenValidityUnits: {
       AccessToken: 'hours',
       IdToken: 'hours',
-      RefreshToken: 'hours'
+      RefreshToken: 'days'
     },
     AccessTokenValidity: '${env:ACCESS_TOKEN_VALIDITY}',
     IdTokenValidity: '${env:ID_TOKEN_VALIDITY}',

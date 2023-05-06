@@ -88,8 +88,12 @@ jobs:
           # AWS CREDENTIALS VARIABLES
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          # INFRA VARIABLES
+          # *********** INFRA VARIABLES ***********
+          # Cognito user pool token validity config
+          # ACCESS_TOKEN_VALIDITY in hours
           ACCESS_TOKEN_VALIDITY: 24
+          # ID_TOKEN_VALIDITY in hours
           ID_TOKEN_VALIDITY: 24
-          REFRESH_TOKEN_VALIDITY: 72
+          # REFRESH_TOKEN_VALIDITY in days
+          REFRESH_TOKEN_VALIDITY: 30
 
