@@ -9,7 +9,11 @@ on:
       - main
 env:
   NODE_VERSION: 18.x
-
+  # AWS CREDENTIALS VARIABLES
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  # *********** INFRA VARIABLES ***********
+  AWS_REGION: eu-west-1
 jobs:
   build:
     name: Build
@@ -27,13 +31,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
-#      - name: Setup pnpm cache
-#        uses: actions/cache@v3
-#        with:
-#          path: ~/.pnpm-store
-#          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-#          restore-keys: |
-#            ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
@@ -44,6 +41,11 @@ jobs:
       - name: Run build
         run: pnpm run build
 
+      - name: Validate serverless template (infra)
+        run: npx serverless infra:print
+
+      - name: Validate serverless template (api)
+        run: npx serverless api:print
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -55,11 +57,6 @@ jobs:
     outputs:
       url: ${{ steps.deploy.outputs.url }}
     env:
-      # AWS CREDENTIALS VARIABLES
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      # *********** INFRA VARIABLES ***********
-      AWS_REGION: eu-west-1
       # Cognito User Pool token validity config
       # ACCESS_TOKEN_VALIDITY in hours
       ACCESS_TOKEN_VALIDITY: 24
@@ -73,19 +70,12 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
-
+a
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
-#      - name: Setup pnpm cache
-#        uses: actions/cache@v3
-#        with:
-#          path: ~/.pnpm-store
-#          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-#          restore-keys: |
-#            ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
