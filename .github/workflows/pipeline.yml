@@ -7,15 +7,13 @@ on:
   pull_request:
     branches:
       - main
-
+env:
+  NODE_VERSION: 18.x
 jobs:
   build:
     name: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      matrix:
-        node-version: [18.x]
     steps:
       - name: Show variables
         run: |
@@ -23,10 +21,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -56,17 +54,14 @@ jobs:
     environment:
       name: Development
       url: https://xxxxxxxx.execute-api.eu-west-1.amazonaws.com
-    strategy:
-      matrix:
-        node-version: [18.x]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
