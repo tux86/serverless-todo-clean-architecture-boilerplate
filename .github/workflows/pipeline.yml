@@ -13,7 +13,7 @@ env:
 
 jobs:
   build:
-    name: build
+    name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -46,7 +46,7 @@ jobs:
         run: pnpm run build
 
   deploy:
-    name: deploy
+    name: Deploy
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: build
@@ -93,6 +93,14 @@ jobs:
 
       - name: Display information about deployed services
         run: npx serverless info
+        env:
+          # AWS CREDENTIALS VARIABLES
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Display outputs of deployed services
         run: npx serverless outputs
+        env:
+          # AWS CREDENTIALS VARIABLES
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
