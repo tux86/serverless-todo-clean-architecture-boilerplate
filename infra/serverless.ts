@@ -23,11 +23,6 @@ export const serverlessConfiguration: AWS = {
     tags: {
       ...stackTags
     },
-    environment: {
-      ACCESS_TOKEN_VALIDITY: '${env:ACCESS_TOKEN_VALIDITY}',
-      ID_TOKEN_VALIDITY: '${env:ID_TOKEN_VALIDITY}',
-      REFRESH_TOKEN_VALIDITY: '${env:REFRESH_TOKEN_VALIDITY}'
-    },
   },
   resources: {
     Resources: {
