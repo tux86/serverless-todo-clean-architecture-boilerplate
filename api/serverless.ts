@@ -5,7 +5,7 @@ import { userFunctions } from './iac/serverless/functions/user.functions'
 import { defaultIam } from './iac/serverless/iam/default-iam'
 import { stackTags } from './iac/serverless/provider/tags'
 import { AWSRegion } from '../common/src/iac/serverless/types'
-
+// servleress
 export const serverlessConfiguration: AWS = {
   service: 'todo-api',
   frameworkVersion: '3',
